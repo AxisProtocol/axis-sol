@@ -37,12 +37,6 @@ const AxisLandingPage: NextPage = () => {
     { id: 'hero', component: HeroSection },
     { id: 'why-win', component: WhyWinSection },
     { id: 'product', component: ProductSection },
-    { id: 'traction', component: TractionSection },
-    { id: 'stats', component: StatsSection },
-    { id: 'roadmap', component: RoadmapSection },
-    { id: 'team', component: TeamSection },
-    { id: 'waitlist', component: () => <WaitlistSection setModalState={setModalState} /> },
-    { id: 'booking', component: CalendlySection },
   ];
 
   useEffect(() => {
