@@ -55,7 +55,7 @@ const MintTab = ({ echartsData }: MintTabProps) => {
           {/* Mint Card */}
           <ModernCard className="p-6 text-center" gradient>
             <Coins className="w-10 h-10 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-white mb-3">Buy Tokens</h2>
+            <h2 className="text-2xl font-bold text-white mb-3">Buy index-Token</h2>
             <div className="text-3xl font-bold text-white mb-2">{mintStats[0].value}</div>
             <div className="text-white/70 text-sm mb-6">Current Index Price</div>
             <ModernButton
@@ -73,7 +73,7 @@ const MintTab = ({ echartsData }: MintTabProps) => {
           {/* Burn Card */}
           <ModernCard className="p-6 text-center" gradient>
             <Flame className="w-10 h-10 mx-auto mb-4 text-red-400" />
-            <h2 className="text-2xl font-bold text-white mb-3">Sell Index Tokens</h2>
+            <h2 className="text-2xl font-bold text-white mb-3">Sell index-Token</h2>
             <div className="text-3xl font-bold text-white mb-2">{mintStats[0].value}</div>
             <div className="text-white/70 text-sm mb-6">Current Index Price</div>
             <ModernButton
