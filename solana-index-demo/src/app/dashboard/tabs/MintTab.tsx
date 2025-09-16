@@ -65,7 +65,7 @@ const MintTab = ({ echartsData }: MintTabProps) => {
               onClick={() => setBuyModalOpen(true)}
               className="w-full"
             >
-              Mint now
+              Buy
 
             </ModernButton>
           </ModernCard>
@@ -82,7 +82,7 @@ const MintTab = ({ echartsData }: MintTabProps) => {
               onClick={() => setBurnModalOpen(true)}
               className="w-full"
             >
-              Burn & Redeem
+              Sell
             </ModernButton>
           </ModernCard>
         </GridLayout>
