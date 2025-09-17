@@ -43,7 +43,7 @@ importers:
         version: 0.9.39(@solana/web3.js@1.98.4(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10))(bs58@6.0.0)(react-dom@19.1.1(react@19.1.1))(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10))(react@19.1.1)
       '@solana/wallet-adapter-wallets':
         specifier: ^0.19.37
-        version: 0.19.37(@babel/runtime@7.28.3)(@react-native-async-storage/async-storage@1.24.0(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10)))(@solana/sysvars@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2))(@solana/web3.js@1.98.4(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10))(@types/react@19.1.12)(aws4fetch@1.0.20)(bs58@6.0.0)(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(react-dom@19.1.1(react@19.1.1))(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10))(react@19.1.1)(tslib@2.8.1)(typescript@5.9.2)(utf-8-validate@5.0.10)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@3.25.76)
+        version: 0.19.37(@babel/runtime@7.28.3)(@react-native-async-storage/async-storage@1.24.0(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10)))(@solana/sysvars@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2))(@solana/web3.js@1.98.4(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10))(@types/react@19.1.12)(aws4fetch@1.0.20)(bs58@6.0.0)(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(react-dom@19.1.1(react@19.1.1))(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10))(react@19.1.1)(tslib@2.8.1)(typescript@5.9.2)(utf-8-validate@5.0.10)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@3.25.76)
       '@solana/web3.js':
         specifier: ^1.98.2
         version: 1.98.4(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10)
@@ -53,6 +53,15 @@ importers:
       '@tailwindcss/postcss':
         specifier: ^4.1.12
         version: 4.1.12
+      '@tsparticles/engine':
+        specifier: ^3.9.1
+        version: 3.9.1
+      '@tsparticles/react':
+        specifier: ^3.0.0
+        version: 3.0.0(@tsparticles/engine@3.9.1)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      '@tsparticles/slim':
+        specifier: ^3.9.1
+        version: 3.9.1
       axios:
         specifier: ^1.11.0
         version: 1.11.0
@@ -65,18 +74,12 @@ importers:
       buffer:
         specifier: ^6.0.3
         version: 6.0.3
-      cross-fetch:
-        specifier: ^4.1.0
-        version: 4.1.0
       crypto-browserify:
         specifier: ^3.12.1
         version: 3.12.1
       csv-parser:
         specifier: ^3.2.0
         version: 3.2.0
-      echarts:
-        specifier: ^6.0.0
-        version: 6.0.0
       ethers:
         specifier: ^6.14.4
         version: 6.15.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -96,8 +99,8 @@ importers:
         specifier: ^5.0.8
         version: 5.0.8
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: 0.544.0
+        version: 0.544.0(react@19.1.1)
       next:
         specifier: ^15.4.5
         version: 15.5.2(@babel/core@7.28.3)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -125,24 +128,12 @@ importers:
       react-icons:
         specifier: ^5.5.0
         version: 5.5.0(react@19.1.1)
-      react-tsparticles:
-        specifier: 2.12.2
-        version: 2.12.2(react@19.1.1)
-      recharts:
-        specifier: ^3.2.0
-        version: 3.2.0(@types/react@19.1.12)(react-dom@19.1.1(react@19.1.1))(react-is@18.3.1)(react@19.1.1)(redux@5.0.1)
       tailwindcss:
         specifier: ^4.1.12
         version: 4.1.12
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@20.19.11)(typescript@5.9.2)
-      tsparticles-engine:
-        specifier: 2.12.0
-        version: 2.12.0
-      tsparticles-slim:
-        specifier: 2.12.0
-        version: 2.12.0
       wrangler:
         specifier: ^4.37.1
         version: 4.37.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -1549,17 +1540,6 @@ packages:
       '@types/react':
         optional: true
 
-  '@reduxjs/toolkit@2.9.0':
-    resolution: {integrity: sha512-fSfQlSRu9Z5yBkvsNhYF2rPS8cGXn/TZVrlwN1948QyZ8xMZ0JvP50S2acZNaf+o63u6aEeMjipFyksjIcWrog==}
-    peerDependencies:
-      react: ^16.9.0 || ^17.0.0 || ^18 || ^19
-      react-redux: ^7.2.1 || ^8.1.3 || ^9.0.0
-    peerDependenciesMeta:
-      react:
-        optional: true
-      react-redux:
-        optional: true
-
   '@reown/appkit-common@1.7.2':
     resolution: {integrity: sha512-DZkl3P5+Iw3TmsitWmWxYbuSCox8iuzngNp/XhbNDJd7t4Cj4akaIUxSEeCajNDiGHlu4HZnfyM1swWsOJ0cOw==}
 
@@ -2616,12 +2596,6 @@ packages:
   '@speed-highlight/core@1.2.7':
     resolution: {integrity: sha512-0dxmVj4gxg3Jg879kvFS/msl4s9F3T9UXC1InxgOf7t5NvcPD97u/WTA5vL/IxWHMn7qSxBozqrnnE2wvl1m8g==}
 
-  '@standard-schema/spec@1.0.0':
-    resolution: {integrity: sha512-m2bOd0f2RT9k8QJx1JN85cZYyH1RqFBdlwtkSlf4tBDYLCiiZnv1fIIwacK6cqwXavOydf0NPToMQgpKq+dVlA==}
-
-  '@standard-schema/utils@0.3.0':
-    resolution: {integrity: sha512-e7Mew686owMaPJVNNLs55PUvgz371nKgwsc4vxE49zsODpJEnxgxRo2y/OKrqueavXgZNMDVj3DdHFlaSAeU8g==}
-
   '@stellar/js-xdr@3.1.2':
     resolution: {integrity: sha512-VVolPL5goVEIsvuGqDc5uiKxV03lzfWdvYg1KikvwheDmTBO68CKDji3bAZ/kppZrx5iTA8z3Ld5yuytcvhvOQ==}
 
@@ -2800,7 +2774,6 @@ packages:
   '@toruslabs/solana-embed@2.1.0':
     resolution: {integrity: sha512-rgZniKy+yuqJp8/Z/RcqzhTL4iCH+4nP55XD5T2nEIajAClsmonsGp24AUqYwEqu+7x2hjumZEh+12rUv+Ippw==}
     engines: {node: '>=18.x', npm: '>=9.x'}
-    deprecated: This sdk is now deprecated. Please use @web3auth/ws-embed instead
     peerDependencies:
       '@babel/runtime': 7.x
 
@@ -2920,6 +2893,121 @@ packages:
   '@tsconfig/node18@1.0.3':
     resolution: {integrity: sha512-RbwvSJQsuN9TB04AQbGULYfOGE/RnSFk/FLQ5b0NmDf5Kx2q/lABZbHQPKCO1vZ6Fiwkplu+yb9pGdLy1iGseQ==}
 
+  '@tsparticles/basic@3.9.1':
+    resolution: {integrity: sha512-ijr2dHMx0IQHqhKW3qA8tfwrR2XYbbWYdaJMQuBo2CkwBVIhZ76U+H20Y492j/NXpd1FUnt2aC0l4CEVGVGdeQ==}
+
+  '@tsparticles/engine@3.9.1':
+    resolution: {integrity: sha512-DpdgAhWMZ3Eh2gyxik8FXS6BKZ8vyea+Eu5BC4epsahqTGY9V3JGGJcXC6lRJx6cPMAx1A0FaQAojPF3v6rkmQ==}
+
+  '@tsparticles/interaction-external-attract@3.9.1':
+    resolution: {integrity: sha512-5AJGmhzM9o4AVFV24WH5vSqMBzOXEOzIdGLIr+QJf4fRh9ZK62snsusv/ozKgs2KteRYQx+L7c5V3TqcDy2upg==}
+
+  '@tsparticles/interaction-external-bounce@3.9.1':
+    resolution: {integrity: sha512-bv05+h70UIHOTWeTsTI1AeAmX6R3s8nnY74Ea6p6AbQjERzPYIa0XY19nq/hA7+Nrg+EissP5zgoYYeSphr85A==}
+
+  '@tsparticles/interaction-external-bubble@3.9.1':
+    resolution: {integrity: sha512-tbd8ox/1GPl+zr+KyHQVV1bW88GE7OM6i4zql801YIlCDrl9wgTDdDFGIy9X7/cwTvTrCePhrfvdkUamXIribQ==}
+
+  '@tsparticles/interaction-external-connect@3.9.1':
+    resolution: {integrity: sha512-sq8YfUNsIORjXHzzW7/AJQtfi/qDqLnYG2qOSE1WOsog39MD30RzmiOloejOkfNeUdcGUcfsDgpUuL3UhzFUOA==}
+
+  '@tsparticles/interaction-external-grab@3.9.1':
+    resolution: {integrity: sha512-QwXza+sMMWDaMiFxd8y2tJwUK6c+nNw554+/9+tEZeTTk2fCbB0IJ7p/TH6ZGWDL0vo2muK54Njv2fEey191ow==}
+
+  '@tsparticles/interaction-external-pause@3.9.1':
+    resolution: {integrity: sha512-Gzv4/FeNir0U/tVM9zQCqV1k+IAgaFjDU3T30M1AeAsNGh/rCITV2wnT7TOGFkbcla27m4Yxa+Fuab8+8pzm+g==}
+
+  '@tsparticles/interaction-external-push@3.9.1':
+    resolution: {integrity: sha512-GvnWF9Qy4YkZdx+WJL2iy9IcgLvzOIu3K7aLYJFsQPaxT8d9TF8WlpoMlWKnJID6H5q4JqQuMRKRyWH8aAKyQw==}
+
+  '@tsparticles/interaction-external-remove@3.9.1':
+    resolution: {integrity: sha512-yPThm4UDWejDOWW5Qc8KnnS2EfSo5VFcJUQDWc1+Wcj17xe7vdSoiwwOORM0PmNBzdDpSKQrte/gUnoqaUMwOA==}
+
+  '@tsparticles/interaction-external-repulse@3.9.1':
+    resolution: {integrity: sha512-/LBppXkrMdvLHlEKWC7IykFhzrz+9nebT2fwSSFXK4plEBxDlIwnkDxd3FbVOAbnBvx4+L8+fbrEx+RvC8diAw==}
+
+  '@tsparticles/interaction-external-slow@3.9.1':
+    resolution: {integrity: sha512-1ZYIR/udBwA9MdSCfgADsbDXKSFS0FMWuPWz7bm79g3sUxcYkihn+/hDhc6GXvNNR46V1ocJjrj0u6pAynS1KQ==}
+
+  '@tsparticles/interaction-particles-attract@3.9.1':
+    resolution: {integrity: sha512-CYYYowJuGwRLUixQcSU/48PTKM8fCUYThe0hXwQ+yRMLAn053VHzL7NNZzKqEIeEyt5oJoy9KcvubjKWbzMBLQ==}
+
+  '@tsparticles/interaction-particles-collisions@3.9.1':
+    resolution: {integrity: sha512-ggGyjW/3v1yxvYW1IF1EMT15M6w31y5zfNNUPkqd/IXRNPYvm0Z0ayhp+FKmz70M5p0UxxPIQHTvAv9Jqnuj8w==}
+
+  '@tsparticles/interaction-particles-links@3.9.1':
+    resolution: {integrity: sha512-MsLbMjy1vY5M5/hu/oa5OSRZAUz49H3+9EBMTIOThiX+a+vpl3sxc9AqNd9gMsPbM4WJlub8T6VBZdyvzez1Vg==}
+
+  '@tsparticles/move-base@3.9.1':
+    resolution: {integrity: sha512-X4huBS27d8srpxwOxliWPUt+NtCwY+8q/cx1DvQxyqmTA8VFCGpcHNwtqiN+9JicgzOvSuaORVqUgwlsc7h4pQ==}
+
+  '@tsparticles/move-parallax@3.9.1':
+    resolution: {integrity: sha512-whlOR0bVeyh6J/hvxf/QM3DqvNnITMiAQ0kro6saqSDItAVqg4pYxBfEsSOKq7EhjxNvfhhqR+pFMhp06zoCVA==}
+
+  '@tsparticles/plugin-easing-quad@3.9.1':
+    resolution: {integrity: sha512-C2UJOca5MTDXKUTBXj30Kiqr5UyID+xrY/LxicVWWZPczQW2bBxbIbfq9ULvzGDwBTxE2rdvIB8YFKmDYO45qw==}
+
+  '@tsparticles/plugin-hex-color@3.9.1':
+    resolution: {integrity: sha512-vZgZ12AjUicJvk7AX4K2eAmKEQX/D1VEjEPFhyjbgI7A65eX72M465vVKIgNA6QArLZ1DLs7Z787LOE6GOBWsg==}
+
+  '@tsparticles/plugin-hsl-color@3.9.1':
+    resolution: {integrity: sha512-jJd1iGgRwX6eeNjc1zUXiJivaqC5UE+SC2A3/NtHwwoQrkfxGWmRHOsVyLnOBRcCPgBp/FpdDe6DIDjCMO715w==}
+
+  '@tsparticles/plugin-rgb-color@3.9.1':
+    resolution: {integrity: sha512-SBxk7f1KBfXeTnnklbE2Hx4jBgh6I6HOtxb+Os1gTp0oaghZOkWcCD2dP4QbUu7fVNCMOcApPoMNC8RTFcy9wQ==}
+
+  '@tsparticles/react@3.0.0':
+    resolution: {integrity: sha512-hjGEtTT1cwv6BcjL+GcVgH++KYs52bIuQGW3PWv7z3tMa8g0bd6RI/vWSLj7p//NZ3uTjEIeilYIUPBh7Jfq/Q==}
+    peerDependencies:
+      '@tsparticles/engine': ^3.0.2
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+
+  '@tsparticles/shape-circle@3.9.1':
+    resolution: {integrity: sha512-DqZFLjbuhVn99WJ+A9ajz9YON72RtCcvubzq6qfjFmtwAK7frvQeb6iDTp6Ze9FUipluxVZWVRG4vWTxi2B+/g==}
+
+  '@tsparticles/shape-emoji@3.9.1':
+    resolution: {integrity: sha512-ifvY63usuT+hipgVHb8gelBHSeF6ryPnMxAAEC1RGHhhXfpSRWMtE6ybr+pSsYU52M3G9+TF84v91pSwNrb9ZQ==}
+
+  '@tsparticles/shape-image@3.9.1':
+    resolution: {integrity: sha512-fCA5eme8VF3oX8yNVUA0l2SLDKuiZObkijb0z3Ky0qj1HUEVlAuEMhhNDNB9E2iELTrWEix9z7BFMePp2CC7AA==}
+
+  '@tsparticles/shape-line@3.9.1':
+    resolution: {integrity: sha512-wT8NSp0N9HURyV05f371cHKcNTNqr0/cwUu6WhBzbshkYGy1KZUP9CpRIh5FCrBpTev34mEQfOXDycgfG0KiLQ==}
+
+  '@tsparticles/shape-polygon@3.9.1':
+    resolution: {integrity: sha512-dA77PgZdoLwxnliH6XQM/zF0r4jhT01pw5y7XTeTqws++hg4rTLV9255k6R6eUqKq0FPSW1/WBsBIl7q/MmrqQ==}
+
+  '@tsparticles/shape-square@3.9.1':
+    resolution: {integrity: sha512-DKGkDnRyZrAm7T2ipqNezJahSWs6xd9O5LQLe5vjrYm1qGwrFxJiQaAdlb00UNrexz1/SA7bEoIg4XKaFa7qhQ==}
+
+  '@tsparticles/shape-star@3.9.1':
+    resolution: {integrity: sha512-kdMJpi8cdeb6vGrZVSxTG0JIjCwIenggqk0EYeKAwtOGZFBgL7eHhF2F6uu1oq8cJAbXPujEoabnLsz6mW8XaA==}
+
+  '@tsparticles/slim@3.9.1':
+    resolution: {integrity: sha512-CL5cDmADU7sDjRli0So+hY61VMbdroqbArmR9Av+c1Fisa5ytr6QD7Jv62iwU2S6rvgicEe9OyRmSy5GIefwZw==}
+
+  '@tsparticles/updater-color@3.9.1':
+    resolution: {integrity: sha512-XGWdscrgEMA8L5E7exsE0f8/2zHKIqnTrZymcyuFBw2DCB6BIV+5z6qaNStpxrhq3DbIxxhqqcybqeOo7+Alpg==}
+
+  '@tsparticles/updater-life@3.9.1':
+    resolution: {integrity: sha512-Oi8aF2RIwMMsjssUkCB6t3PRpENHjdZf6cX92WNfAuqXtQphr3OMAkYFJFWkvyPFK22AVy3p/cFt6KE5zXxwAA==}
+
+  '@tsparticles/updater-opacity@3.9.1':
+    resolution: {integrity: sha512-w778LQuRZJ+IoWzeRdrGykPYSSaTeWfBvLZ2XwYEkh/Ss961InOxZKIpcS6i5Kp/Zfw0fS1ZAuqeHwuj///Osw==}
+
+  '@tsparticles/updater-out-modes@3.9.1':
+    resolution: {integrity: sha512-cKQEkAwbru+hhKF+GTsfbOvuBbx2DSB25CxOdhtW2wRvDBoCnngNdLw91rs+0Cex4tgEeibkebrIKFDDE6kELg==}
+
+  '@tsparticles/updater-rotate@3.9.1':
+    resolution: {integrity: sha512-9BfKaGfp28JN82MF2qs6Ae/lJr9EColMfMTHqSKljblwbpVDHte4umuwKl3VjbRt87WD9MGtla66NTUYl+WxuQ==}
+
+  '@tsparticles/updater-size@3.9.1':
+    resolution: {integrity: sha512-3NSVs0O2ApNKZXfd+y/zNhTXSFeG1Pw4peI8e6z/q5+XLbmue9oiEwoPy/tQLaark3oNj3JU7Q903ZijPyXSzw==}
+
+  '@tsparticles/updater-stroke-color@3.9.1':
+    resolution: {integrity: sha512-3x14+C2is9pZYTg9T2TiA/aM1YMq4wLdYaZDcHm3qO30DZu5oeQq0rm/6w+QOGKYY1Z3Htg9rlSUZkhTHn7eDA==}
+
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
 
@@ -2934,33 +3022,6 @@ packages:
 
   '@types/connect@3.4.38':
     resolution: {integrity: sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==}
-
-  '@types/d3-array@3.2.2':
-    resolution: {integrity: sha512-hOLWVbm7uRza0BYXpIIW5pxfrKe0W+D5lrFiAEYR+pb6w3N2SwSMaJbXdUfSEv+dT4MfHBLtn5js0LAWaO6otw==}
-
-  '@types/d3-color@3.1.3':
-    resolution: {integrity: sha512-iO90scth9WAbmgv7ogoq57O9YpKmFBbmoEoCHDB2xMBY0+/KVrqAaCDyCE16dUspeOvIxFFRI+0sEtqDqy2b4A==}
-
-  '@types/d3-ease@3.0.2':
-    resolution: {integrity: sha512-NcV1JjO5oDzoK26oMzbILE6HW7uVXOHLQvHshBUW4UMdZGfiY6v5BeQwh9a9tCzv+CeefZQHJt5SRgK154RtiA==}
-
-  '@types/d3-interpolate@3.0.4':
-    resolution: {integrity: sha512-mgLPETlrpVV1YRJIglr4Ez47g7Yxjl1lj7YKsiMCb27VJH9W8NVM6Bb9d8kkpG/uAQS5AmbA48q2IAolKKo1MA==}
-
-  '@types/d3-path@3.1.1':
-    resolution: {integrity: sha512-VMZBYyQvbGmWyWVea0EHs/BwLgxc+MKi1zLDCONksozI4YJMcTt8ZEuIR4Sb1MMTE8MMW49v0IwI5+b7RmfWlg==}
-
-  '@types/d3-scale@4.0.9':
-    resolution: {integrity: sha512-dLmtwB8zkAeO/juAMfnV+sItKjlsw2lKdZVVy6LRr0cBmegxSABiLEpGVmSJJ8O08i4+sGR6qQtb6WtuwJdvVw==}
-
-  '@types/d3-shape@3.1.7':
-    resolution: {integrity: sha512-VLvUQ33C+3J+8p+Daf+nYSOsjB4GXp19/S/aGo60m9h1v6XaxjiT82lKVWJCfzhtuZ3yD7i/TPeC/fuKLLOSmg==}
-
-  '@types/d3-time@3.0.4':
-    resolution: {integrity: sha512-yuzZug1nkAAaBlBBikKZTgzCeA+k1uy4ZFwWANOfKw5z5LRhV0gNA7gNkKm7HoK+HRN0wX3EkxGk0fpbWhmB7g==}
-
-  '@types/d3-timer@3.0.2':
-    resolution: {integrity: sha512-Ps3T8E8dZDam6fUyNiMkekK3XUsaUEik+idO9/YjPtfj2qruF8tFBXS7XhtE4iIXBLxhmLjP3SXpLhVf21I9Lw==}
 
   '@types/graceful-fs@4.1.9':
     resolution: {integrity: sha512-olP3sd1qOEe5dXTSaFvQG+02VdRXcdytWLAZsAq1PecU8uqQAhkrnbli7DagjtXKW/Bl7YJbUsa8MPcuc8LHEQ==}
@@ -3005,9 +3066,6 @@ packages:
 
   '@types/trusted-types@2.0.7':
     resolution: {integrity: sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==}
-
-  '@types/use-sync-external-store@0.0.6':
-    resolution: {integrity: sha512-zFDAD+tlpf2r4asuHEj0XH6pY6i0g5NeAHPn+15wk3BV6JA69eERFXC1gyGThDkVa1zCyKr5jox1+2LbV/AMLg==}
 
   '@types/uuid@8.3.4':
     resolution: {integrity: sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw==}
@@ -3596,10 +3654,6 @@ packages:
   cloudflare@4.5.0:
     resolution: {integrity: sha512-fPcbPKx4zF45jBvQ0z7PCdgejVAPBBCZxwqk1k7krQNfpM07Cfj97/Q6wBzvYqlWXx/zt1S9+m8vnfCe06umbQ==}
 
-  clsx@2.1.1:
-    resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
-    engines: {node: '>=6'}
-
   color-convert@2.0.1:
     resolution: {integrity: sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==}
     engines: {node: '>=7.0.0'}
@@ -3736,50 +3790,6 @@ packages:
     engines: {node: '>= 10'}
     hasBin: true
 
-  d3-array@3.2.4:
-    resolution: {integrity: sha512-tdQAmyA18i4J7wprpYq8ClcxZy3SC31QMeByyCFyRt7BVHdREQZ5lpzoe5mFEYZUWe+oq8HBvk9JjpibyEV4Jg==}
-    engines: {node: '>=12'}
-
-  d3-color@3.1.0:
-    resolution: {integrity: sha512-zg/chbXyeBtMQ1LbD/WSoW2DpC3I0mpmPdW+ynRTj/x2DAWYrIY7qeZIHidozwV24m4iavr15lNwIwLxRmOxhA==}
-    engines: {node: '>=12'}
-
-  d3-ease@3.0.1:
-    resolution: {integrity: sha512-wR/XK3D3XcLIZwpbvQwQ5fK+8Ykds1ip7A2Txe0yxncXSdq1L9skcG7blcedkOX+ZcgxGAmLX1FrRGbADwzi0w==}
-    engines: {node: '>=12'}
-
-  d3-format@3.1.0:
-    resolution: {integrity: sha512-YyUI6AEuY/Wpt8KWLgZHsIU86atmikuoOmCfommt0LYHiQSPjvX2AcFc38PX0CBpr2RCyZhjex+NS/LPOv6YqA==}
-    engines: {node: '>=12'}
-
-  d3-interpolate@3.0.1:
-    resolution: {integrity: sha512-3bYs1rOD33uo8aqJfKP3JWPAibgw8Zm2+L9vBKEHJ2Rg+viTR7o5Mmv5mZcieN+FRYaAOWX5SJATX6k1PWz72g==}
-    engines: {node: '>=12'}
-
-  d3-path@3.1.0:
-    resolution: {integrity: sha512-p3KP5HCf/bvjBSSKuXid6Zqijx7wIfNW+J/maPs+iwR35at5JCbLUT0LzF1cnjbCHWhqzQTIN2Jpe8pRebIEFQ==}
-    engines: {node: '>=12'}
-
-  d3-scale@4.0.2:
-    resolution: {integrity: sha512-GZW464g1SH7ag3Y7hXjf8RoUuAFIqklOAq3MRl4OaWabTFJY9PN/E1YklhXLh+OQ3fM9yS2nOkCoS+WLZ6kvxQ==}
-    engines: {node: '>=12'}
-
-  d3-shape@3.2.0:
-    resolution: {integrity: sha512-SaLBuwGm3MOViRq2ABk3eLoxwZELpH6zhl3FbAoJ7Vm1gofKx6El1Ib5z23NUEhF9AsGl7y+dzLe5Cw2AArGTA==}
-    engines: {node: '>=12'}
-
-  d3-time-format@4.1.0:
-    resolution: {integrity: sha512-dJxPBlzC7NugB2PDLwo9Q8JiTR3M3e4/XANkreKSUxF8vvXKqm1Yfq4Q5dl8budlunRVlUUaDUgFt7eA8D6NLg==}
-    engines: {node: '>=12'}
-
-  d3-time@3.1.0:
-    resolution: {integrity: sha512-VqKjzBLejbSMT4IgbmVgDjpkYrNWUYJnbCGo874u7MMKIWsILRX+OpX/gTk8MqjpT1A/c6HY2dCA77ZN0lkQ2Q==}
-    engines: {node: '>=12'}
-
-  d3-timer@3.0.1:
-    resolution: {integrity: sha512-ndfJ/JxxMd3nw31uyKoY2naivF+r29V+Lc0svZxe1JvvIRmi8hUsrMvdOwgS1o6uBHmiz91geQ0ylPP0aj1VUA==}
-    engines: {node: '>=12'}
-
   daisyui@5.0.54:
     resolution: {integrity: sha512-03iuq06+lLq/VczY/+YpADgLXVC1HYO63PNiH6A9hn/+f6IkVoONVc+Jh08xizkLQQCVVMMUBp+KeIdcWSBLcg==}
 
@@ -3827,9 +3837,6 @@ packages:
   decamelize@1.2.0:
     resolution: {integrity: sha512-z2S+W9X73hAUUki+N+9Za2lBlun89zigOyGrsax+KUQ6wKW4ZoWpEYBkGhQjwAjjDCkWxhY0VKEhk8wzY7F5cA==}
     engines: {node: '>=0.10.0'}
-
-  decimal.js-light@2.5.1:
-    resolution: {integrity: sha512-qIMFpTMZmny+MMIitAB6D7iVPEorVw6YQRWkvarTkT4tBeSLLiHzcwj6q0MmYSFCiVpiqPJTJEYIrpcPzVEIvg==}
 
   decode-uri-component@0.2.2:
     resolution: {integrity: sha512-FqUYQ+8o158GyGTrMFJms9qh3CqTKvAqgqsTnkLI8sKu0028orqBhxNMFkFen0zGyg6epACD32pjVk58ngIErQ==}
@@ -3919,9 +3926,6 @@ packages:
   ecdsa-sig-formatter@1.0.11:
     resolution: {integrity: sha512-nagl3RYrbNv6kQkeJIpt6NJZy8twLB/2vtz6yN9Z4vRKHN4/QZJIEbqohALSgwKdnksuY3k5Addp5lg8sVoVcQ==}
 
-  echarts@6.0.0:
-    resolution: {integrity: sha512-Tte/grDQRiETQP4xz3iZWSvoHrkCQtwqd6hs+mifXcjrCuo2iKWbajFObuLJVBlDIJlOzgQPd1hsaKt/3+OMkQ==}
-
   eciesjs@0.4.15:
     resolution: {integrity: sha512-r6kEJXDKecVOCj2nLMuXK/FCPeurW33+3JRpfXVbjLja3XUYFfD9I/JBreH6sUyzcm3G/YQboBjMla6poKeSdA==}
     engines: {bun: '>=1', deno: '>=2', node: '>=16'}
@@ -4000,9 +4004,6 @@ packages:
 
   es-toolkit@1.33.0:
     resolution: {integrity: sha512-X13Q/ZSc+vsO1q600bvNK4bxgXMkHcf//RxCmYDaRY5DAcT+eoXjY5hoAPGMdRnWQjvyLEcyauG3b6hz76LNqg==}
-
-  es-toolkit@1.39.10:
-    resolution: {integrity: sha512-E0iGnTtbDhkeczB0T+mxmoVlT4YNweEKBLq7oaU4p11mecdsZpNWOglI4895Vh4usbQ+LsJiuLuI2L0Vdmfm2w==}
 
   es6-promise@4.2.8:
     resolution: {integrity: sha512-HJDGx5daxeIvxdBxvG2cb9g4tEvwIk3i8+nhX0yGrYmZUzbkdg8QbDevheDB8gd0//uPj4c1EQua8Q+MViT0/w==}
@@ -4403,9 +4404,6 @@ packages:
     engines: {node: '>=16.x'}
     hasBin: true
 
-  immer@10.1.3:
-    resolution: {integrity: sha512-tmjF/k8QDKydUlm3mZU+tjM6zeq9/fFpPqH9SzWmBnVVKsPBg/V66qsMwb3/Bo90cgUN+ghdVBess+hPsxUyRw==}
-
   import-fresh@2.0.0:
     resolution: {integrity: sha512-eZ5H8rcgYazHbKC3PG4ClHNykCSxtAhxSSEM+2mb+7evD2CKF5V7c0dNum7AdpDh0ZdICwZY9sRSn8f+KH96sg==}
     engines: {node: '>=4'}
@@ -4423,10 +4421,6 @@ packages:
 
   int64-buffer@1.1.0:
     resolution: {integrity: sha512-94smTCQOvigN4d/2R/YDjz8YVG0Sufvv2aAh8P5m42gwhCsDAJqnbNOrxJsrADuAFAA69Q/ptGzxvNcNuIJcvw==}
-
-  internmap@2.0.3:
-    resolution: {integrity: sha512-5Hh7Y1wQbvY5ooGgPbDaL5iYLAPzMTUrjMulskHLH6wnv/A+1q5rgEaiuqEjB+oxGXIVZs1FF+R/KPN3ZSQYYg==}
-    engines: {node: '>=12'}
 
   invariant@2.2.4:
     resolution: {integrity: sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==}
@@ -4765,7 +4759,6 @@ packages:
 
   lodash.isequal@4.5.0:
     resolution: {integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==}
-    deprecated: This package is deprecated. Use require('node:util').isDeepStrictEqual instead.
 
   lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
@@ -4800,8 +4793,8 @@ packages:
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
 
-  lucide-react@0.542.0:
-    resolution: {integrity: sha512-w3hD8/SQB7+lzU2r4VdFyzzOzKnUjTZIF/MQJGSSvni7Llewni4vuViRppfRAa2guOsY5k4jZyxw/i9DQHv+dw==}
+  lucide-react@0.544.0:
+    resolution: {integrity: sha512-t5tS44bqd825zAW45UQxpG2CvcC4urOwn2TrwSH8u+MjeE+1NnWl6QqeQ/6NdjMqdOygyiT9p3Ev0p1NJykxjw==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
@@ -5060,7 +5053,6 @@ packages:
   node-domexception@1.0.0:
     resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
     engines: {node: '>=10.5.0'}
-    deprecated: Use your platform's native DOMException instead
 
   node-fetch-native@1.6.7:
     resolution: {integrity: sha512-g9yhqoedzIUm0nTnTqAQvueMPVOuIY16bqgAJJC8XOOubYFNwz6IER9qs0Gq2Xd0+CecCKFjtdDTMA4u4xG06Q==}
@@ -5449,27 +5441,9 @@ packages:
       react: ~16
       react-dom: ~16
 
-  react-redux@9.2.0:
-    resolution: {integrity: sha512-ROY9fvHhwOD9ySfrF0wmvu//bKCQ6AeZZq1nJNtbDC+kk5DuSuNX/n6YWYF/SYy7bSba4D4FSz8DJeKY/S/r+g==}
-    peerDependencies:
-      '@types/react': ^18.2.25 || ^19
-      react: ^18.0 || ^19
-      redux: ^5.0.0
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-      redux:
-        optional: true
-
   react-refresh@0.14.2:
     resolution: {integrity: sha512-jCvmsr+1IUSMUyzOkRcvnVbX3ZYC6g9TDrDbFuFmRDq7PD4yaGbLKNQL6k2jnArV8hjYxh7hVhAZB6s9HDGpZA==}
     engines: {node: '>=0.10.0'}
-
-  react-tsparticles@2.12.2:
-    resolution: {integrity: sha512-/nrEbyL8UROXKIMXe+f+LZN2ckvkwV2Qa+GGe/H26oEIc+wq/ybSG9REDwQiSt2OaDQGu0MwmA4BKmkL6wAWcA==}
-    deprecated: '@tsparticles/react is the new version, please use that'
-    peerDependencies:
-      react: '>=16'
 
   react@19.1.1:
     resolution: {integrity: sha512-w8nqGImo45dmMIfljjMwOGtbmC/mk4CMYhWIicdSflH91J9TyCyczcPFXJzrZ/ZXcgGRFeP6BU0BEJTw6tZdfQ==}
@@ -5494,22 +5468,6 @@ packages:
     resolution: {integrity: sha512-r/H9MzAWtrv8aSVjPCMFpDMl5q66GqtmmRkRjpHTsp4zBAa+snZyiQNlMONiUmEJcsnaw0wCauJ2GWODr/aFkg==}
     engines: {node: '>= 12.13.0'}
 
-  recharts@3.2.0:
-    resolution: {integrity: sha512-fX0xCgNXo6mag9wz3oLuANR+dUQM4uIlTYBGTGq9CBRgW/8TZPzqPGYs5NTt8aENCf+i1CI8vqxT1py8L/5J2w==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-      react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-      react-is: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-
-  redux-thunk@3.1.0:
-    resolution: {integrity: sha512-NW2r5T6ksUKXCabzhL9z+h206HQw/NJkcLm1GPImRQ8IzfXwRGqjVhKJGauHirT0DAuyy6hjdnMZaRoAcy0Klw==}
-    peerDependencies:
-      redux: ^5.0.0
-
-  redux@5.0.1:
-    resolution: {integrity: sha512-M9/ELqF6fy8FwmkpnF0S3YKOqMyoWJ4+CS5Efg2ct3oY9daQvd/Pc71FpGZsVsbl3Cpb+IIcjBDUnnyBdQbq4w==}
-
   regenerator-runtime@0.13.11:
     resolution: {integrity: sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==}
 
@@ -5523,9 +5481,6 @@ packages:
 
   require-main-filename@2.0.0:
     resolution: {integrity: sha512-NKN5kMDylKuldxYLSUfrbo5Tuzh4hd+2E8NPPX02mZtn1VuREQToYe/ZdlJy+J3uCpfaiGF05e7B8W0iXbQHmg==}
-
-  reselect@5.1.1:
-    resolution: {integrity: sha512-K/BG6eIky/SBpzfHZv/dd+9JBFiS4SWV7FIujVyJRux6e45+73RaUHXLmIR1f7WOMaQ0U1km6qwklRQxpJJY0w==}
 
   resolve-from@3.0.0:
     resolution: {integrity: sha512-GnlH6vxLymXJNMBo7XP1fJIzBFbdYt49CuTwmB/6N53t+kMPRMFKz783LlQ4tv28XoQfMWinAJX6WCGf2IlaIw==}
@@ -5907,9 +5862,6 @@ packages:
   throat@5.0.0:
     resolution: {integrity: sha512-fcwX4mndzpLQKBS1DVYhGAcYaYt7vsHNIvQV+WXMvnow5cgjPphq5CaayLaGsjRdSCKZFNGt7/GYAuXaNOiYCA==}
 
-  tiny-invariant@1.3.3:
-    resolution: {integrity: sha512-+FbBPE1o9QAYvviau/qC5SE3caw21q3xkvWKBtja5vgqOWIHHJ3ioaq1VPfn/Szqctz2bU/oYeKd9/z5BL+PVg==}
-
   tiny-secp256k1@1.1.7:
     resolution: {integrity: sha512-eb+F6NabSnjbLwNoC+2o5ItbmP1kg7HliWue71JgLegQt6A5mTN8YbvTLCazdlg6e5SV6A+r8OGvZYskdlmhqQ==}
     engines: {node: '>=6.0.0'}
@@ -5958,150 +5910,11 @@ packages:
   tslib@1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
 
-  tslib@2.3.0:
-    resolution: {integrity: sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==}
-
   tslib@2.7.0:
     resolution: {integrity: sha512-gLXCKdN1/j47AiHiOkJN69hJmcbGTHI0ImLmbYLHykhgeN0jVGola9yVjFgzCUklsZQMW55o+dW7IXv3RCXDzA==}
 
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
-
-  tsparticles-basic@2.12.0:
-    resolution: {integrity: sha512-pN6FBpL0UsIUXjYbiui5+IVsbIItbQGOlwyGV55g6IYJBgdTNXgFX0HRYZGE9ZZ9psEXqzqwLM37zvWnb5AG9g==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-engine@2.12.0:
-    resolution: {integrity: sha512-ZjDIYex6jBJ4iMc9+z0uPe7SgBnmb6l+EJm83MPIsOny9lPpetMsnw/8YJ3xdxn8hV+S3myTpTN1CkOVmFv0QQ==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-interaction-external-attract@2.12.0:
-    resolution: {integrity: sha512-0roC6D1QkFqMVomcMlTaBrNVjVOpyNzxIUsjMfshk2wUZDAvTNTuWQdUpmsLS4EeSTDN3rzlGNnIuuUQqyBU5w==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-interaction-external-bounce@2.12.0:
-    resolution: {integrity: sha512-MMcqKLnQMJ30hubORtdq+4QMldQ3+gJu0bBYsQr9BsThsh8/V0xHc1iokZobqHYVP5tV77mbFBD8Z7iSCf0TMQ==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-interaction-external-bubble@2.12.0:
-    resolution: {integrity: sha512-5kImCSCZlLNccXOHPIi2Yn+rQWTX3sEa/xCHwXW19uHxtILVJlnAweayc8+Zgmb7mo0DscBtWVFXHPxrVPFDUA==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-interaction-external-connect@2.12.0:
-    resolution: {integrity: sha512-ymzmFPXz6AaA1LAOL5Ihuy7YSQEW8MzuSJzbd0ES13U8XjiU3HlFqlH6WGT1KvXNw6WYoqrZt0T3fKxBW3/C3A==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-interaction-external-grab@2.12.0:
-    resolution: {integrity: sha512-iQF/A947hSfDNqAjr49PRjyQaeRkYgTYpfNmAf+EfME8RsbapeP/BSyF6mTy0UAFC0hK2A2Hwgw72eT78yhXeQ==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-interaction-external-pause@2.12.0:
-    resolution: {integrity: sha512-4SUikNpsFROHnRqniL+uX2E388YTtfRWqqqZxRhY0BrijH4z04Aii3YqaGhJxfrwDKkTQlIoM2GbFT552QZWjw==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-interaction-external-push@2.12.0:
-    resolution: {integrity: sha512-kqs3V0dgDKgMoeqbdg+cKH2F+DTrvfCMrPF1MCCUpBCqBiH+TRQpJNNC86EZYHfNUeeLuIM3ttWwIkk2hllR/Q==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-interaction-external-remove@2.12.0:
-    resolution: {integrity: sha512-2eNIrv4m1WB2VfSVj46V2L/J9hNEZnMgFc+A+qmy66C8KzDN1G8aJUAf1inW8JVc0lmo5+WKhzex4X0ZSMghBg==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-interaction-external-repulse@2.12.0:
-    resolution: {integrity: sha512-rSzdnmgljeBCj5FPp4AtGxOG9TmTsK3AjQW0vlyd1aG2O5kSqFjR+FuT7rfdSk9LEJGH5SjPFE6cwbuy51uEWA==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-interaction-external-slow@2.12.0:
-    resolution: {integrity: sha512-2IKdMC3om7DttqyroMtO//xNdF0NvJL/Lx7LDo08VpfTgJJozxU+JAUT8XVT7urxhaDzbxSSIROc79epESROtA==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-interaction-particles-attract@2.12.0:
-    resolution: {integrity: sha512-Hl8qwuwF9aLq3FOkAW+Zomu7Gb8IKs6Y3tFQUQScDmrrSCaeRt2EGklAiwgxwgntmqzL7hbMWNx06CHHcUQKdQ==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-interaction-particles-collisions@2.12.0:
-    resolution: {integrity: sha512-Se9nPWlyPxdsnHgR6ap4YUImAu3W5MeGKJaQMiQpm1vW8lSMOUejI1n1ioIaQth9weKGKnD9rvcNn76sFlzGBA==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-interaction-particles-links@2.12.0:
-    resolution: {integrity: sha512-e7I8gRs4rmKfcsHONXMkJnymRWpxHmeaJIo4g2NaDRjIgeb2AcJSWKWZvrsoLnm7zvaf/cMQlbN6vQwCixYq3A==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-move-base@2.12.0:
-    resolution: {integrity: sha512-oSogCDougIImq+iRtIFJD0YFArlorSi8IW3HD2gO3USkH+aNn3ZqZNTqp321uB08K34HpS263DTbhLHa/D6BWw==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-move-parallax@2.12.0:
-    resolution: {integrity: sha512-58CYXaX8Ih5rNtYhpnH0YwU4Ks7gVZMREGUJtmjhuYN+OFr9FVdF3oDIJ9N6gY5a5AnAKz8f5j5qpucoPRcYrQ==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-particles.js@2.12.0:
-    resolution: {integrity: sha512-LyOuvYdhbUScmA4iDgV3LxA0HzY1DnOwQUy3NrPYO393S2YwdDjdwMod6Btq7EBUjg9FVIh+sZRizgV5elV2dg==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-plugin-easing-quad@2.12.0:
-    resolution: {integrity: sha512-2mNqez5pydDewMIUWaUhY5cNQ80IUOYiujwG6qx9spTq1D6EEPLbRNAEL8/ecPdn2j1Um3iWSx6lo340rPkv4Q==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-shape-circle@2.12.0:
-    resolution: {integrity: sha512-L6OngbAlbadG7b783x16ns3+SZ7i0SSB66M8xGa5/k+YcY7zm8zG0uPt1Hd+xQDR2aNA3RngVM10O23/Lwk65Q==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-shape-image@2.12.0:
-    resolution: {integrity: sha512-iCkSdUVa40DxhkkYjYuYHr9MJGVw+QnQuN5UC+e/yBgJQY+1tQL8UH0+YU/h0GHTzh5Sm+y+g51gOFxHt1dj7Q==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-shape-line@2.12.0:
-    resolution: {integrity: sha512-RcpKmmpKlk+R8mM5wA2v64Lv1jvXtU4SrBDv3vbdRodKbKaWGGzymzav1Q0hYyDyUZgplEK/a5ZwrfrOwmgYGA==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-shape-polygon@2.12.0:
-    resolution: {integrity: sha512-5YEy7HVMt1Obxd/jnlsjajchAlYMr9eRZWN+lSjcFSH6Ibra7h59YuJVnwxOxAobpijGxsNiBX0PuGQnB47pmA==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-shape-square@2.12.0:
-    resolution: {integrity: sha512-33vfajHqmlODKaUzyPI/aVhnAOT09V7nfEPNl8DD0cfiNikEuPkbFqgJezJuE55ebtVo7BZPDA9o7GYbWxQNuw==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-shape-star@2.12.0:
-    resolution: {integrity: sha512-4sfG/BBqm2qBnPLASl2L5aBfCx86cmZLXeh49Un+TIR1F5Qh4XUFsahgVOG0vkZQa+rOsZPEH04xY5feWmj90g==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-shape-text@2.12.0:
-    resolution: {integrity: sha512-v2/FCA+hyTbDqp2ymFOe97h/NFb2eezECMrdirHWew3E3qlvj9S/xBibjbpZva2gnXcasBwxn0+LxKbgGdP0rA==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-slim@2.12.0:
-    resolution: {integrity: sha512-27w9aGAAAPKHvP4LHzWFpyqu7wKyulayyaZ/L6Tuuejy4KP4BBEB4rY5GG91yvAPsLtr6rwWAn3yS+uxnBDpkA==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-updater-color@2.12.0:
-    resolution: {integrity: sha512-KcG3a8zd0f8CTiOrylXGChBrjhKcchvDJjx9sp5qpwQK61JlNojNCU35xoaSk2eEHeOvFjh0o3CXWUmYPUcBTQ==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-updater-life@2.12.0:
-    resolution: {integrity: sha512-J7RWGHAZkowBHpcLpmjKsxwnZZJ94oGEL2w+wvW1/+ZLmAiFFF6UgU0rHMC5CbHJT4IPx9cbkYMEHsBkcRJ0Bw==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-updater-opacity@2.12.0:
-    resolution: {integrity: sha512-YUjMsgHdaYi4HN89LLogboYcCi1o9VGo21upoqxq19yRy0hRCtx2NhH22iHF/i5WrX6jqshN0iuiiNefC53CsA==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-updater-out-modes@2.12.0:
-    resolution: {integrity: sha512-owBp4Gk0JNlSrmp12XVEeBroDhLZU+Uq3szbWlHGSfcR88W4c/0bt0FiH5bHUqORIkw+m8O56hCjbqwj69kpOQ==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-updater-rotate@2.12.0:
-    resolution: {integrity: sha512-waOFlGFmEZOzsQg4C4VSejNVXGf4dMf3fsnQrEROASGf1FCd8B6WcZau7JtXSTFw0OUGuk8UGz36ETWN72DkCw==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-updater-size@2.12.0:
-    resolution: {integrity: sha512-B0yRdEDd/qZXCGDL/ussHfx5YJ9UhTqNvmS5X2rR2hiZhBAE2fmsXLeWkdtF2QusjPeEqFDxrkGiLOsh6poqRA==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
-
-  tsparticles-updater-stroke-color@2.12.0:
-    resolution: {integrity: sha512-MPou1ZDxsuVq6SN1fbX+aI5yrs6FyP2iPCqqttpNbWyL+R6fik1rL0ab/x02B57liDXqGKYomIbBQVP3zUTW1A==}
-    deprecated: starting from tsparticles v3 the packages are now moved to @tsparticles/package-name instead of tsparticles-package-name
 
   tweetnacl@1.0.3:
     resolution: {integrity: sha512-6rt+RN7aOi1nGMyC4Xa5DdYiukl2UWCbcJft7YhxReBGQD7OAM8Pbxw6YMo4r2diNEA8FEmu32YOn9rhaiE5yw==}
@@ -6262,11 +6075,6 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
 
-  use-sync-external-store@1.5.0:
-    resolution: {integrity: sha512-Rb46I4cGGVBmjamjphe8L/UnvJD+uPPtTkNvX5mZgqdbavhI4EbgIWJiIHXJ8bc/i9EQGPRh4DwEURJ552Do0A==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-
   utf-8-validate@5.0.10:
     resolution: {integrity: sha512-Z6czzLq4u8fPOyx7TU6X3dvUZVvoJmxSQ+IcrlmagKhilxlhZgxPK6C5Jqbkw1IDUmFTM+cz9QDnnLTwDz/2gQ==}
     engines: {node: '>=6.14.2'}
@@ -6294,7 +6102,6 @@ packages:
 
   uuidv4@6.2.13:
     resolution: {integrity: sha512-AXyzMjazYB3ovL3q051VLH06Ixj//Knx7QnUSi1T//Ie3io6CpsPu9nVMOx5MoLWh6xV0B9J0hIaxungxXUbPQ==}
-    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
 
   v8-compile-cache-lib@3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}
@@ -6317,9 +6124,6 @@ packages:
   vary@1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
-
-  victory-vendor@37.3.6:
-    resolution: {integrity: sha512-SbPDPdDBYp+5MJHhBCAyI7wKM3d5ivekigc2Dk2s7pgbZ9wIgIBYGVw4zGHBml/qTFbexrofXW6Gu4noGxrOwQ==}
 
   viem@2.23.2:
     resolution: {integrity: sha512-NVmW/E0c5crMOtbEAqMF0e3NmvQykFXhLOc/CkLIXOlzHSA6KXVz3CYVmaKqBF8/xtjsjHAGjdJN3Ru1kFJLaA==}
@@ -6549,9 +6353,6 @@ packages:
 
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
-
-  zrender@6.0.0:
-    resolution: {integrity: sha512-41dFXEEXuJpNecuUQq6JlbybmnHaqqpGlbH1yxnA5V9MMP4SbohSVZsJIwz+zdjQXSSlR1Vc34EgH1zxyTDvhg==}
 
 snapshots:
 
@@ -8618,18 +8419,6 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.1.12
 
-  '@reduxjs/toolkit@2.9.0(react-redux@9.2.0(@types/react@19.1.12)(react@19.1.1)(redux@5.0.1))(react@19.1.1)':
-    dependencies:
-      '@standard-schema/spec': 1.0.0
-      '@standard-schema/utils': 0.3.0
-      immer: 10.1.3
-      redux: 5.0.1
-      redux-thunk: 3.1.0(redux@5.0.1)
-      reselect: 5.1.1
-    optionalDependencies:
-      react: 19.1.1
-      react-redux: 9.2.0(@types/react@19.1.12)(react@19.1.1)(redux@5.0.1)
-
   '@reown/appkit-common@1.7.2(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10)(zod@3.22.4)':
     dependencies:
       big.js: 6.2.2
@@ -9527,26 +9316,26 @@ snapshots:
       - react
       - react-native
 
-  '@solana-program/compute-budget@0.8.0(@solana/kit@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)))':
+  '@solana-program/compute-budget@0.8.0(@solana/kit@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)))':
     dependencies:
-      '@solana/kit': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/kit': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))
 
-  '@solana-program/stake@0.2.1(@solana/kit@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)))':
+  '@solana-program/stake@0.2.1(@solana/kit@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)))':
     dependencies:
-      '@solana/kit': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/kit': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))
 
-  '@solana-program/system@0.7.0(@solana/kit@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)))':
+  '@solana-program/system@0.7.0(@solana/kit@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)))':
     dependencies:
-      '@solana/kit': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/kit': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))
 
-  '@solana-program/token-2022@0.4.2(@solana/kit@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)))(@solana/sysvars@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2))':
+  '@solana-program/token-2022@0.4.2(@solana/kit@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)))(@solana/sysvars@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2))':
     dependencies:
-      '@solana/kit': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/kit': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       '@solana/sysvars': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)
 
-  '@solana-program/token@0.5.1(@solana/kit@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)))':
+  '@solana-program/token@0.5.1(@solana/kit@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)))':
     dependencies:
-      '@solana/kit': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/kit': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))
 
   '@solana/accounts@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)':
     dependencies:
@@ -9703,7 +9492,7 @@ snapshots:
     transitivePeerDependencies:
       - fastestsmallesttextencoderdecoder
 
-  '@solana/kit@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
+  '@solana/kit@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
       '@solana/accounts': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)
       '@solana/addresses': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)
@@ -9716,11 +9505,11 @@ snapshots:
       '@solana/rpc': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)
       '@solana/rpc-parsed-types': 2.3.0(typescript@5.9.2)
       '@solana/rpc-spec-types': 2.3.0(typescript@5.9.2)
-      '@solana/rpc-subscriptions': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/rpc-subscriptions': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       '@solana/rpc-types': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)
       '@solana/signers': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)
       '@solana/sysvars': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)
-      '@solana/transaction-confirmation': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/transaction-confirmation': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       '@solana/transaction-messages': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)
       '@solana/transactions': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)
       typescript: 5.9.2
@@ -9810,14 +9599,14 @@ snapshots:
     transitivePeerDependencies:
       - fastestsmallesttextencoderdecoder
 
-  '@solana/rpc-subscriptions-channel-websocket@2.3.0(typescript@5.9.2)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
+  '@solana/rpc-subscriptions-channel-websocket@2.3.0(typescript@5.9.2)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
       '@solana/errors': 2.3.0(typescript@5.9.2)
       '@solana/functional': 2.3.0(typescript@5.9.2)
       '@solana/rpc-subscriptions-spec': 2.3.0(typescript@5.9.2)
       '@solana/subscribable': 2.3.0(typescript@5.9.2)
       typescript: 5.9.2
-      ws: 8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      ws: 7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
   '@solana/rpc-subscriptions-spec@2.3.0(typescript@5.9.2)':
     dependencies:
@@ -9827,7 +9616,7 @@ snapshots:
       '@solana/subscribable': 2.3.0(typescript@5.9.2)
       typescript: 5.9.2
 
-  '@solana/rpc-subscriptions@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
+  '@solana/rpc-subscriptions@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
       '@solana/errors': 2.3.0(typescript@5.9.2)
       '@solana/fast-stable-stringify': 2.3.0(typescript@5.9.2)
@@ -9835,7 +9624,7 @@ snapshots:
       '@solana/promises': 2.3.0(typescript@5.9.2)
       '@solana/rpc-spec-types': 2.3.0(typescript@5.9.2)
       '@solana/rpc-subscriptions-api': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)
-      '@solana/rpc-subscriptions-channel-websocket': 2.3.0(typescript@5.9.2)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/rpc-subscriptions-channel-websocket': 2.3.0(typescript@5.9.2)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       '@solana/rpc-subscriptions-spec': 2.3.0(typescript@5.9.2)
       '@solana/rpc-transformers': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)
       '@solana/rpc-types': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)
@@ -9962,7 +9751,7 @@ snapshots:
     transitivePeerDependencies:
       - fastestsmallesttextencoderdecoder
 
-  '@solana/transaction-confirmation@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
+  '@solana/transaction-confirmation@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
       '@solana/addresses': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)
       '@solana/codecs-strings': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)
@@ -9970,7 +9759,7 @@ snapshots:
       '@solana/keys': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)
       '@solana/promises': 2.3.0(typescript@5.9.2)
       '@solana/rpc': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)
-      '@solana/rpc-subscriptions': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/rpc-subscriptions': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       '@solana/rpc-types': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)
       '@solana/transaction-messages': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)
       '@solana/transactions': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)
@@ -10247,11 +10036,11 @@ snapshots:
       - typescript
       - utf-8-validate
 
-  '@solana/wallet-adapter-trezor@0.1.6(@solana/sysvars@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2))(@solana/web3.js@1.98.4(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.9.2)(utf-8-validate@5.0.10)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-trezor@0.1.6(@solana/sysvars@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2))(@solana/web3.js@1.98.4(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.9.2)(utf-8-validate@5.0.10)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
       '@solana/wallet-adapter-base': 0.9.27(@solana/web3.js@1.98.4(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10))
       '@solana/web3.js': 1.98.4(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10)
-      '@trezor/connect-web': 9.6.2(@solana/sysvars@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2))(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.9.2)(utf-8-validate@5.0.10)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@trezor/connect-web': 9.6.2(@solana/sysvars@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2))(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.9.2)(utf-8-validate@5.0.10)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       buffer: 6.0.3
     transitivePeerDependencies:
       - '@solana/sysvars'
@@ -10314,7 +10103,7 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@solana/wallet-adapter-wallets@0.19.37(@babel/runtime@7.28.3)(@react-native-async-storage/async-storage@1.24.0(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10)))(@solana/sysvars@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2))(@solana/web3.js@1.98.4(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10))(@types/react@19.1.12)(aws4fetch@1.0.20)(bs58@6.0.0)(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(react-dom@19.1.1(react@19.1.1))(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10))(react@19.1.1)(tslib@2.8.1)(typescript@5.9.2)(utf-8-validate@5.0.10)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@3.25.76)':
+  '@solana/wallet-adapter-wallets@0.19.37(@babel/runtime@7.28.3)(@react-native-async-storage/async-storage@1.24.0(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10)))(@solana/sysvars@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2))(@solana/web3.js@1.98.4(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10))(@types/react@19.1.12)(aws4fetch@1.0.20)(bs58@6.0.0)(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(react-dom@19.1.1(react@19.1.1))(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10))(react@19.1.1)(tslib@2.8.1)(typescript@5.9.2)(utf-8-validate@5.0.10)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@3.25.76)':
     dependencies:
       '@solana/wallet-adapter-alpha': 0.1.14(@solana/web3.js@1.98.4(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10))
       '@solana/wallet-adapter-avana': 0.1.17(@solana/web3.js@1.98.4(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10))
@@ -10347,7 +10136,7 @@ snapshots:
       '@solana/wallet-adapter-tokenary': 0.1.16(@solana/web3.js@1.98.4(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10))
       '@solana/wallet-adapter-tokenpocket': 0.4.23(@solana/web3.js@1.98.4(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10))
       '@solana/wallet-adapter-torus': 0.11.32(@babel/runtime@7.28.3)(@solana/web3.js@1.98.4(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10)
-      '@solana/wallet-adapter-trezor': 0.1.6(@solana/sysvars@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2))(@solana/web3.js@1.98.4(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.9.2)(utf-8-validate@5.0.10)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-trezor': 0.1.6(@solana/sysvars@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2))(@solana/web3.js@1.98.4(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.9.2)(utf-8-validate@5.0.10)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       '@solana/wallet-adapter-trust': 0.1.17(@solana/web3.js@1.98.4(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10))
       '@solana/wallet-adapter-unsafe-burner': 0.1.11(@solana/web3.js@1.98.4(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10))
       '@solana/wallet-adapter-walletconnect': 0.1.21(@react-native-async-storage/async-storage@1.24.0(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10)))(@solana/web3.js@1.98.4(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10))(@types/react@19.1.12)(aws4fetch@1.0.20)(bufferutil@4.0.9)(react@19.1.1)(typescript@5.9.2)(utf-8-validate@5.0.10)(zod@3.25.76)
@@ -10528,10 +10317,6 @@ snapshots:
       uuid: 9.0.1
 
   '@speed-highlight/core@1.2.7': {}
-
-  '@standard-schema/spec@1.0.0': {}
-
-  '@standard-schema/utils@0.3.0': {}
 
   '@stellar/js-xdr@3.1.2': {}
 
@@ -10810,12 +10595,12 @@ snapshots:
       - react-native
       - utf-8-validate
 
-  '@trezor/blockchain-link@2.5.2(@solana/sysvars@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2))(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.9.2)(utf-8-validate@5.0.10)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
+  '@trezor/blockchain-link@2.5.2(@solana/sysvars@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2))(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.9.2)(utf-8-validate@5.0.10)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana-program/stake': 0.2.1(@solana/kit@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)))
-      '@solana-program/token': 0.5.1(@solana/kit@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)))
-      '@solana-program/token-2022': 0.4.2(@solana/kit@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)))(@solana/sysvars@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2))
-      '@solana/kit': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana-program/stake': 0.2.1(@solana/kit@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)))
+      '@solana-program/token': 0.5.1(@solana/kit@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)))
+      '@solana-program/token-2022': 0.4.2(@solana/kit@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)))(@solana/sysvars@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2))
+      '@solana/kit': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       '@solana/rpc-types': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)
       '@stellar/stellar-sdk': 13.3.0
       '@trezor/blockchain-link-types': 1.4.2(tslib@2.8.1)
@@ -10864,9 +10649,9 @@ snapshots:
       - expo-localization
       - react-native
 
-  '@trezor/connect-web@9.6.2(@solana/sysvars@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2))(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.9.2)(utf-8-validate@5.0.10)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
+  '@trezor/connect-web@9.6.2(@solana/sysvars@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2))(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.9.2)(utf-8-validate@5.0.10)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@trezor/connect': 9.6.2(@solana/sysvars@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2))(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.9.2)(utf-8-validate@5.0.10)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@trezor/connect': 9.6.2(@solana/sysvars@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2))(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.9.2)(utf-8-validate@5.0.10)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       '@trezor/connect-common': 0.4.2(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10))(tslib@2.8.1)
       '@trezor/utils': 9.4.2(tslib@2.8.1)
       '@trezor/websocket-client': 1.2.2(bufferutil@4.0.9)(tslib@2.8.1)(utf-8-validate@5.0.10)
@@ -10885,7 +10670,7 @@ snapshots:
       - utf-8-validate
       - ws
 
-  '@trezor/connect@9.6.2(@solana/sysvars@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2))(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.9.2)(utf-8-validate@5.0.10)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
+  '@trezor/connect@9.6.2(@solana/sysvars@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2))(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.9.2)(utf-8-validate@5.0.10)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
       '@ethereumjs/common': 10.0.0
       '@ethereumjs/tx': 10.0.0
@@ -10893,12 +10678,12 @@ snapshots:
       '@mobily/ts-belt': 3.13.1
       '@noble/hashes': 1.8.0
       '@scure/bip39': 1.6.0
-      '@solana-program/compute-budget': 0.8.0(@solana/kit@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)))
-      '@solana-program/system': 0.7.0(@solana/kit@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)))
-      '@solana-program/token': 0.5.1(@solana/kit@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)))
-      '@solana-program/token-2022': 0.4.2(@solana/kit@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)))(@solana/sysvars@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2))
-      '@solana/kit': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))
-      '@trezor/blockchain-link': 2.5.2(@solana/sysvars@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2))(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.9.2)(utf-8-validate@5.0.10)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana-program/compute-budget': 0.8.0(@solana/kit@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)))
+      '@solana-program/system': 0.7.0(@solana/kit@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)))
+      '@solana-program/token': 0.5.1(@solana/kit@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)))
+      '@solana-program/token-2022': 0.4.2(@solana/kit@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)))(@solana/sysvars@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2))
+      '@solana/kit': 2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@trezor/blockchain-link': 2.5.2(@solana/sysvars@2.3.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.2))(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.9.2)(utf-8-validate@5.0.10)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       '@trezor/blockchain-link-types': 1.4.2(tslib@2.8.1)
       '@trezor/blockchain-link-utils': 1.4.2(bufferutil@4.0.9)(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10))(tslib@2.8.1)(utf-8-validate@5.0.10)
       '@trezor/connect-analytics': 1.3.5(react-native@0.80.1(@babel/core@7.28.3)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10))(tslib@2.8.1)
@@ -11024,6 +10809,188 @@ snapshots:
 
   '@tsconfig/node18@1.0.3': {}
 
+  '@tsparticles/basic@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+      '@tsparticles/move-base': 3.9.1
+      '@tsparticles/plugin-hex-color': 3.9.1
+      '@tsparticles/plugin-hsl-color': 3.9.1
+      '@tsparticles/plugin-rgb-color': 3.9.1
+      '@tsparticles/shape-circle': 3.9.1
+      '@tsparticles/updater-color': 3.9.1
+      '@tsparticles/updater-opacity': 3.9.1
+      '@tsparticles/updater-out-modes': 3.9.1
+      '@tsparticles/updater-size': 3.9.1
+
+  '@tsparticles/engine@3.9.1': {}
+
+  '@tsparticles/interaction-external-attract@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/interaction-external-bounce@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/interaction-external-bubble@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/interaction-external-connect@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/interaction-external-grab@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/interaction-external-pause@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/interaction-external-push@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/interaction-external-remove@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/interaction-external-repulse@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/interaction-external-slow@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/interaction-particles-attract@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/interaction-particles-collisions@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/interaction-particles-links@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/move-base@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/move-parallax@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/plugin-easing-quad@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/plugin-hex-color@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/plugin-hsl-color@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/plugin-rgb-color@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/react@3.0.0(@tsparticles/engine@3.9.1)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+      react: 19.1.1
+      react-dom: 19.1.1(react@19.1.1)
+
+  '@tsparticles/shape-circle@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/shape-emoji@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/shape-image@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/shape-line@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/shape-polygon@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/shape-square@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/shape-star@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/slim@3.9.1':
+    dependencies:
+      '@tsparticles/basic': 3.9.1
+      '@tsparticles/engine': 3.9.1
+      '@tsparticles/interaction-external-attract': 3.9.1
+      '@tsparticles/interaction-external-bounce': 3.9.1
+      '@tsparticles/interaction-external-bubble': 3.9.1
+      '@tsparticles/interaction-external-connect': 3.9.1
+      '@tsparticles/interaction-external-grab': 3.9.1
+      '@tsparticles/interaction-external-pause': 3.9.1
+      '@tsparticles/interaction-external-push': 3.9.1
+      '@tsparticles/interaction-external-remove': 3.9.1
+      '@tsparticles/interaction-external-repulse': 3.9.1
+      '@tsparticles/interaction-external-slow': 3.9.1
+      '@tsparticles/interaction-particles-attract': 3.9.1
+      '@tsparticles/interaction-particles-collisions': 3.9.1
+      '@tsparticles/interaction-particles-links': 3.9.1
+      '@tsparticles/move-parallax': 3.9.1
+      '@tsparticles/plugin-easing-quad': 3.9.1
+      '@tsparticles/shape-emoji': 3.9.1
+      '@tsparticles/shape-image': 3.9.1
+      '@tsparticles/shape-line': 3.9.1
+      '@tsparticles/shape-polygon': 3.9.1
+      '@tsparticles/shape-square': 3.9.1
+      '@tsparticles/shape-star': 3.9.1
+      '@tsparticles/updater-life': 3.9.1
+      '@tsparticles/updater-rotate': 3.9.1
+      '@tsparticles/updater-stroke-color': 3.9.1
+
+  '@tsparticles/updater-color@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/updater-life@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/updater-opacity@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/updater-out-modes@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/updater-rotate@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/updater-size@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
+  '@tsparticles/updater-stroke-color@3.9.1':
+    dependencies:
+      '@tsparticles/engine': 3.9.1
+
   '@types/babel__core@7.20.5':
     dependencies:
       '@babel/parser': 7.28.3
@@ -11048,30 +11015,6 @@ snapshots:
   '@types/connect@3.4.38':
     dependencies:
       '@types/node': 20.19.11
-
-  '@types/d3-array@3.2.2': {}
-
-  '@types/d3-color@3.1.3': {}
-
-  '@types/d3-ease@3.0.2': {}
-
-  '@types/d3-interpolate@3.0.4':
-    dependencies:
-      '@types/d3-color': 3.1.3
-
-  '@types/d3-path@3.1.1': {}
-
-  '@types/d3-scale@4.0.9':
-    dependencies:
-      '@types/d3-time': 3.0.4
-
-  '@types/d3-shape@3.1.7':
-    dependencies:
-      '@types/d3-path': 3.1.1
-
-  '@types/d3-time@3.0.4': {}
-
-  '@types/d3-timer@3.0.2': {}
 
   '@types/graceful-fs@4.1.9':
     dependencies:
@@ -11119,8 +11062,6 @@ snapshots:
   '@types/stack-utils@2.0.3': {}
 
   '@types/trusted-types@2.0.7': {}
-
-  '@types/use-sync-external-store@0.0.6': {}
 
   '@types/uuid@8.3.4': {}
 
@@ -12236,8 +12177,6 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  clsx@2.1.1: {}
-
   color-convert@2.0.1:
     dependencies:
       color-name: 1.1.4
@@ -12392,44 +12331,6 @@ snapshots:
 
   csv-parser@3.2.0: {}
 
-  d3-array@3.2.4:
-    dependencies:
-      internmap: 2.0.3
-
-  d3-color@3.1.0: {}
-
-  d3-ease@3.0.1: {}
-
-  d3-format@3.1.0: {}
-
-  d3-interpolate@3.0.1:
-    dependencies:
-      d3-color: 3.1.0
-
-  d3-path@3.1.0: {}
-
-  d3-scale@4.0.2:
-    dependencies:
-      d3-array: 3.2.4
-      d3-format: 3.1.0
-      d3-interpolate: 3.0.1
-      d3-time: 3.1.0
-      d3-time-format: 4.1.0
-
-  d3-shape@3.2.0:
-    dependencies:
-      d3-path: 3.1.0
-
-  d3-time-format@4.1.0:
-    dependencies:
-      d3-time: 3.1.0
-
-  d3-time@3.1.0:
-    dependencies:
-      d3-array: 3.2.4
-
-  d3-timer@3.0.1: {}
-
   daisyui@5.0.54: {}
 
   dateformat@4.6.3: {}
@@ -12453,8 +12354,6 @@ snapshots:
       ms: 2.1.3
 
   decamelize@1.2.0: {}
-
-  decimal.js-light@2.5.1: {}
 
   decode-uri-component@0.2.2: {}
 
@@ -12539,11 +12438,6 @@ snapshots:
   ecdsa-sig-formatter@1.0.11:
     dependencies:
       safe-buffer: 5.2.1
-
-  echarts@6.0.0:
-    dependencies:
-      tslib: 2.3.0
-      zrender: 6.0.0
 
   eciesjs@0.4.15:
     dependencies:
@@ -12632,8 +12526,6 @@ snapshots:
       hasown: 2.0.2
 
   es-toolkit@1.33.0: {}
-
-  es-toolkit@1.39.10: {}
 
   es6-promise@4.2.8: {}
 
@@ -13090,8 +12982,6 @@ snapshots:
     dependencies:
       queue: 6.0.2
 
-  immer@10.1.3: {}
-
   import-fresh@2.0.0:
     dependencies:
       caller-path: 2.0.0
@@ -13107,8 +12997,6 @@ snapshots:
   inherits@2.0.4: {}
 
   int64-buffer@1.1.0: {}
-
-  internmap@2.0.3: {}
 
   invariant@2.2.4:
     dependencies:
@@ -13469,7 +13357,7 @@ snapshots:
     dependencies:
       yallist: 3.1.1
 
-  lucide-react@0.542.0(react@19.1.1):
+  lucide-react@0.544.0(react@19.1.1):
     dependencies:
       react: 19.1.1
 
@@ -14302,21 +14190,7 @@ snapshots:
       react-dom: 19.1.1(react@19.1.1)
       webrtc-adapter: 7.7.1
 
-  react-redux@9.2.0(@types/react@19.1.12)(react@19.1.1)(redux@5.0.1):
-    dependencies:
-      '@types/use-sync-external-store': 0.0.6
-      react: 19.1.1
-      use-sync-external-store: 1.5.0(react@19.1.1)
-    optionalDependencies:
-      '@types/react': 19.1.12
-      redux: 5.0.1
-
   react-refresh@0.14.2: {}
-
-  react-tsparticles@2.12.2(react@19.1.1):
-    dependencies:
-      react: 19.1.1
-      tsparticles-engine: 2.12.0
 
   react@19.1.1: {}
 
@@ -14348,32 +14222,6 @@ snapshots:
 
   real-require@0.1.0: {}
 
-  recharts@3.2.0(@types/react@19.1.12)(react-dom@19.1.1(react@19.1.1))(react-is@18.3.1)(react@19.1.1)(redux@5.0.1):
-    dependencies:
-      '@reduxjs/toolkit': 2.9.0(react-redux@9.2.0(@types/react@19.1.12)(react@19.1.1)(redux@5.0.1))(react@19.1.1)
-      clsx: 2.1.1
-      decimal.js-light: 2.5.1
-      es-toolkit: 1.39.10
-      eventemitter3: 5.0.1
-      immer: 10.1.3
-      react: 19.1.1
-      react-dom: 19.1.1(react@19.1.1)
-      react-is: 18.3.1
-      react-redux: 9.2.0(@types/react@19.1.12)(react@19.1.1)(redux@5.0.1)
-      reselect: 5.1.1
-      tiny-invariant: 1.3.3
-      use-sync-external-store: 1.5.0(react@19.1.1)
-      victory-vendor: 37.3.6
-    transitivePeerDependencies:
-      - '@types/react'
-      - redux
-
-  redux-thunk@3.1.0(redux@5.0.1):
-    dependencies:
-      redux: 5.0.1
-
-  redux@5.0.1: {}
-
   regenerator-runtime@0.13.11: {}
 
   require-addon@1.1.0:
@@ -14385,8 +14233,6 @@ snapshots:
   require-directory@2.1.1: {}
 
   require-main-filename@2.0.0: {}
-
-  reselect@5.1.1: {}
 
   resolve-from@3.0.0: {}
 
@@ -14879,8 +14725,6 @@ snapshots:
 
   throat@5.0.0: {}
 
-  tiny-invariant@1.3.3: {}
-
   tiny-secp256k1@1.1.7:
     dependencies:
       bindings: 1.5.0
@@ -14931,183 +14775,9 @@ snapshots:
 
   tslib@1.14.1: {}
 
-  tslib@2.3.0: {}
-
   tslib@2.7.0: {}
 
   tslib@2.8.1: {}
-
-  tsparticles-basic@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-      tsparticles-move-base: 2.12.0
-      tsparticles-shape-circle: 2.12.0
-      tsparticles-updater-color: 2.12.0
-      tsparticles-updater-opacity: 2.12.0
-      tsparticles-updater-out-modes: 2.12.0
-      tsparticles-updater-size: 2.12.0
-
-  tsparticles-engine@2.12.0: {}
-
-  tsparticles-interaction-external-attract@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-interaction-external-bounce@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-interaction-external-bubble@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-interaction-external-connect@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-interaction-external-grab@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-interaction-external-pause@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-interaction-external-push@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-interaction-external-remove@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-interaction-external-repulse@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-interaction-external-slow@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-interaction-particles-attract@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-interaction-particles-collisions@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-interaction-particles-links@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-move-base@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-move-parallax@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-particles.js@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-plugin-easing-quad@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-shape-circle@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-shape-image@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-shape-line@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-shape-polygon@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-shape-square@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-shape-star@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-shape-text@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-slim@2.12.0:
-    dependencies:
-      tsparticles-basic: 2.12.0
-      tsparticles-engine: 2.12.0
-      tsparticles-interaction-external-attract: 2.12.0
-      tsparticles-interaction-external-bounce: 2.12.0
-      tsparticles-interaction-external-bubble: 2.12.0
-      tsparticles-interaction-external-connect: 2.12.0
-      tsparticles-interaction-external-grab: 2.12.0
-      tsparticles-interaction-external-pause: 2.12.0
-      tsparticles-interaction-external-push: 2.12.0
-      tsparticles-interaction-external-remove: 2.12.0
-      tsparticles-interaction-external-repulse: 2.12.0
-      tsparticles-interaction-external-slow: 2.12.0
-      tsparticles-interaction-particles-attract: 2.12.0
-      tsparticles-interaction-particles-collisions: 2.12.0
-      tsparticles-interaction-particles-links: 2.12.0
-      tsparticles-move-base: 2.12.0
-      tsparticles-move-parallax: 2.12.0
-      tsparticles-particles.js: 2.12.0
-      tsparticles-plugin-easing-quad: 2.12.0
-      tsparticles-shape-circle: 2.12.0
-      tsparticles-shape-image: 2.12.0
-      tsparticles-shape-line: 2.12.0
-      tsparticles-shape-polygon: 2.12.0
-      tsparticles-shape-square: 2.12.0
-      tsparticles-shape-star: 2.12.0
-      tsparticles-shape-text: 2.12.0
-      tsparticles-updater-color: 2.12.0
-      tsparticles-updater-life: 2.12.0
-      tsparticles-updater-opacity: 2.12.0
-      tsparticles-updater-out-modes: 2.12.0
-      tsparticles-updater-rotate: 2.12.0
-      tsparticles-updater-size: 2.12.0
-      tsparticles-updater-stroke-color: 2.12.0
-
-  tsparticles-updater-color@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-updater-life@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-updater-opacity@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-updater-out-modes@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-updater-rotate@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-updater-size@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
-
-  tsparticles-updater-stroke-color@2.12.0:
-    dependencies:
-      tsparticles-engine: 2.12.0
 
   tweetnacl@1.0.3: {}
 
@@ -15213,10 +14883,6 @@ snapshots:
     dependencies:
       react: 19.1.1
 
-  use-sync-external-store@1.5.0(react@19.1.1):
-    dependencies:
-      react: 19.1.1
-
   utf-8-validate@5.0.10:
     dependencies:
       node-gyp-build: 4.8.4
@@ -15263,23 +14929,6 @@ snapshots:
       uint8array-tools: 0.0.8
 
   vary@1.1.2: {}
-
-  victory-vendor@37.3.6:
-    dependencies:
-      '@types/d3-array': 3.2.2
-      '@types/d3-ease': 3.0.2
-      '@types/d3-interpolate': 3.0.4
-      '@types/d3-scale': 4.0.9
-      '@types/d3-shape': 3.1.7
-      '@types/d3-time': 3.0.4
-      '@types/d3-timer': 3.0.2
-      d3-array: 3.2.4
-      d3-ease: 3.0.1
-      d3-interpolate: 3.0.1
-      d3-scale: 4.0.2
-      d3-shape: 3.2.0
-      d3-time: 3.1.0
-      d3-timer: 3.0.1
 
   viem@2.23.2(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10)(zod@3.25.76):
     dependencies:
@@ -15553,7 +15202,3 @@ snapshots:
   zod@3.22.4: {}
 
   zod@3.25.76: {}
-
-  zrender@6.0.0:
-    dependencies:
-      tslib: 2.3.0

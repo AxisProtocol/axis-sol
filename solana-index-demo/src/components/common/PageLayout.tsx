@@ -1,13 +1,12 @@
 'use client';
 
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState, useCallback } from 'react';
 import Navbar from './Navbar';
 import ModernFooter from './ModernFooter';
-import Particles from 'react-tsparticles';
-import { useCallback } from 'react';
+import Particles, { initParticlesEngine } from '@tsparticles/react';
 import { motion } from 'framer-motion';
-import type { Engine } from 'tsparticles-engine';
-import { loadSlim } from 'tsparticles-slim';
+import type { Engine } from '@tsparticles/engine';
+import { loadSlim } from '@tsparticles/slim';
 import { particlesOptions } from '../../utils/particles';
 
 interface PageLayoutProps {
@@ -23,18 +22,25 @@ const PageLayout = ({
   description, 
   showParticles = true 
 }: PageLayoutProps) => {
+  const [particlesReady, setParticlesReady] = useState(false);
+
   const particlesInit = useCallback(async (engine: Engine) => {
     await loadSlim(engine);
   }, []);
+
+  useEffect(() => {
+    initParticlesEngine(async (engine: Engine) => {
+      await particlesInit(engine);
+    }).then(() => setParticlesReady(true));
+  }, [particlesInit]);
 
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden relative">
       <Navbar />
       
-      {showParticles && (
+      {showParticles && particlesReady && (
         <Particles
           id="tsparticles"
-          init={particlesInit}
           options={particlesOptions}
           className="fixed inset-0 w-full h-full z-0 pointer-events-none"
         />

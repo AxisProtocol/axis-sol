@@ -23,7 +23,7 @@ const MintTab = ({ echartsData }: MintTabProps) => {
   const [burnModalOpen, setBurnModalOpen] = useState(false);
 
   const { data: indexPriceData, loading: priceLoading } = useIndexPrice();
-  const latestClose = indexPriceData?.currentPrice ?? echartsData?.at(-1)?.[2] ?? 100;
+  const latestClose = (indexPriceData?.normalizedPrice ?? echartsData?.at(-1)?.[2] ?? 100) as number;
 
   const mintStats = [
     { label: 'Index Price', value: `$${latestClose.toFixed(4)}`, icon: <Coins className="w-5 h-5 mx-auto" /> },

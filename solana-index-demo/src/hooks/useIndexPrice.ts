@@ -15,6 +15,11 @@ interface UseIndexPriceReturn {
   refetch: () => void;
 }
 
+// simple in-memory cache with TTL
+let cachedData: IndexPriceData | null = null;
+let cachedAt = 0;
+const CACHE_TTL_MS = 60_000; // 60s
+
 export const useIndexPrice = (): UseIndexPriceReturn => {
   const [data, setData] = useState<IndexPriceData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -24,13 +29,46 @@ export const useIndexPrice = (): UseIndexPriceReturn => {
     try {
       setLoading(true);
       setError(null);
-      
-      const response = await fetch('/api/get-index-price');
-      if (!response.ok) {
-        throw new Error('Failed to fetch index price');
+
+      // serve from cache if fresh
+      const now = Date.now();
+      if (cachedData && now - cachedAt < CACHE_TTL_MS) {
+        setData(cachedData);
+        return;
       }
-      
-      const result = await response.json();
+
+      // Fetch index price normalized to 100 at baseline
+      const indexRes = await fetch('https://api.axis-protocol.xyz/api/famcindexprice', { cache: 'force-cache' });
+      if (!indexRes.ok) {
+        throw new Error('Failed to fetch index price from Axis Protocol');
+      }
+      const indexJson: {
+        indexPrice: number; // normalized to 100 at baseline
+        baseDate?: string | null;
+        baseIndex: number;
+        currentIndex: number;
+        symbols: string[];
+        count: number;
+      } = await indexRes.json();
+
+      const result: IndexPriceData = {
+        currentPrice: indexJson.currentIndex,
+        normalizedPrice: indexJson.indexPrice,
+        dailyChange: null, // Not provided by this endpoint
+        lastUpdated: new Date().toISOString(),
+        calculationBreakdown: {
+          source: 'axis-protocol',
+          baseDate: indexJson.baseDate ?? null,
+          baseIndex: indexJson.baseIndex,
+          currentIndex: indexJson.currentIndex,
+          symbols: indexJson.symbols,
+          count: indexJson.count,
+        },
+      };
+
+      cachedData = result;
+      cachedAt = now;
+
       setData(result);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error');
@@ -44,6 +82,8 @@ export const useIndexPrice = (): UseIndexPriceReturn => {
   }, []);
 
   const refetch = () => {
+    // bypass cache on manual refetch
+    cachedAt = 0;
     fetchIndexPrice();
   };
 

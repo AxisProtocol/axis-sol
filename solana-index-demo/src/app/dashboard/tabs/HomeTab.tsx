@@ -18,7 +18,7 @@ interface HomeTabProps {
 
 const HomeTab = ({ echartsData }: HomeTabProps) => {
   const { data: indexPriceData, loading: priceLoading } = useIndexPrice();
-  const latestClose = indexPriceData?.currentPrice ?? echartsData?.at(-1)?.[2] ?? 100;
+  const latestClose = (indexPriceData?.normalizedPrice ?? echartsData?.at(-1)?.[2] ?? 100) as number;
 
   const featureCards = [
     {
@@ -167,7 +167,7 @@ const HomeTab = ({ echartsData }: HomeTabProps) => {
         <ModernCard className="p-3 sm:p-4 text-center" gradient>
           <Coins className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-2" />
           <div className="text-base sm:text-lg font-bold text-white">${latestClose.toFixed(4)}</div>
-          <div className="text-white/70 text-xs sm:text-sm">Current Index Price</div>
+          <div className="text-white/70 text-xs sm:text-sm">Current Index Price (normalized)</div>
         </ModernCard>
         <ModernCard className="p-3 sm:p-4 text-center" gradient>
           <Coins className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-2" />

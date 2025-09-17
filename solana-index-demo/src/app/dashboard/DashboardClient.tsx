@@ -5,7 +5,6 @@ import { useCallback, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 
 import { PageLayout, ModernCard, GridLayout } from '../../components/common'
-import type { EChartProps } from '../../components/charts/EChartsChart'
 
 const BuyModal = dynamic(() => import('@/components/dashboard/Modal/BuyModal'), { ssr: false })
 const BurnModal = dynamic(() => import('@/components/dashboard/Modal/BurnModal'), { ssr: false })
@@ -15,7 +14,7 @@ const ConstituentsGrid = dynamic(() => import('@/components/dashboard/Constituen
 const ChartSection = dynamic(() => import('@/components/dashboard/ChartSection'), { ssr: false })
 const EventTimeline = dynamic(() => import('@/components/dashboard/EventTimeline'), { ssr: false })
 
-const API_BASE = 'https://axis-trigger.kidneyweakx.workers.dev'
+const API_BASE = 'https://api.axis-protocol.xyz'
 
 type EChartsData = (string | number)[][]
 

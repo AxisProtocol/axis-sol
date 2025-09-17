@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { Home, Coins, BarChart3, Zap, Briefcase, Target, ChevronLeft, ChevronRight } from 'lucide-react';
 import SidebarWalletButton from './SidebarWalletButton';
+import Link from 'next/link';
 
 interface SidebarProps {
   activeTab: string;
@@ -72,13 +73,14 @@ const Sidebar = ({ activeTab, onTabChange }: SidebarProps) => {
           <div className="p-4 border-b border-gray-700/30">
             <div className="flex items-center space-x-3">
               <div className="w-20 h-20 relative">
+                <Link href="/">
                 <Image
                   src="/logo.png"
                   alt="AXIS"
                   fill
                   className="object-contain"
                   sizes="20px"
-                />
+                /></Link>
               </div>
               {!isCollapsed && (
                 <motion.span

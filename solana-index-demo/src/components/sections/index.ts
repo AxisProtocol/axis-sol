@@ -1,11 +1,5 @@
 export { default as Section } from './Section';
 export { default as HeroSection } from './HeroSection';
-export { default as WhyWinSection } from './WhyWinSection';
-export { default as ProductSection } from './ProductSection';
-export { default as TractionSection } from './TractionSection';
-export { default as StatsSection } from './StatsSection';
-export { default as RoadmapSection } from './RoadmapSection';
-export { default as TeamSection } from './TeamSection';
-export { default as WaitlistSection } from './WaitlistSection';
-export { default as CalendlySection } from './CalendlySection';
+export { default as IndexOverviewSection } from './IndexOverviewSection';
+export { default as MethodologySection } from './MethodologySection';
 export { default as LoadingScreen } from './LoadingScreen';
