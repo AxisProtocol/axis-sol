@@ -18,3 +18,4 @@ export { default as TabNavigation } from './TabNavigation';
 export { default as ModernFooter } from './ModernFooter';
 export { default as Sidebar } from './Sidebar';
 export { default as SidebarWalletButton } from './SidebarWalletButton';
+export { coinIcons, getCoinIcon } from './coinIcons';

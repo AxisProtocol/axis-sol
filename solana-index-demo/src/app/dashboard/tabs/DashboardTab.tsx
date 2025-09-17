@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
-import { ModernCard, GridLayout, ModernButton } from '../../../components/common';
+import { ModernCard, GridLayout, ModernButton, getCoinIcon } from '../../../components/common';
 import Image from 'next/image';
 import { Zap, Coins, RefreshCcw, Landmark, Lock, User, BarChart3 } from 'lucide-react';
 import { useIndexPrice } from '../../../hooks/useIndexPrice';
@@ -38,7 +38,7 @@ const sharedTokenData: TokenData[] = [
     volume24h: 15.2e9, 
     marketCap: 850.5e9, 
     allocation: 10,
-    imageUrl: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png'
+    imageUrl: getCoinIcon('BTC')
   },
   { 
     symbol: 'ETH', 
@@ -48,7 +48,7 @@ const sharedTokenData: TokenData[] = [
     volume24h: 8.5e9, 
     marketCap: 317.2e9, 
     allocation: 10,
-    imageUrl: 'https://assets.coingecko.com/coins/images/279/large/ethereum.png'
+    imageUrl: getCoinIcon('ETH')
   },
   { 
     symbol: 'SOL', 
@@ -58,7 +58,7 @@ const sharedTokenData: TokenData[] = [
     volume24h: 2.1e9, 
     marketCap: 42.8e9, 
     allocation: 10,
-    imageUrl: 'https://assets.coingecko.com/coins/images/4128/large/solana.png'
+    imageUrl: getCoinIcon('SOL')
   },
   { 
     symbol: 'BNB', 
@@ -68,7 +68,7 @@ const sharedTokenData: TokenData[] = [
     volume24h: 1.8e9, 
     marketCap: 46.2e9, 
     allocation: 10,
-    imageUrl: 'https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png'
+    imageUrl: getCoinIcon('BNB')
   },
   { 
     symbol: 'XRP', 
@@ -78,7 +78,7 @@ const sharedTokenData: TokenData[] = [
     volume24h: 1.2e9, 
     marketCap: 33.5e9, 
     allocation: 10,
-    imageUrl: 'https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png'
+    imageUrl: getCoinIcon('XRP')
   },
   { 
     symbol: 'ADA', 
@@ -88,7 +88,7 @@ const sharedTokenData: TokenData[] = [
     volume24h: 890e6, 
     marketCap: 17.1e9, 
     allocation: 10,
-    imageUrl: 'https://assets.coingecko.com/coins/images/975/large/cardano.png'
+    imageUrl: getCoinIcon('ADA')
   },
   { 
     symbol: 'DOGE', 
@@ -98,7 +98,7 @@ const sharedTokenData: TokenData[] = [
     volume24h: 650e6, 
     marketCap: 12.1e9, 
     allocation: 10,
-    imageUrl: 'https://assets.coingecko.com/coins/images/5/large/dogecoin.png'
+    imageUrl: getCoinIcon('DOGE')
   },
   { 
     symbol: 'AVAX', 
@@ -108,7 +108,7 @@ const sharedTokenData: TokenData[] = [
     volume24h: 520e6, 
     marketCap: 13.2e9, 
     allocation: 10,
-    imageUrl: 'https://assets.coingecko.com/coins/images/12559/large/Avalanche_Circle_RedWhite_Trans.png'
+    imageUrl: getCoinIcon('AVAX')
   },
   { 
     symbol: 'TRX', 
@@ -118,7 +118,7 @@ const sharedTokenData: TokenData[] = [
     volume24h: 380e6, 
     marketCap: 9.2e9, 
     allocation: 10,
-    imageUrl: 'https://assets.coingecko.com/coins/images/1094/large/tron-logo.png'
+    imageUrl: getCoinIcon('TRX')
   },
   { 
     symbol: 'SUI', 
@@ -128,7 +128,7 @@ const sharedTokenData: TokenData[] = [
     volume24h: 240e6, 
     marketCap: 4.8e9, 
     allocation: 10,
-    imageUrl: 'https://assets.coingecko.com/coins/images/26375/large/sui_asset.jpeg'
+    imageUrl: getCoinIcon('SUI')
   },
 ];
 

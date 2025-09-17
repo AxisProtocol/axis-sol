@@ -3,6 +3,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Card } from '../common';
 import { TrendingUp, ShieldCheck, Wallet } from 'lucide-react';
+import Image from 'next/image';
+import { getCoinIcon } from '../common';
 
 /* ========= utils ========= */
 const fmtUSD = (n: number) => {
@@ -136,11 +138,14 @@ export default function IndexOverviewSection() {
                     <tr key={a.symbol} className="border-b border-white/5 last:border-0">
                       <td className="py-3">
                         <div className="flex items-center gap-3">
-                          <span
-                            className="inline-flex items-center justify-center w-7 h-7 rounded-full"
-                            style={{ backgroundColor: a.color }}
-                          >
-                            <span className="text-[11px] font-bold text-black/80">{a.symbol}</span>
+                          <span className="inline-flex items-center justify-center w-7 h-7 rounded-full overflow-hidden bg-white/5">
+                            <Image
+                              src={getCoinIcon(a.symbol)}
+                              alt={a.symbol}
+                              width={28}
+                              height={28}
+                              className="object-contain"
+                            />
                           </span>
                           <div className="leading-tight">
                             <div className="font-medium">{a.name}</div>
