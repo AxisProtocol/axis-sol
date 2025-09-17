@@ -9,14 +9,8 @@ import { Footer } from '../components/common/Footer';
 import {
   Section,
   HeroSection,
-  WhyWinSection,
-  ProductSection,
-  TractionSection,
-  StatsSection,
-  RoadmapSection,
-  TeamSection,
-  WaitlistSection,
-  CalendlySection,
+  IndexOverviewSection,
+  MethodologySection,
   LoadingScreen
 } from '../components/sections';
 
@@ -35,8 +29,8 @@ const AxisLandingPage: NextPage = () => {
 
   const sections = [
     { id: 'hero', component: HeroSection },
-    { id: 'why-win', component: WhyWinSection },
-    { id: 'product', component: ProductSection },
+    { id: 'index-overview', component: IndexOverviewSection },
+    { id: 'methodology', component: MethodologySection },
   ];
 
   useEffect(() => {

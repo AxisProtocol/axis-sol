@@ -15,7 +15,7 @@ const ConstituentsGrid = dynamic(() => import('@/components/dashboard/Constituen
 const ChartSection = dynamic(() => import('@/components/dashboard/ChartSection'), { ssr: false })
 const EventTimeline = dynamic(() => import('@/components/dashboard/EventTimeline'), { ssr: false })
 
-const API_BASE = 'https://axis-trigger.kidneyweakx.workers.dev'
+const API_BASE = 'https://api.axis-protocol.xyz'
 
 type EChartsData = (string | number)[][]
 
