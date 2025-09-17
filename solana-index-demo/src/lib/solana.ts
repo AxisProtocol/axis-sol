@@ -2,8 +2,22 @@
 import { Connection, Keypair, PublicKey } from '@solana/web3.js'
 import bs58 from 'bs58'
 
-export const connection = new Connection(process.env.SOLANA_RPC_URL!, 'confirmed')
-export const TREASURY_OWNER = new PublicKey(process.env.TREASURY_OWNER!)
+// Only initialize connection if we're not in build mode and have valid env vars
+function createConnection(): Connection | null {
+  const rpcUrl = process.env.SOLANA_RPC_URL
+  if (!rpcUrl || (!rpcUrl.startsWith('http://') && !rpcUrl.startsWith('https://'))) {
+    // During build time, env vars might not be available, so return null
+    return null
+  }
+  return new Connection(rpcUrl, 'confirmed')
+}
+
+export const connection = createConnection()
+
+// If connection is null (build time), we'll need to handle this in the functions that use it
+
+// Only initialize TREASURY_OWNER if we have the env var
+export const TREASURY_OWNER = process.env.TREASURY_OWNER ? new PublicKey(process.env.TREASURY_OWNER) : null
 
 function toKeypairFromAny(raw: string): Keypair {
   const s = raw.trim()
@@ -33,6 +47,9 @@ export function loadTreasurySigner(): Keypair {
   const raw = process.env.TREASURY_PRIVATE_KEY || ''
   const kp = toKeypairFromAny(raw)
   // **本人確認**：設定の TREASURY_OWNER と一致しなければ即エラー
+  if (!TREASURY_OWNER) {
+    throw new Error('TREASURY_OWNER environment variable is not set')
+  }
   if (!kp.publicKey.equals(TREASURY_OWNER)) {
     throw new Error(
       `Signer pubkey mismatch. ENV TREASURY_OWNER=${TREASURY_OWNER.toBase58()} but keypair=${kp.publicKey.toBase58()}`

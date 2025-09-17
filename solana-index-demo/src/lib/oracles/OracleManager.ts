@@ -3,7 +3,6 @@ const TronWeb = require('tronweb');
 import { PriceStrategy, ASSET_PRICE_STRATEGIES } from '../config/oracleStrategies';
 import { getChainlinkPrice } from './providers/chainlink';
 import { getPythPrice } from './providers/pyth';
-import { getTronlinkPrice } from './providers/tronlink';
 
 export class OracleManager {
   private providers: Map<string, any> = new Map();
@@ -62,13 +61,6 @@ export class OracleManager {
       case 'pyth': {
         if (!strategy.feedId) throw new Error('Pyth strategy requires a feedId.');
         return getPythPrice(strategy.feedId);
-      }
-      
-      case 'tronlink': {
-        if (!strategy.address) throw new Error('Tronlink strategy requires an address.');
-        const provider = this.providers.get('tron');
-        if (!provider) throw new Error(`Provider for chain 'tron' is not initialized.`);
-        return getTronlinkPrice(provider, strategy.address);
       }
 
       default:
