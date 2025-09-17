@@ -30,12 +30,5 @@
 				"DOQueueHandler"
 			]
 		}
-	],
-	"d1_databases": [
-		{
-			"binding": "axis_protocol_cache",
-			"database_name": "axis-protocol-cache",
-			"database_id": "cce0f8c7-4e77-495b-b134-af5c04a23961"
-		}
 	]
 }
