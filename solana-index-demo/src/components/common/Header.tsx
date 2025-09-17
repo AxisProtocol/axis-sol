@@ -4,8 +4,8 @@ import Image from 'next/image';
 
 const navItems = [
   { name: 'Home', href: '#hero' },
-  { name: 'Axis Index', href: '#why-win' },
-  { name: 'Index Methodology', href: '#product' },
+  { name: 'Axis Index', href: '#index-overview' },
+  { name: 'Index Methodology', href: '#methodology' },
 ];
 
 export const Header = () => {
