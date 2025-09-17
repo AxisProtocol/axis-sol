@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import { ModernCard, GridLayout, ModernButton } from '../../../components/common';
 import Image from 'next/image';
 import { Zap, Coins, RefreshCcw, Landmark, Lock, User, BarChart3 } from 'lucide-react';
+import { useIndexPrice } from '../../../hooks/useIndexPrice';
 
 const IndexValueCard = dynamic(() => import('../../../components/dashboard/IndexValueCard'), { ssr: false });
 const ChartSection = dynamic(() => import('../../../components/dashboard/ChartSection'), { ssr: false });
@@ -171,19 +172,23 @@ const DashboardTab = ({
     );
   }
 
-  const latestClose = echartsData.at(-1)![2] as number;
-  const baseOpen = echartsData[0][1] as number;
-  const fallbackIdx = baseOpen ? (latestClose / baseOpen) * 100 : 0;
-  const displayedIdx = fallbackIdx;
+  const { data: indexPriceData, loading: priceLoading } = useIndexPrice();
+  const displayedIdx = indexPriceData?.normalizedPrice ?? null;
 
   return (
     <div className="space-y-4">
       {/* Index Value Card - Top */}
       <div className="flex justify-center">
-        <IndexValueCard 
-          indexValue={displayedIdx}
-          dailyChange={initialDailyChange}
-        />
+        {priceLoading || displayedIdx === null ? (
+          <div className="flex items-center justify-center h-24">
+            <span className="loading loading-spinner loading-lg text-blue-500"></span>
+          </div>
+        ) : (
+          <IndexValueCard 
+            indexValue={displayedIdx}
+            dailyChange={initialDailyChange}
+          />
+        )}
       </div>
 
       {/* Tokenomics Section */}
