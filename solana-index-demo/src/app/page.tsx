@@ -66,10 +66,30 @@ const AxisLandingPage: NextPage = () => {
     sessionStorage.setItem('hasSeenIntro', 'true');
   };
 
+  // Optimize pointer tracking for desktop only, with rAF throttle and passive listener
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => setMousePosition({ x: e.clientX, y: e.clientY });
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    const isCoarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+    if (isCoarse) return; // Skip on touch devices to improve scroll perf
+
+    let rafId = 0;
+    let lastX = 0;
+    let lastY = 0;
+
+    const onMove = (e: MouseEvent) => {
+      lastX = e.clientX;
+      lastY = e.clientY;
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        setMousePosition({ x: lastX, y: lastY });
+        rafId = 0;
+      });
+    };
+
+    window.addEventListener('mousemove', onMove, { passive: true });
+    return () => {
+      window.removeEventListener('mousemove', onMove as any);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   return (
@@ -91,7 +111,10 @@ const AxisLandingPage: NextPage = () => {
       </AnimatePresence>
 
       {!isLoading && (
-        <div className="relative bg-black text-white min-h-screen">
+        <div 
+          className="relative bg-black text-white min-h-screen overflow-y-auto overscroll-y-contain"
+          style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-y', scrollBehavior: 'smooth' }}
+        >
           <Header />
           <Background mouseX={mousePosition.x} mouseY={mousePosition.y} />
 
