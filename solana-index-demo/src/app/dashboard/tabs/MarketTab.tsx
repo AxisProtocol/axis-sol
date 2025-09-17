@@ -4,6 +4,9 @@ import { useState } from 'react';
 import { ModernCard, GridLayout } from '../../../components/common';
 import Image from 'next/image';
 import { Coins, BarChart3 } from 'lucide-react';
+import dynamic from 'next/dynamic';
+
+const TVChart = dynamic(() => import('../../../components/charts/TVChart'), { ssr: false });
 
 interface MarketData {
   symbol: string;
@@ -148,6 +151,10 @@ const MarketTab = ({}: MarketTabProps) => {
 
   return (
     <div className="space-y-4">
+      {/* TradingView-like Chart connected to TV API */}
+      <ModernCard className="p-3 sm:p-4">
+        <TVChart initialSymbol="INDEX:FAMC" initialResolution="60" initialBars={1000} />
+      </ModernCard>
       {/* Market Overview - Compact */}
       <ModernCard className="p-3 sm:p-4" gradient>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">

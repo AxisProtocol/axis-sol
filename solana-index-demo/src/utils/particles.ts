@@ -1,4 +1,4 @@
-import type { ISourceOptions } from 'tsparticles-engine';
+import type { ISourceOptions } from '@tsparticles/engine';
 
 export const particlesOptions: ISourceOptions = {
   background: {
@@ -17,7 +17,7 @@ export const particlesOptions: ISourceOptions = {
         enable: true,
         mode: 'repulse',
       },
-      resize: true,
+      // resize: true,
     },
     modes: {
       push: {
@@ -53,7 +53,7 @@ export const particlesOptions: ISourceOptions = {
     number: {
       density: {
         enable: true,
-        area: 800,
+        // area: 800,
       },
       value: 80,
     },

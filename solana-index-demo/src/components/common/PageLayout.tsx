@@ -3,11 +3,11 @@
 import { ReactNode } from 'react';
 import Navbar from './Navbar';
 import ModernFooter from './ModernFooter';
-import Particles from 'react-tsparticles';
+import Particles from '@tsparticles/react';
 import { useCallback } from 'react';
 import { motion } from 'framer-motion';
-import type { Engine } from 'tsparticles-engine';
-import { loadSlim } from 'tsparticles-slim';
+import type { Engine } from '@tsparticles/engine';
+import { loadSlim } from '@tsparticles/slim';
 import { particlesOptions } from '../../utils/particles';
 
 interface PageLayoutProps {

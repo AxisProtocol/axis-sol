@@ -10,7 +10,6 @@ import {
   import fs from 'fs';
   import os from 'os';
   import path from 'path';
-  import fetch from 'cross-fetch';
   
   // グローバルフェッチを設定
   global.fetch = fetch;
