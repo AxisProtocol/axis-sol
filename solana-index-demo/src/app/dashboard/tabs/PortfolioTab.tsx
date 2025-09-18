@@ -143,11 +143,11 @@ const PortfolioTab = ({}: PortfolioTabProps) => {
     return (
       <div className="text-center py-8">
         <Briefcase className="w-10 h-10 mx-auto mb-3" />
-        <h3 className="text-xl font-bold text-gray-900 mb-3">No Portfolio Found</h3>
-        <p className="text-gray-600 text-lg mb-6">
+        <h3 className="text-xl font-bold text-base-content mb-3">No Portfolio Found</h3>
+        <p className="text-base-content/70 text-lg mb-6">
           {error || 'Connect your wallet and mint some tokens to see your portfolio'}
         </p>
-        <button className="px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors">
+        <button className="px-6 py-2 bg-primary text-primary-content font-semibold rounded-lg hover:opacity-90 transition-colors">
           Mint Tokens
         </button>
       </div>
@@ -158,7 +158,7 @@ const PortfolioTab = ({}: PortfolioTabProps) => {
     <div className="space-y-4">
       {/* Portfolio Stats - Compact */}
       <ModernCard className="p-4" gradient>
-        <h2 className="text-xl font-bold text-white mb-4 text-center flex items-center justify-center space-x-2">
+        <h2 className="text-xl font-bold text-base-content mb-4 text-center flex items-center justify-center space-x-2">
           <Briefcase className="w-5 h-5" />
           <span>Portfolio Overview</span>
         </h2>
@@ -171,7 +171,7 @@ const PortfolioTab = ({}: PortfolioTabProps) => {
 
       {/* Token Details with Additional Info */}
       <ModernCard className="p-4">
-        <h3 className="text-xl font-bold text-white mb-4 text-center flex items-center justify-center space-x-2">
+        <h3 className="text-xl font-bold text-base-content mb-4 text-center flex items-center justify-center space-x-2">
           <ClipboardList className="w-5 h-5" />
           <span>Token Details</span>
         </h3>
@@ -179,22 +179,22 @@ const PortfolioTab = ({}: PortfolioTabProps) => {
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
             <thead>
-              <tr className="border-b border-white/20">
-                <th className="text-left py-2 px-3 text-white/70">Token</th>
-                <th className="text-right py-2 px-3 text-white/70">Allocation</th>
-                <th className="text-right py-2 px-3 text-white/70">Current Price</th>
-                <th className="text-right py-2 px-3 text-white/70">24h Change</th>
-                <th className="text-right py-2 px-3 text-white/70">Since Mint</th>
-                <th className="text-left py-2 px-3 text-white/70 hidden lg:table-cell">Chain</th>
-                <th className="text-left py-2 px-3 text-white/70 hidden xl:table-cell">Address</th>
-                <th className="text-center py-2 px-3 text-white/70 hidden xl:table-cell">Proof of Reserve</th>
+              <tr className="border-b border-base-300">
+                <th className="text-left py-2 px-3 text-base-content/70">Token</th>
+                <th className="text-right py-2 px-3 text-base-content/70">Allocation</th>
+                <th className="text-right py-2 px-3 text-base-content/70">Current Price</th>
+                <th className="text-right py-2 px-3 text-base-content/70">24h Change</th>
+                <th className="text-right py-2 px-3 text-base-content/70">Since Mint</th>
+                <th className="text-left py-2 px-3 text-base-content/70 hidden lg:table-cell">Chain</th>
+                <th className="text-left py-2 px-3 text-base-content/70 hidden xl:table-cell">Address</th>
+                <th className="text-center py-2 px-3 text-base-content/70 hidden xl:table-cell">Proof of Reserve</th>
               </tr>
             </thead>
             <tbody>
               {portfolioData.tokens.map((token) => (
                 <tr
                   key={token.symbol}
-                  className="border-b border-white/10 hover:bg-white/5"
+                  className="border-b border-base-300 hover:bg-base-200/30"
                 >
                   <td className="py-2 px-3">
                     <div className="flex items-center space-x-2">
@@ -208,33 +208,33 @@ const PortfolioTab = ({}: PortfolioTabProps) => {
                         />
                       </div>
                       <div>
-                        <div className="font-semibold text-white text-xs">{token.symbol}</div>
-                        <div className="text-white/70 text-xs">{token.name}</div>
+                        <div className="font-semibold text-base-content text-xs">{token.symbol}</div>
+                        <div className="text-base-content/60 text-xs">{token.name}</div>
                       </div>
                     </div>
                   </td>
                   <td className="text-right py-2 px-3">
                     <div className="flex items-center justify-end space-x-2">
-                      <div className="w-8 bg-white/20 rounded-full h-1">
+                      <div className="w-8 bg-base-300 rounded-full h-1">
                         <div 
-                          className="bg-blue-500 h-1 rounded-full"
+                          className="bg-primary h-1 rounded-full"
                           style={{ width: `${token.allocation}%` }}
                         />
                       </div>
-                      <span className="text-white font-medium text-xs">{token.allocation.toFixed(1)}%</span>
+                      <span className="text-base-content font-medium text-xs">{token.allocation.toFixed(1)}%</span>
                     </div>
                   </td>
-                  <td className="text-right py-2 px-3 text-white text-xs">${token.currentPrice.toFixed(4)}</td>
-                  <td className={`text-right py-2 px-3 text-xs ${token.change24h >= 0 ? 'text-green-300' : 'text-red-300'}`}>
+                  <td className="text-right py-2 px-3 text-base-content text-xs">${token.currentPrice.toFixed(4)}</td>
+                  <td className={`text-right py-2 px-3 text-xs ${token.change24h >= 0 ? 'text-success' : 'text-error'}`}>
                     {token.change24h >= 0 ? '+' : ''}{token.change24h.toFixed(2)}%
                   </td>
-                  <td className={`text-right py-2 px-3 text-xs ${token.changeSinceMint >= 0 ? 'text-green-300' : 'text-red-300'}`}>
+                  <td className={`text-right py-2 px-3 text-xs ${token.changeSinceMint >= 0 ? 'text-success' : 'text-error'}`}>
                     {token.changeSinceMint >= 0 ? '+' : ''}{token.changeSinceMint.toFixed(2)}%
                   </td>
-                  <td className="text-left py-2 px-3 text-white/70 text-xs hidden lg:table-cell">
+                  <td className="text-left py-2 px-3 text-base-content/60 text-xs hidden lg:table-cell">
                     {token.chain}
                   </td>
-                  <td className="text-left py-2 px-3 text-white/70 text-xs hidden xl:table-cell">
+                  <td className="text-left py-2 px-3 text-base-content/60 text-xs hidden xl:table-cell">
                     <div className="max-w-24 truncate" title={token.originalChainAddress}>
                       {token.originalChainAddress.slice(0, 8)}...{token.originalChainAddress.slice(-6)}
                     </div>
@@ -258,56 +258,56 @@ const PortfolioTab = ({}: PortfolioTabProps) => {
 
       {/* Portfolio Status */}
       <ModernCard className="p-4">
-        <h3 className="text-lg font-bold text-white mb-4 text-center flex items-center justify-center space-x-2">
+        <h3 className="text-lg font-bold text-base-content mb-4 text-center flex items-center justify-center space-x-2">
           <BarChart3 className="w-5 h-5" />
           <span>Portfolio Status</span>
         </h3>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Mint Status */}
-          <div className="p-3 bg-white/10 rounded border border-white/20">
+          <div className="p-3 bg-base-200/30 rounded border border-base-300">
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center space-x-2">
                 <Coins className="w-4 h-4" />
-                <span className="text-sm font-semibold text-white">Mint</span>
+                <span className="text-sm font-semibold text-base-content">Mint</span>
               </div>
               <span className="px-2 py-1 bg-green-500/20 text-green-300 rounded-full text-xs font-medium">
                 Active
               </span>
             </div>
-            <div className="text-xs text-white/70">
+            <div className="text-xs text-base-content/70">
               Last: 2025-08-01
             </div>
           </div>
 
           {/* Burn Status */}
-          <div className="p-3 bg-white/10 rounded border border-white/20">
+          <div className="p-3 bg-base-200/30 rounded border border-base-300">
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center space-x-2">
                 <Flame className="w-4 h-4 text-red-400" />
-                <span className="text-sm font-semibold text-white">Burn</span>
+                <span className="text-sm font-semibold text-base-content">Burn</span>
               </div>
               <span className="px-2 py-1 bg-red-500/20 text-red-300 rounded-full text-xs font-medium">
                 Available
               </span>
             </div>
-            <div className="text-xs text-white/70">
+            <div className="text-xs text-base-content/70">
               Last: 2025-08-01
             </div>
           </div>
 
           {/* Rebalancing Status */}
-          <div className="p-3 bg-white/10 rounded border border-white/20">
+          <div className="p-3 bg-base-200/30 rounded border border-base-300">
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center space-x-2">
                 <RefreshCcw className="w-4 h-4" />
-                <span className="text-sm font-semibold text-white">Rebalancing</span>
+                <span className="text-sm font-semibold text-base-content">Rebalancing</span>
               </div>
               <span className="px-2 py-1 bg-blue-500/20 text-blue-300 rounded-full text-xs font-medium">
                 Scheduled
               </span>
             </div>
-            <div className="text-xs text-white/70">
+            <div className="text-xs text-base-content/70">
               Last: 2025-08-01
             </div>
           </div>

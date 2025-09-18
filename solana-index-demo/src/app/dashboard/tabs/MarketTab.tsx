@@ -158,24 +158,24 @@ const MarketTab = ({}: MarketTabProps) => {
       {/* Market Overview - Compact */}
       <ModernCard className="p-3 sm:p-4" gradient>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-          <div className="text-center p-2 sm:p-3 bg-white/10 rounded border border-white/20">
+          <div className="text-center p-2 sm:p-3 bg-base-200/30 rounded border border-base-300">
             <Coins className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-1" />
-            <div className="text-sm sm:text-lg font-bold text-white">{formatLargeNumber(totalMarketCap)}</div>
-            <div className="text-white/70 text-xs">Market Cap</div>
+            <div className="text-sm sm:text-lg font-bold text-base-content">{formatLargeNumber(totalMarketCap)}</div>
+            <div className="text-base-content/70 text-xs">Market Cap</div>
           </div>
           
-          <div className="text-center p-2 sm:p-3 bg-white/10 rounded border border-white/20">
+          <div className="text-center p-2 sm:p-3 bg-base-200/30 rounded border border-base-300">
             <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-1" />
-            <div className={`text-sm sm:text-lg font-bold ${averageChange >= 0 ? 'text-green-300' : 'text-red-300'}`}>
+            <div className={`text-sm sm:text-lg font-bold ${averageChange >= 0 ? 'text-success' : 'text-error'}`}>
               {averageChange >= 0 ? '+' : ''}{averageChange.toFixed(2)}%
             </div>
-            <div className="text-white/70 text-xs">24h Change</div>
+            <div className="text-base-content/70 text-xs">24h Change</div>
           </div>
           
-          <div className="text-center p-2 sm:p-3 bg-white/10 rounded border border-white/20">
+          <div className="text-center p-2 sm:p-3 bg-base-200/30 rounded border border-base-300">
             <Coins className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-1" />
-            <div className="text-sm sm:text-lg font-bold text-white">{marketData.length}</div>
-            <div className="text-white/70 text-xs">Assets</div>
+            <div className="text-sm sm:text-lg font-bold text-base-content">{marketData.length}</div>
+            <div className="text-base-content/70 text-xs">Assets</div>
           </div>
         </div>
       </ModernCard>
@@ -185,19 +185,19 @@ const MarketTab = ({}: MarketTabProps) => {
         <div className="overflow-x-auto">
           <table className="w-full text-xs sm:text-sm">
             <thead>
-              <tr className="border-b border-white/20">
-                <th className="text-left py-2 px-2 sm:px-3 text-white/70 font-medium">Token</th>
-                <th className="text-right py-2 px-2 sm:px-3 text-white/70 font-medium hidden sm:table-cell">Allocation</th>
-                <th className="text-right py-2 px-2 sm:px-3 text-white/70 font-medium">Price</th>
-                <th className="text-right py-2 px-2 sm:px-3 text-white/70 font-medium">24h Change</th>
-                <th className="text-right py-2 px-2 sm:px-3 text-white/70 font-medium hidden lg:table-cell">Market Cap</th>
+              <tr className="border-b border-base-300">
+                <th className="text-left py-2 px-2 sm:px-3 text-base-content/70 font-medium">Token</th>
+                <th className="text-right py-2 px-2 sm:px-3 text-base-content/70 font-medium hidden sm:table-cell">Allocation</th>
+                <th className="text-right py-2 px-2 sm:px-3 text-base-content/70 font-medium">Price</th>
+                <th className="text-right py-2 px-2 sm:px-3 text-base-content/70 font-medium">24h Change</th>
+                <th className="text-right py-2 px-2 sm:px-3 text-base-content/70 font-medium hidden lg:table-cell">Market Cap</th>
               </tr>
             </thead>
             <tbody>
               {marketData.map((token) => (
                 <tr
                   key={token.symbol}
-                  className="border-b border-white/10 hover:bg-white/5"
+                  className="border-b border-base-300 hover:bg-base-200/30"
                 >
                   <td className="py-2 px-2 sm:px-3">
                     <div className="flex items-center space-x-1 sm:space-x-2">
@@ -211,31 +211,31 @@ const MarketTab = ({}: MarketTabProps) => {
                         />
                       </div>
                       <div className="min-w-0">
-                        <div className="font-semibold text-white text-xs sm:text-sm truncate">{token.symbol}</div>
-                        <div className="text-white/70 text-xs truncate hidden sm:block">{token.name}</div>
+                        <div className="font-semibold text-base-content text-xs sm:text-sm truncate">{token.symbol}</div>
+                        <div className="text-base-content/60 text-xs truncate hidden sm:block">{token.name}</div>
                       </div>
                     </div>
                   </td>
                   <td className="text-right py-2 px-2 sm:px-3 hidden sm:table-cell">
                     <div className="flex items-center justify-end space-x-1 sm:space-x-2">
-                      <div className="w-8 sm:w-10 bg-white/20 rounded-full h-1">
+                      <div className="w-8 sm:w-10 bg-base-300 rounded-full h-1">
                         <div 
-                          className="bg-blue-500 h-1 rounded-full"
+                          className="bg-primary h-1 rounded-full"
                           style={{ width: `${(token.allocation / 20) * 100}%` }}
                         />
                       </div>
-                      <span className="text-white font-medium text-xs">{token.allocation}%</span>
+                      <span className="text-base-content font-medium text-xs">{token.allocation}%</span>
                     </div>
                   </td>
-                  <td className="text-right py-2 px-2 sm:px-3 text-white font-medium text-xs">
+                  <td className="text-right py-2 px-2 sm:px-3 text-base-content font-medium text-xs">
                     {formatPrice(token.price)}
                   </td>
                   <td className={`text-right py-2 px-2 sm:px-3 font-medium text-xs ${
-                    token.change24h >= 0 ? 'text-green-300' : 'text-red-300'
+                    token.change24h >= 0 ? 'text-success' : 'text-error'
                   }`}>
                     {token.change24h >= 0 ? '+' : ''}{token.change24h.toFixed(2)}%
                   </td>
-                  <td className="text-right py-2 px-2 sm:px-3 text-white text-xs hidden lg:table-cell">
+                  <td className="text-right py-2 px-2 sm:px-3 text-base-content text-xs hidden lg:table-cell">
                     {formatLargeNumber(token.marketCap)}
                   </td>
                 </tr>

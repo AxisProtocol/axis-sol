@@ -77,7 +77,7 @@ const UnifiedDashboard = ({
   };
 
   return (
-    <div className="min-h-screen bg-black text-white flex">
+    <div className="min-h-screen bg-base-100 text-base-content flex">
       {/* Sidebar */}
       <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
       

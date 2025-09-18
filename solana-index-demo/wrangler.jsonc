@@ -1,12 +1,44 @@
 {
-  "main": ".open-next/worker.js",
-  "name": "axis-solana-index",
-  "compatibility_date": "2025-03-25",
-  "compatibility_flags": [
-    "nodejs_compat"
-  ],
-  "assets": {
-    "directory": ".open-next/assets",
-    "binding": "ASSETS"
-  }
+	"main": ".open-next/worker.js",
+	"name": "axis-protocol",
+	"compatibility_date": "2025-03-25",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"assets": {
+		"directory": ".open-next/assets",
+		"binding": "ASSETS"
+	},
+	"services": [
+		{
+			"binding": "WORKER_SELF_REFERENCE",
+			"service": "axis-protocol"
+		}
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "NEXT_CACHE_DO_QUEUE",
+				"class_name": "DOQueueHandler"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": [
+				"DOQueueHandler"
+			]
+		}
+	],
+	"routes": [
+    {
+      "pattern": "axis-protocol.xyz",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.axis-protocol.xyz",
+      "custom_domain": true
+    }
+  ]
 }

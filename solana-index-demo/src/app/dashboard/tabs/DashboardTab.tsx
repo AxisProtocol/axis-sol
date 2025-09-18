@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
-import { ModernCard, GridLayout, ModernButton } from '../../../components/common';
+import { ModernCard, GridLayout, ModernButton, getCoinIcon } from '../../../components/common';
 import Image from 'next/image';
 import { Zap, Coins, RefreshCcw, Landmark, Lock, User, BarChart3 } from 'lucide-react';
 import { useIndexPrice } from '../../../hooks/useIndexPrice';
@@ -38,7 +38,7 @@ const sharedTokenData: TokenData[] = [
     volume24h: 15.2e9, 
     marketCap: 850.5e9, 
     allocation: 10,
-    imageUrl: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png'
+    imageUrl: getCoinIcon('BTC')
   },
   { 
     symbol: 'ETH', 
@@ -48,7 +48,7 @@ const sharedTokenData: TokenData[] = [
     volume24h: 8.5e9, 
     marketCap: 317.2e9, 
     allocation: 10,
-    imageUrl: 'https://assets.coingecko.com/coins/images/279/large/ethereum.png'
+    imageUrl: getCoinIcon('ETH')
   },
   { 
     symbol: 'SOL', 
@@ -58,7 +58,7 @@ const sharedTokenData: TokenData[] = [
     volume24h: 2.1e9, 
     marketCap: 42.8e9, 
     allocation: 10,
-    imageUrl: 'https://assets.coingecko.com/coins/images/4128/large/solana.png'
+    imageUrl: getCoinIcon('SOL')
   },
   { 
     symbol: 'BNB', 
@@ -68,7 +68,7 @@ const sharedTokenData: TokenData[] = [
     volume24h: 1.8e9, 
     marketCap: 46.2e9, 
     allocation: 10,
-    imageUrl: 'https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png'
+    imageUrl: getCoinIcon('BNB')
   },
   { 
     symbol: 'XRP', 
@@ -78,7 +78,7 @@ const sharedTokenData: TokenData[] = [
     volume24h: 1.2e9, 
     marketCap: 33.5e9, 
     allocation: 10,
-    imageUrl: 'https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png'
+    imageUrl: getCoinIcon('XRP')
   },
   { 
     symbol: 'ADA', 
@@ -88,7 +88,7 @@ const sharedTokenData: TokenData[] = [
     volume24h: 890e6, 
     marketCap: 17.1e9, 
     allocation: 10,
-    imageUrl: 'https://assets.coingecko.com/coins/images/975/large/cardano.png'
+    imageUrl: getCoinIcon('ADA')
   },
   { 
     symbol: 'DOGE', 
@@ -98,7 +98,7 @@ const sharedTokenData: TokenData[] = [
     volume24h: 650e6, 
     marketCap: 12.1e9, 
     allocation: 10,
-    imageUrl: 'https://assets.coingecko.com/coins/images/5/large/dogecoin.png'
+    imageUrl: getCoinIcon('DOGE')
   },
   { 
     symbol: 'AVAX', 
@@ -108,7 +108,7 @@ const sharedTokenData: TokenData[] = [
     volume24h: 520e6, 
     marketCap: 13.2e9, 
     allocation: 10,
-    imageUrl: 'https://assets.coingecko.com/coins/images/12559/large/Avalanche_Circle_RedWhite_Trans.png'
+    imageUrl: getCoinIcon('AVAX')
   },
   { 
     symbol: 'TRX', 
@@ -118,7 +118,7 @@ const sharedTokenData: TokenData[] = [
     volume24h: 380e6, 
     marketCap: 9.2e9, 
     allocation: 10,
-    imageUrl: 'https://assets.coingecko.com/coins/images/1094/large/tron-logo.png'
+    imageUrl: getCoinIcon('TRX')
   },
   { 
     symbol: 'SUI', 
@@ -128,7 +128,7 @@ const sharedTokenData: TokenData[] = [
     volume24h: 240e6, 
     marketCap: 4.8e9, 
     allocation: 10,
-    imageUrl: 'https://assets.coingecko.com/coins/images/26375/large/sui_asset.jpeg'
+    imageUrl: getCoinIcon('SUI')
   },
 ];
 
@@ -167,7 +167,7 @@ const DashboardTab = ({
   if (!initialLatestEntry || !echartsData?.length) {
     return (
       <div className="text-center py-8">
-        <p className="text-gray-400 text-lg">No data available</p>
+        <p className="text-base-content/60 text-lg">No data available</p>
       </div>
     );
   }
@@ -193,7 +193,7 @@ const DashboardTab = ({
 
       {/* Tokenomics Section */}
       <ModernCard className="p-4" gradient>
-        <h3 className="text-lg font-bold text-white mb-3 text-center flex items-center justify-center space-x-2">
+        <h3 className="text-lg font-bold text-base-content mb-3 text-center flex items-center justify-center space-x-2">
           <Zap className="w-5 h-5" />
           <span>AXIS Tokenomics</span>
         </h3>
@@ -202,11 +202,11 @@ const DashboardTab = ({
           {tokenomics.map((item) => (
             <div
               key={item.label}
-              className="text-center p-3 bg-white/10 rounded border border-white/20"
+              className="text-center p-3 bg-base-200/30 rounded border border-base-300"
             >
               <div className="text-lg mb-1">{item.icon}</div>
-              <div className="text-lg font-bold text-white mb-1">{item.value}</div>
-              <div className="text-white/70 text-xs">{item.label}</div>
+              <div className="text-lg font-bold text-base-content mb-1">{item.value}</div>
+              <div className="text-base-content/70 text-xs">{item.label}</div>
             </div>
           ))}
         </GridLayout>
@@ -214,7 +214,7 @@ const DashboardTab = ({
 
       {/* Staking Stats */}
       <ModernCard className="p-4">
-        <h3 className="text-lg font-bold text-white mb-3 text-center flex items-center justify-center space-x-2">
+        <h3 className="text-lg font-bold text-base-content mb-3 text-center flex items-center justify-center space-x-2">
           <Lock className="w-5 h-5" />
           <span>Staking</span>
         </h3>
@@ -223,8 +223,8 @@ const DashboardTab = ({
           {stakingStats.map((stat) => (
             <ModernCard key={stat.label} className="text-center p-3" gradient>
               <div className="text-lg mb-1">{stat.icon}</div>
-              <div className="text-lg font-bold text-white mb-1">{stat.value}</div>
-              <div className="text-white/70 text-xs">{stat.label}</div>
+              <div className="text-lg font-bold text-base-content mb-1">{stat.value}</div>
+              <div className="text-base-content/70 text-xs">{stat.label}</div>
             </ModernCard>
           ))}
         </GridLayout>
@@ -232,7 +232,7 @@ const DashboardTab = ({
 
       {/* Token Constituents - Market Style */}
       <ModernCard className="p-4">
-        <h3 className="text-lg font-bold text-white mb-4 text-center flex items-center justify-center space-x-2">
+        <h3 className="text-lg font-bold text-base-content mb-4 text-center flex items-center justify-center space-x-2">
           <Coins className="w-5 h-5" />
           <span>Index Constituents</span>
         </h3>
@@ -240,19 +240,19 @@ const DashboardTab = ({
         <div className="overflow-x-auto">
           <table className="w-full text-xs sm:text-sm">
             <thead>
-              <tr className="border-b border-white/20">
-                <th className="text-left py-2 px-2 sm:px-3 text-white/70 font-medium">Token</th>
-                <th className="text-right py-2 px-2 sm:px-3 text-white/70 font-medium hidden sm:table-cell">Allocation</th>
-                <th className="text-right py-2 px-2 sm:px-3 text-white/70 font-medium">Price</th>
-                <th className="text-right py-2 px-2 sm:px-3 text-white/70 font-medium">24h Change</th>
-                <th className="text-right py-2 px-2 sm:px-3 text-white/70 font-medium hidden lg:table-cell">Market Cap</th>
+              <tr className="border-b border-base-300">
+                <th className="text-left py-2 px-2 sm:px-3 text-base-content/70 font-medium">Token</th>
+                <th className="text-right py-2 px-2 sm:px-3 text-base-content/70 font-medium hidden sm:table-cell">Allocation</th>
+                <th className="text-right py-2 px-2 sm:px-3 text-base-content/70 font-medium">Price</th>
+                <th className="text-right py-2 px-2 sm:px-3 text-base-content/70 font-medium">24h Change</th>
+                <th className="text-right py-2 px-2 sm:px-3 text-base-content/70 font-medium hidden lg:table-cell">Market Cap</th>
               </tr>
             </thead>
             <tbody>
               {sharedTokenData.map((token) => (
                 <tr
                   key={token.symbol}
-                  className="border-b border-white/10 hover:bg-white/5"
+                  className="border-b border-base-300 hover:bg-base-200/30"
                 >
                   <td className="py-2 px-2 sm:px-3">
                     <div className="flex items-center space-x-1 sm:space-x-2">
@@ -266,31 +266,31 @@ const DashboardTab = ({
                         />
                       </div>
                       <div className="min-w-0">
-                        <div className="font-semibold text-white text-xs sm:text-sm truncate">{token.symbol}</div>
-                        <div className="text-white/70 text-xs truncate hidden sm:block">{token.name}</div>
+                        <div className="font-semibold text-base-content text-xs sm:text-sm truncate">{token.symbol}</div>
+                        <div className="text-base-content/60 text-xs truncate hidden sm:block">{token.name}</div>
                       </div>
                     </div>
                   </td>
                   <td className="text-right py-2 px-2 sm:px-3 hidden sm:table-cell">
                     <div className="flex items-center justify-end space-x-1 sm:space-x-2">
-                      <div className="w-8 sm:w-10 bg-white/20 rounded-full h-1">
+                      <div className="w-8 sm:w-10 bg-base-300 rounded-full h-1">
                         <div 
-                          className="bg-blue-500 h-1 rounded-full"
+                          className="bg-primary h-1 rounded-full"
                           style={{ width: `${(token.allocation / 10) * 100}%` }}
                         />
                       </div>
-                      <span className="text-white font-medium text-xs">{token.allocation}%</span>
+                      <span className="text-base-content font-medium text-xs">{token.allocation}%</span>
                     </div>
                   </td>
-                  <td className="text-right py-2 px-2 sm:px-3 text-white font-medium text-xs">
+                  <td className="text-right py-2 px-2 sm:px-3 text-base-content font-medium text-xs">
                     {formatPrice(token.price)}
                   </td>
                   <td className={`text-right py-2 px-2 sm:px-3 font-medium text-xs ${
-                    token.change24h >= 0 ? 'text-green-300' : 'text-red-300'
+                    token.change24h >= 0 ? 'text-success' : 'text-error'
                   }`}>
                     {token.change24h >= 0 ? '+' : ''}{token.change24h.toFixed(2)}%
                   </td>
-                  <td className="text-right py-2 px-2 sm:px-3 text-white text-xs hidden lg:table-cell">
+                  <td className="text-right py-2 px-2 sm:px-3 text-base-content text-xs hidden lg:table-cell">
                     {formatLargeNumber(token.marketCap)}
                   </td>
                 </tr>

@@ -1,4 +1,87 @@
 @import "tailwindcss";
+@plugin "daisyui";
+@plugin "daisyui/theme" {
+  name: "axis-dark";
+  default: true;
+  prefersdark: true;
+  color-scheme: halloween;
+
+  --color-base-100: #0a0b0f;
+  --color-base-200: #0e121b;
+  --color-base-300: #171d2b;
+  --color-base-content: #eef1ff;
+
+  --color-primary: #6b4bd9;            /* eva purple */
+  --color-primary-content: #f5f7ff;
+  --color-secondary: #16f2a4;          /* eva neon green (softened) */
+  --color-secondary-content: #07120f;
+  --color-accent: #a78bfa;             /* violet accent */
+  --color-accent-content: #0f0a1a;
+
+  --color-neutral: #0b0f16;
+  --color-neutral-content: #e8eaf6;
+
+  /* signal colors tuned for readability on dark */
+  --color-info: #60a5fa;
+  --color-info-content: #0b0f16;
+  --color-success: #22c55e;
+  --color-success-content: #0b0f16;
+  --color-warning: #fbbf24;
+  --color-warning-content: #0b0f16;
+  --color-error: #ef4444;
+  --color-error-content: #0b0f16;
+
+  /* radii, borders, effects */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+
+@plugin "daisyui/theme" {
+  name: "axis-light";
+  default: false;
+  prefersdark: false;
+  color-scheme: retro;
+
+  /* Light palette, coordinated with dark for consistency */
+  --color-base-100: #ffffff;
+  --color-base-200: #f6f7fb;
+  --color-base-300: #e9ecf5;
+  --color-base-content: #14121d;
+
+  --color-primary: #6b4bd9;            /* eva purple */
+  --color-primary-content: #ffffff;
+  --color-secondary: #14e6a1;          /* mint green */
+  --color-secondary-content: #0d1214;
+  --color-accent: #a78bfa;
+  --color-accent-content: #1b102b;
+
+  --color-neutral: #11131b;
+  --color-neutral-content: #ffffff;
+
+  --color-info: #3b82f6;
+  --color-info-content: #11131b;
+  --color-success: #16a34a;
+  --color-success-content: #0d1410;
+  --color-warning: #f59e0b;
+  --color-warning-content: #1a1305;
+  --color-error: #dc2626;
+  --color-error-content: #ffffff;
+
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
 
 html,
 body {
@@ -94,14 +177,22 @@ a {
 }
 
 ::-webkit-scrollbar-track {
-  background: #1f2937;
+  background: var(--color-base-200);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #3b82f6;
+  background: var(--color-primary);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2563eb;
+  background: var(--color-primary);
+  /* If supported, subtly darken on hover */
+  background: color-mix(in oklch, var(--color-primary), black 12%);
+}
+
+/* Firefox scrollbar colors */
+html {
+  scrollbar-color: var(--color-primary) var(--color-base-200);
+  scrollbar-width: thin;
 }

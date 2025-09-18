@@ -22,25 +22,16 @@ const ModernCard = ({
   const baseClasses = `
     relative rounded-lg p-3 sm:p-4
     ${gradient 
-      ? dark 
-        ? 'bg-gradient-to-br from-gray-800/50 to-gray-700/50' 
-        : 'bg-gradient-to-br from-gray-800/50 to-gray-700/50'
-      : dark 
-        ? 'bg-gray-800/30' 
-        : 'bg-gray-800/30'
+      ? 'bg-gradient-to-br from-primary/10 via-primary/5 to-accent/10' 
+      : 'bg-base-200/40'
     }
-    ${dark 
-      ? 'border border-gray-700/30' 
-      : 'border border-gray-700/30'
-    }
+    border border-base-300
     ${onClick ? 'cursor-pointer' : ''}
     ${className}
   `;
 
   const hoverClasses = hover 
-    ? dark 
-      ? 'hover:border-gray-600/50 hover:shadow-lg hover:shadow-gray-900/20' 
-      : 'hover:border-gray-300 hover:shadow-lg' 
+    ? 'hover:border-primary/50 hover:shadow-lg hover:shadow-primary/20' 
     : '';
 
   return (
