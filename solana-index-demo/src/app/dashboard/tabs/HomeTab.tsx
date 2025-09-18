@@ -86,13 +86,13 @@ const HomeTab = ({ echartsData }: HomeTabProps) => {
     <div className="space-y-6 sm:space-y-8">
       {/* Header */}
       <div className="text-center">
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2">Home</h1>
-        <p className="text-gray-400 text-sm sm:text-base">Welcome to the AXIS Protocol Dashboard</p>
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-base-content mb-2">Home</h1>
+        <p className="text-base-content/60 text-sm sm:text-base">Welcome to the AXIS Protocol Dashboard</p>
       </div>
 
       {/* Connect Wallet Banner */}
-      <div className="bg-gradient-to-r from-gray-800/50 to-gray-700/50 border border-gray-600/30 rounded-xl p-4 sm:p-6 lg:p-8 text-center">
-        <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
+      <div className="bg-gradient-to-r from-base-200/50 to-base-300/50 border border-base-300 rounded-xl p-4 sm:p-6 lg:p-8 text-center">
+        <h2 className="text-lg sm:text-xl font-semibold text-base-content mb-4">
           Connect your wallet to view your index positions
         </h2>
         <div className="flex justify-center">
@@ -111,10 +111,10 @@ const HomeTab = ({ echartsData }: HomeTabProps) => {
           >
             <div className="text-center">
               <div className="text-3xl sm:text-4xl mb-3 sm:mb-4">{card.icon}</div>
-              <h3 className="text-lg sm:text-xl font-bold text-white mb-2">{card.title}</h3>
-              <p className="text-gray-400 text-xs sm:text-sm mb-2 sm:mb-3">{card.subtitle}</p>
-              <p className="text-gray-300 text-xs mb-3 sm:mb-4">{card.description}</p>
-              <div className="flex items-center justify-center text-orange-400 text-xs sm:text-sm">
+              <h3 className="text-lg sm:text-xl font-bold text-base-content mb-2">{card.title}</h3>
+              <p className="text-base-content/60 text-xs sm:text-sm mb-2 sm:mb-3">{card.subtitle}</p>
+              <p className="text-base-content/70 text-xs mb-3 sm:mb-4">{card.description}</p>
+              <div className="flex items-center justify-center text-secondary text-xs sm:text-sm">
                 <span>Explore</span>
                 <ArrowRight className="ml-1 w-4 h-4" />
               </div>
@@ -128,7 +128,7 @@ const HomeTab = ({ echartsData }: HomeTabProps) => {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <Heart className="w-4 h-4 text-red-400" fill="#ef4444" />
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Your Favorites</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-base-content">Your Favorites</h2>
           </div>
           <button className="text-orange-400 text-xs sm:text-sm hover:text-orange-300 transition-colors">
             Discover more <ArrowRight className="inline w-4 h-4 ml-1 align-middle" />
@@ -139,23 +139,23 @@ const HomeTab = ({ echartsData }: HomeTabProps) => {
           {favorites.length > 0 ? (
             <div className="space-y-4">
               {favorites.map((favorite, index) => (
-                <div 
+            <div 
                   key={index}
-                  className="flex items-center justify-between p-3 sm:p-4 bg-gray-800/30 rounded-lg cursor-pointer hover:bg-gray-700/30 transition-colors"
+              className="flex items-center justify-between p-3 sm:p-4 bg-base-200/30 rounded-lg cursor-pointer hover:bg-base-300/30 transition-colors"
                   onClick={favorite.action}
                 >
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-white font-medium text-sm sm:text-base truncate">{favorite.name}</h3>
-                    <p className="text-gray-400 text-xs sm:text-sm truncate">{favorite.description}</p>
+                <h3 className="text-base-content font-medium text-sm sm:text-base truncate">{favorite.name}</h3>
+                <p className="text-base-content/60 text-xs sm:text-sm truncate">{favorite.description}</p>
                   </div>
-                  <span className="text-gray-400 ml-2 flex-shrink-0">→</span>
+              <span className="text-base-content/60 ml-2 flex-shrink-0">→</span>
                 </div>
               ))}
             </div>
           ) : (
             <div className="text-center py-8">
-              <p className="text-gray-400">
-                No favorite apps yet, <span className="text-orange-400 cursor-pointer hover:text-orange-300">add some!</span>
+              <p className="text-base-content/60">
+                No favorite apps yet, <span className="text-secondary cursor-pointer hover:opacity-80">add some!</span>
               </p>
             </div>
           )}
@@ -166,18 +166,18 @@ const HomeTab = ({ echartsData }: HomeTabProps) => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
         <ModernCard className="p-3 sm:p-4 text-center" gradient>
           <Coins className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-2" />
-          <div className="text-base sm:text-lg font-bold text-white">${latestClose.toFixed(4)}</div>
-          <div className="text-white/70 text-xs sm:text-sm">Current Index Price (normalized)</div>
+          <div className="text-base sm:text-lg font-bold text-base-content">${latestClose.toFixed(4)}</div>
+          <div className="text-base-content/70 text-xs sm:text-sm">Current Index Price (normalized)</div>
         </ModernCard>
         <ModernCard className="p-3 sm:p-4 text-center" gradient>
           <Coins className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-2" />
-          <div className="text-base sm:text-lg font-bold text-white">1M</div>
-          <div className="text-white/70 text-xs sm:text-sm">Total Supply</div>
+          <div className="text-base sm:text-lg font-bold text-base-content">1M</div>
+          <div className="text-base-content/70 text-xs sm:text-sm">Total Supply</div>
         </ModernCard>
         <ModernCard className="p-3 sm:p-4 text-center" gradient>
           <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-2" />
-          <div className="text-base sm:text-lg font-bold text-white">$25.5M</div>
-          <div className="text-white/70 text-xs sm:text-sm">Market Cap</div>
+          <div className="text-base sm:text-lg font-bold text-base-content">$25.5M</div>
+          <div className="text-base-content/70 text-xs sm:text-sm">Market Cap</div>
         </ModernCard>
       </div>
     </div>

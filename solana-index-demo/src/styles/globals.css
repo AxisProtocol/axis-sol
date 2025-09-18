@@ -6,31 +6,30 @@
   prefersdark: true;
   color-scheme: halloween;
 
-  /* Based on halloween, adjusted to EVA palette */
-  --color-base-100: #0e0e0e;
-  --color-base-200: #1a1a1a;
-  --color-base-300: #2a2a2a;
-  --color-base-content: #ebebeb;
+  --color-base-100: #0a0b0f;
+  --color-base-200: #0e121b;
+  --color-base-300: #171d2b;
+  --color-base-content: #eef1ff;
 
-  --color-primary: #1c0539;            /* deep purple */
-  --color-primary-content: #ebebeb;
-  --color-secondary: #033a22;          /* deep green */
-  --color-secondary-content: #ebebeb;
-  --color-accent: #1c0539;
-  --color-accent-content: #ebebeb;
+  --color-primary: #6b4bd9;            /* eva purple */
+  --color-primary-content: #f5f7ff;
+  --color-secondary: #16f2a4;          /* eva neon green (softened) */
+  --color-secondary-content: #07120f;
+  --color-accent: #a78bfa;             /* violet accent */
+  --color-accent-content: #0f0a1a;
 
-  --color-neutral: #0e0e0e;
-  --color-neutral-content: #ebebeb;
+  --color-neutral: #0b0f16;
+  --color-neutral-content: #e8eaf6;
 
-  /* keep halloween-like signal colors */
+  /* signal colors tuned for readability on dark */
   --color-info: #60a5fa;
-  --color-info-content: #0e0e0e;
-  --color-success: #10b981;
-  --color-success-content: #0e0e0e;
-  --color-warning: #f59e0b;
-  --color-warning-content: #0e0e0e;
+  --color-info-content: #0b0f16;
+  --color-success: #22c55e;
+  --color-success-content: #0b0f16;
+  --color-warning: #fbbf24;
+  --color-warning-content: #0b0f16;
   --color-error: #ef4444;
-  --color-error-content: #0e0e0e;
+  --color-error-content: #0b0f16;
 
   /* radii, borders, effects */
   --radius-selector: 1rem;
@@ -49,29 +48,29 @@
   prefersdark: false;
   color-scheme: retro;
 
-  /* Light palette adjustments */
+  /* Light palette, coordinated with dark for consistency */
   --color-base-100: #ffffff;
-  --color-base-200: #f8f9fa;
-  --color-base-300: #e9ecef;
-  --color-base-content: #1f1f1f;
+  --color-base-200: #f6f7fb;
+  --color-base-300: #e9ecf5;
+  --color-base-content: #14121d;
 
-  --color-primary: #d3b5f8;            /* soft purple */
-  --color-primary-content: #1f1f1f;
-  --color-secondary: #b1fbdb;          /* mint */
-  --color-secondary-content: #1f1f1f;
-  --color-accent: #d3b5f8;
-  --color-accent-content: #1f1f1f;
+  --color-primary: #6b4bd9;            /* eva purple */
+  --color-primary-content: #ffffff;
+  --color-secondary: #14e6a1;          /* mint green */
+  --color-secondary-content: #0d1214;
+  --color-accent: #a78bfa;
+  --color-accent-content: #1b102b;
 
-  --color-neutral: #1f1f1f;
+  --color-neutral: #11131b;
   --color-neutral-content: #ffffff;
 
-  --color-info: #60a5fa;
-  --color-info-content: #1f1f1f;
-  --color-success: #34d399;
-  --color-success-content: #1f1f1f;
+  --color-info: #3b82f6;
+  --color-info-content: #11131b;
+  --color-success: #16a34a;
+  --color-success-content: #0d1410;
   --color-warning: #f59e0b;
-  --color-warning-content: #1f1f1f;
-  --color-error: #ef4444;
+  --color-warning-content: #1a1305;
+  --color-error: #dc2626;
   --color-error-content: #ffffff;
 
   --radius-selector: 1rem;
