@@ -30,5 +30,15 @@
 				"DOQueueHandler"
 			]
 		}
-	]
+	],
+	"routes": [
+    {
+      "pattern": "axis-protocol.xyz",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.axis-protocol.xyz",
+      "custom_domain": true
+    }
+  ]
 }
