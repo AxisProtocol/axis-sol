@@ -105,6 +105,13 @@ export default function BurnModal({ isOpen, onClose, indexPrice }: Props) {
       setTxSig(signature)
       setStep('settling')
 
+      // Kick background processor (non-blocking)
+      fetch('/api/settlements/process', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ signature })
+      }).catch(()=>{})
+
       let done = false
       const deadline = Date.now() + 90_000
       while (!done && Date.now() < deadline) {

@@ -17,7 +17,17 @@ export const connection = createConnection()
 // If connection is null (build time), we'll need to handle this in the functions that use it
 
 // Only initialize TREASURY_OWNER if we have the env var
-export const TREASURY_OWNER = process.env.TREASURY_OWNER ? new PublicKey(process.env.TREASURY_OWNER) : null
+function safePublicKeyFromString(value?: string | null): PublicKey | null {
+  try {
+    const v = (value || '').trim()
+    if (!v) return null
+    return new PublicKey(v)
+  } catch {
+    return null
+  }
+}
+
+export const TREASURY_OWNER = safePublicKeyFromString(process.env.TREASURY_OWNER)
 
 function toKeypairFromAny(raw: string): Keypair {
   const s = raw.trim()

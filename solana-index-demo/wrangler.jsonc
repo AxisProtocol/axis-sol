@@ -5,11 +5,18 @@
 	"compatibility_flags": [
 		"nodejs_compat"
 	],
+  "account_id": "d637410df2e8f923e3fe6b63955a283b",
 	"assets": {
 		"directory": ".open-next/assets",
 		"binding": "ASSETS"
 	},
+  "observability": {
+    "enabled": true
+  },
   "vars": {
+    "WEBHOOK_DEBUG": "true",
+    "WEBHOOK_FAST_MODE": "true",
+    "SOLANA_RPC_URL": "https://api.devnet.solana.com",
     "USDC_DEV_MINT": "Gh9ZwEmdLJ8DscKNTkTqPbNwLNNBjuSzaG9Vp2KGtKJr",
     "TREASURY_USDC_ATA": "GPrfbGCK2rBEYL2jy7mMq9pYBht1tTss6ZfLUwU1jxrB",
     "AXIS_MINT_2022": "6XJVFiPQZ9pAa6Cuhcm6jbHtV3G3ZjK3VZ2HNTanpAQ1",
