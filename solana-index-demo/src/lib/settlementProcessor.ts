@@ -17,7 +17,15 @@ try { PYTH_PRICE_IDS = JSON.parse(process.env.PYTH_PRICE_IDS || '[]') } catch { 
 
 const L = (o: any) => console.log(JSON.stringify({ ts:new Date().toISOString(), mod:'settlement-processor', ...o }))
 
+// --- Simple TTL cache for index value ---
+let __INDEX_CACHE__: { ts: number, value: number } | null = null
+const INDEX_TTL_MS = 45_000
+
 export async function fetchIndexValue(): Promise<number> {
+  const now = Date.now()
+  if (__INDEX_CACHE__ && (now - __INDEX_CACHE__.ts) < INDEX_TTL_MS) {
+    return __INDEX_CACHE__.value
+  }
   const { data } = await axios.get('https://hermes.pyth.network/api/latest_price_feeds', {
     params: { ids: PYTH_PRICE_IDS, binary: false },
   })
@@ -46,6 +54,7 @@ export async function fetchIndexValue(): Promise<number> {
     return b ? p / b : 0
   })
   const idx = 100 * (ratios.reduce((a,b)=>a+b,0) / ratios.length)
+  __INDEX_CACHE__ = { ts: now, value: idx }
   return idx
 }
 
@@ -129,11 +138,8 @@ export async function verifyUsdcDepositOnChain(signature: string): Promise<{ fro
   }
   const senderEntryFinal = senderEntry
   if (!senderEntryFinal) return null
-  const senderTokenAccPubkey = findPubkeyByIndex(senderEntryFinal.pb.accountIndex)
-  if (!senderTokenAccPubkey) return null
-  const ai = await connection.getParsedAccountInfo(senderTokenAccPubkey, 'finalized')
-  // @ts-ignore
-  const ownerStr: string | undefined = (ai.value?.data as any)?.parsed?.info?.owner
+  // prefer owner from post balances to avoid extra RPC
+  const ownerStr: string | undefined = senderEntryFinal.pb.owner
   if (!ownerStr) return null
   return { fromUser: new PublicKey(ownerStr), uiAmount: delta }
 }
