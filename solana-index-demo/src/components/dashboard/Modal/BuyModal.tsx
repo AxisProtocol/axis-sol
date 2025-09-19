@@ -81,7 +81,7 @@ export default function BuyModal({ isOpen, onClose, indexPrice }: {
       setSettleOpen(true)
 
       // Kick background processor (non-blocking)
-      fetch('/api/settlements/process', {
+      fetch('/api/settlements/start', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ signature })

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { putPending, getOne } from '@/lib/settlementStore'
+import { payoutForSignature } from '@/lib/settlementProcessor'
 
 // ----- env & const -----
 const AUTH = process.env.HELIUS_WEBHOOK_TOKEN || '' // e.g. "Bearer dev-abc123xyz"
@@ -109,6 +110,12 @@ export async function POST(request: NextRequest) {
         // pending 記録
         putPending(sig, { side:'mint', depositSig: sig, usdcUi })
         L({ lvl:'info', step:'queue.recorded', side:'mint', signature: sig, usdcUi, fastMode: !!FAST_MODE })
+        // fast mode: fire-and-forget payout
+        if (FAST_MODE && sig) {
+          ;(async () => {
+            try { await payoutForSignature(sig, true) } catch (e:any) { L({ lvl:'error', step:'fast.payout.fail', signature: sig, err: e?.message }) }
+          })()
+        }
         results.push({ sig, side:'mint', queued: true })
         continue
       }
@@ -122,6 +129,11 @@ export async function POST(request: NextRequest) {
 
         putPending(sig, { side:'burn', depositSig: sig, axisUi })
         L({ lvl:'info', step:'queue.recorded', side:'burn', signature: sig, axisUi, fastMode: !!FAST_MODE })
+        if (FAST_MODE && sig) {
+          ;(async () => {
+            try { await payoutForSignature(sig, true) } catch (e:any) { L({ lvl:'error', step:'fast.payout.fail', signature: sig, err: e?.message }) }
+          })()
+        }
         results.push({ sig, side:'burn', queued: true })
         continue
       }

@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { classifyDeposit, getPayoutPlan } from '@/lib/settlementProcessor'
-import { putPending, getOne } from '@/lib/settlementStore'
+import { getPayoutPlan, payoutForSignature } from '@/lib/settlementProcessor'
+import { getOne } from '@/lib/settlementStore'
 
-// lightweight dedupe window per signature
+// minimal dedupe guard
 const g = globalThis as any
 if (!g.__AXIS_PROCESS_DEDUPE__) g.__AXIS_PROCESS_DEDUPE__ = new Map<string, number>()
 const DEDUPE: Map<string, number> = g.__AXIS_PROCESS_DEDUPE__
@@ -15,39 +15,28 @@ export async function POST(request: NextRequest) {
     if (!sig) return NextResponse.json({ ok:false, error:'missing signature' }, { status: 400 })
     const url = new URL(request.url)
     const planFlag = body?.plan === 1 || body?.plan === true || url.searchParams.get('plan') === '1'
+    const fast = body?.fast !== false
     const force = body?.force === 1 || body?.force === true || url.searchParams.get('force') === '1'
 
-    // dedupe
+    // simple dedupe to avoid double spends in quick retries
     const now = Date.now()
     const last = DEDUPE.get(sig) || 0
     if (!force && now - last < DEDUPE_TTL_MS) {
-      return NextResponse.json({ ok:true, deduped:true, signature: sig })
+      const existing = getOne(sig)
+      return NextResponse.json({ ok:true, deduped:true, signature: sig, ...(existing ? { record: { phase: existing.phase, side: existing.side, payoutSig: existing.payoutSig, error: existing.error } } : {}) })
     }
     DEDUPE.set(sig, now)
-
-    // Prefer existing store record (webhook path). Fallback to on-chain classify if missing or force
-    const existing = getOne(sig)
-    let cls = existing && !force
-      ? (existing.side === 'mint'
-          ? { kind: 'mint' as const, fromUser: null as any, uiAmount: existing.usdcUi || 0 }
-          : { kind: 'burn' as const, fromUser: null as any, uiAmount: existing.axisUi || 0 })
-      : await classifyDeposit(sig)
-    if (!cls) return NextResponse.json({ ok:false, error:'not a deposit signature' }, { status: 200 })
-
-    // Ensure pending exists with side and amounts
-    if (!existing) {
-      if (cls.kind === 'mint') putPending(sig, { side:'mint', depositSig: sig, usdcUi: cls.uiAmount })
-      else putPending(sig, { side:'burn', depositSig: sig, axisUi: cls.uiAmount })
-    }
 
     if (planFlag) {
       const plan = await getPayoutPlan(sig)
       return NextResponse.json({ ok:true, plan })
     }
-    return NextResponse.json({ ok:true, queued:true, side: cls.kind, signature: sig })
+
+    // one-shot payout
+    const result = await payoutForSignature(sig, fast)
+    return NextResponse.json({ ok:true, result })
   } catch (e:any) {
     return NextResponse.json({ ok:false, error: e?.message || 'failed' }, { status: 200 })
   }
 }
-
 
