@@ -1,6 +1,40 @@
 // /lib/solana.ts
 import { Connection, Keypair, PublicKey } from '@solana/web3.js'
-import bs58 from 'bs58'
+
+// Custom base58 decoder for Cloudflare Workers compatibility
+const BASE58_ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
+
+function base58Decode(input: string): Uint8Array {
+  if (!input) return new Uint8Array(0)
+  
+  let num = 0n
+  let multi = 1n
+  
+  // Convert string to BigInt
+  for (let i = input.length - 1; i >= 0; i--) {
+    const char = input[i]
+    const index = BASE58_ALPHABET.indexOf(char)
+    if (index === -1) {
+      throw new Error(`Invalid base58 character: ${char}`)
+    }
+    num += BigInt(index) * multi
+    multi *= 58n
+  }
+  
+  // Convert BigInt to bytes
+  const bytes: number[] = []
+  while (num > 0n) {
+    bytes.unshift(Number(num & 255n))
+    num >>= 8n
+  }
+  
+  // Handle leading zeros
+  for (let i = 0; i < input.length && input[i] === '1'; i++) {
+    bytes.unshift(0)
+  }
+  
+  return new Uint8Array(bytes)
+}
 
 // Only initialize connection if we're not in build mode and have valid env vars
 function createConnection(): Connection | null {
@@ -17,7 +51,17 @@ export const connection = createConnection()
 // If connection is null (build time), we'll need to handle this in the functions that use it
 
 // Only initialize TREASURY_OWNER if we have the env var
-export const TREASURY_OWNER = process.env.TREASURY_OWNER ? new PublicKey(process.env.TREASURY_OWNER) : null
+function safePublicKeyFromString(value?: string | null): PublicKey | null {
+  try {
+    const v = (value || '').trim()
+    if (!v) return null
+    return new PublicKey(v)
+  } catch {
+    return null
+  }
+}
+
+export const TREASURY_OWNER = safePublicKeyFromString(process.env.TREASURY_OWNER)
 
 function toKeypairFromAny(raw: string): Keypair {
   const s = raw.trim()
@@ -34,12 +78,12 @@ function toKeypairFromAny(raw: string): Keypair {
 
   // 2) Base58（Phantomなど）
   try {
-    const u8 = bs58.decode(s)
+    const u8 = base58Decode(s)
     if (u8.length === 64) return Keypair.fromSecretKey(u8)
     if (u8.length === 32) return Keypair.fromSeed(u8)
     throw new Error(`Invalid base58 key length: ${u8.length} (expected 32 or 64)`)
   } catch (e) {
-    throw new Error('Invalid base58 in TREASURY_PRIVATE_KEY')
+    throw new Error(`Invalid base58 in TREASURY_PRIVATE_KEY: ${e instanceof Error ? e.message : String(e)}`)
   }
 }
 

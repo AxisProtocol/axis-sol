@@ -1,12 +1,13 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { getOne } from '@/lib/settlementStore';
+import { classifyDeposit } from '@/lib/settlementProcessor';
 
 export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ sig: string }> }
+  request: Request,
+  context: any
 ) {
   try {
-    const { sig } = await params;
+    const sig = context?.params?.sig as string | undefined;
 
     if (!sig) {
       console.log('[Settlements API] Missing signature parameter');
@@ -18,7 +19,7 @@ export async function GET(
 
     console.log(`[Settlements API] Checking settlement for signature: ${sig}`);
 
-    // Get settlement data from the store
+    // Prefer store; if missing, try classify to infer side
     const settlementRecord = getOne(sig);
     
     if (settlementRecord) {
@@ -38,19 +39,12 @@ export async function GET(
       return NextResponse.json(responseData);
     } else {
       console.log(`[Settlements API] No settlement record found for signature: ${sig}`);
-      
-      // Return a pending record if none exists (this might happen for new transactions)
-      const defaultRecord = {
-        record: {
-          phase: 'pending' as const,
-          side: 'mint' as const,
-          payoutSig: undefined,
-          error: undefined
-        }
-      };
-      
-      console.log(`[Settlements API] Returning default pending record:`, defaultRecord);
-      return NextResponse.json(defaultRecord);
+      // Try to classify on-chain so UI can show correct side even without store
+      const cls = await classifyDeposit(sig).catch(()=>null);
+      const side = cls?.kind === 'burn' ? 'burn' as const : 'mint' as const;
+      const fallback = { record: { phase: 'pending' as const, side, payoutSig: undefined, error: undefined } };
+      console.log(`[Settlements API] Returning inferred pending record:`, fallback);
+      return NextResponse.json(fallback);
     }
 
   } catch (error) {

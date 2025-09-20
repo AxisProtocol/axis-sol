@@ -2,6 +2,14 @@
 
 import axios from 'axios'
 
+// Allow overriding the recipient wallet to a valid base58 pubkey for payout tests
+const TEST_USER_PUBKEY =
+  process.env.TEST_USER_PUBKEY ||
+  process.argv[2] ||
+  process.env.TREASURY_OWNER ||
+  // Dev default (treasury owner in wrangler.jsonc) – OK for local testing
+  'BTcWoRe6Z9VaCPCxrcr5dQmn8cA8KNHpFdgJEVopSBsj'
+
 // Test script for the Helius webhook endpoint
 async function testWebhook() {
   const webhookUrl = 'http://localhost:3000/api/helius-webhook'
@@ -14,9 +22,9 @@ async function testWebhook() {
       slot: 12345,
       description: 'Test USDC transfer to treasury',
       tokenTransfers: [{
-        mint: process.env.USDC_DEV_MINT || 'mock-usdc-mint',
-        fromUserAccount: 'test-user-account',
-        toUserAccount: process.env.TREASURY_OWNER || 'mock-treasury',
+        mint: process.env.USDC_DEV_MINT || 'Gh9ZwEmdLJ8DscKNTkTqPbNwLNNBjuSzaG9Vp2KGtKJr',
+        fromUserAccount: TEST_USER_PUBKEY, // must be valid base58 for payout tx
+        toUserAccount: process.env.TREASURY_OWNER || 'BTcWoRe6Z9VaCPCxrcr5dQmn8cA8KNHpFdgJEVopSBsj',
         tokenAmount: '1000',
         rawTokenAmount: {
           tokenAmount: '1000000000',
@@ -25,9 +33,9 @@ async function testWebhook() {
       }],
       accountData: [{
         tokenBalanceChanges: [{
-          mint: process.env.USDC_DEV_MINT || 'mock-usdc-mint',
-          tokenAccount: process.env.TREASURY_USDC_ATA || 'mock-treasury-ata',
-          userAccount: 'test-user-account',
+          mint: process.env.USDC_DEV_MINT || 'Gh9ZwEmdLJ8DscKNTkTqPbNwLNNBjuSzaG9Vp2KGtKJr',
+          tokenAccount: process.env.TREASURY_USDC_ATA || 'GPrfbGCK2rBEYL2jy7mMq9pYBht1tTss6ZfLUwU1jxrB',
+          userAccount: TEST_USER_PUBKEY,
           rawTokenAmount: {
             tokenAmount: '1000000000',
             decimals: 6
@@ -39,6 +47,7 @@ async function testWebhook() {
 
   try {
     console.log('🧪 Testing Helius webhook endpoint...')
+    console.log('👤 Using recipient pubkey:', TEST_USER_PUBKEY)
     console.log('📤 Sending mock payload:', JSON.stringify(mockPayload, null, 2))
     
     const response = await axios.post(webhookUrl, mockPayload, {
