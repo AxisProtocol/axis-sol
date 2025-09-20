@@ -16,7 +16,21 @@ type Record = {
   payoutSig?: string
   error?: string
 }
+const apiUrl = "https://api.axis-protocol.xyz"
 
+// Notification function
+const showNotification = (title: string, body: string, icon?: string) => {
+  if ('Notification' in window && Notification.permission === 'granted') {
+    new Notification(title, { body, icon })
+  }
+}
+
+// Request notification permission
+const requestNotificationPermission = async () => {
+  if ('Notification' in window && Notification.permission === 'default') {
+    await Notification.requestPermission()
+  }
+}
 export default function SettlementModal({ open, onClose, depositSig, memoId, expectedText, explorerBase='https://solscan.io' }: Props) {
   const [phase, setPhase] = useState<Phase>('pending')
   const [payoutSig, setPayoutSig] = useState<string>()
@@ -25,16 +39,22 @@ export default function SettlementModal({ open, onClose, depositSig, memoId, exp
   const [pollCount, setPollCount] = useState<number>(0)
   const [lastPollTime, setLastPollTime] = useState<number>(Date.now())
   const [debugInfo, setDebugInfo] = useState<string>('')
+  const [nextPollIn, setNextPollIn] = useState<number>(60) // Countdown to next poll
 
   useEffect(() => {
     if (!open || !depositSig) return
+    
+    // Request notification permission when modal opens
+    requestNotificationPermission()
     
     console.log(`[SettlementModal] Starting settlement check for: ${depositSig}`)
     setDebugInfo(`Started checking settlement for ${depositSig}`)
     
     let stop = false
     let timeoutId: NodeJS.Timeout
-    const maxPolls = 30 // Maximum 30 polls (60 seconds with 2s interval)
+    let countdownId: NodeJS.Timeout
+    const maxPolls = 10 // Maximum 10 polls (10 minutes with 60s interval)
+    const pollInterval = 60000 // 60 seconds
     
     const poll = async () => {
       if (stop) return
@@ -47,8 +67,8 @@ export default function SettlementModal({ open, onClose, depositSig, memoId, exp
       setDebugInfo(`Poll #${currentPoll} - Time: ${Math.round(timeSinceStart/1000)}s`)
       
       try {
-        console.log(`[SettlementModal] Fetching settlement data from /api/settlements/${depositSig}`)
-        const response = await fetch(`/api/settlements/${depositSig}`)
+        console.log(`[SettlementModal] Fetching settlement data from /api/settlement/${depositSig}`)
+        const response = await fetch(`${apiUrl}/api/settlement/${depositSig}`)
         
         if (!response.ok) {
           throw new Error(`HTTP ${response.status}: ${response.statusText}`)
@@ -67,6 +87,22 @@ export default function SettlementModal({ open, onClose, depositSig, memoId, exp
           if (rec.phase !== 'pending') {
             console.log(`[SettlementModal] Settlement completed with phase: ${rec.phase}`)
             setDebugInfo(`Settlement ${rec.phase} - ${rec.payoutSig ? `Payout: ${rec.payoutSig}` : 'No payout'}`)
+            
+            // Show notification
+            if (rec.phase === 'paid') {
+              showNotification(
+                'Settlement Complete! 🎉',
+                `Your ${rec.side === 'mint' ? 'AXIS tokens' : 'USDC'} have been sent successfully.`,
+                '/favicon.ico'
+              )
+            } else if (rec.phase === 'failed') {
+              showNotification(
+                'Settlement Failed ❌',
+                `Settlement failed: ${rec.error || 'Unknown error'}`,
+                '/favicon.ico'
+              )
+            }
+            
             return // 完了
           }
         } else {
@@ -88,12 +124,28 @@ export default function SettlementModal({ open, onClose, depositSig, memoId, exp
         setDebugInfo(`Max polls reached (${maxPolls}) - Stopping`)
         setError('Settlement timeout - maximum attempts reached')
         setPhase('failed')
+        showNotification(
+          'Settlement Timeout ⏰',
+          'Settlement check timed out after 10 minutes. Please try again.',
+          '/favicon.ico'
+        )
         return
       }
       
+      // Start countdown for next poll
+      setNextPollIn(pollInterval / 1000)
+      let countdown = pollInterval / 1000
+      countdownId = setInterval(() => {
+        countdown--
+        setNextPollIn(countdown)
+        if (countdown <= 0) {
+          clearInterval(countdownId)
+        }
+      }, 1000)
+      
       // Continue polling if not stopped
       if (!stop) {
-        timeoutId = setTimeout(poll, 2000)
+        timeoutId = setTimeout(poll, pollInterval)
       }
     }
     
@@ -104,6 +156,7 @@ export default function SettlementModal({ open, onClose, depositSig, memoId, exp
       console.log(`[SettlementModal] Cleaning up settlement check for: ${depositSig}`)
       stop = true 
       if (timeoutId) clearTimeout(timeoutId)
+      if (countdownId) clearInterval(countdownId)
     }
   }, [open, depositSig, since])
 
@@ -116,7 +169,11 @@ export default function SettlementModal({ open, onClose, depositSig, memoId, exp
       setError(undefined)
       setPollCount(0)
       setLastPollTime(Date.now())
+      setNextPollIn(60)
       setDebugInfo('Modal opened')
+    } else {
+      // Clean up when modal closes
+      setNextPollIn(60)
     }
   }, [open, depositSig])
 
@@ -144,19 +201,29 @@ export default function SettlementModal({ open, onClose, depositSig, memoId, exp
             <b>{expectedText}</b>
           </div>}
 
-          {/* Debug Information */}
+          {/* Status Information */}
           <div className="bg-[#10151f] border border-[#243047] rounded-lg p-3 mt-2">
-            <div className="text-sm text-[#8b98a5] mb-2">Debug Info:</div>
+            <div className="text-sm text-[#8b98a5] mb-2">Status:</div>
             <div className="text-xs font-mono">{debugInfo}</div>
             <div className="text-xs text-[#8b98a5] mt-1">
-              Polls: {pollCount} | Time: {Math.round((Date.now() - since) / 1000)}s
+              Polls: {pollCount}/10 | Time: {Math.round((Date.now() - since) / 1000)}s
             </div>
           </div>
 
-          {phase === 'pending' && <div className="flex items-center gap-2.5 mt-2">
-            <div className="w-4 h-4 rounded-full border-2 border-[#385989] border-t-transparent animate-spin" />
-            <div>Waiting for settlement (backend)...</div>
-          </div>}
+          {phase === 'pending' && (
+            <div className="mt-2 space-y-2">
+              <div className="flex items-center gap-2.5">
+                <div className="w-4 h-4 rounded-full border-2 border-[#385989] border-t-transparent animate-spin" />
+                <div>Waiting for settlement processing...</div>
+              </div>
+              <div className="text-sm text-[#8b98a5]">
+                Next check in: <span className="font-mono text-[#8ab4ff]">{nextPollIn}s</span>
+              </div>
+              <div className="text-xs text-[#8b98a5]">
+                Settlement processor runs every 2 minutes. We check every minute.
+              </div>
+            </div>
+          )}
 
           {phase === 'paid' && <div className="flex items-center gap-2.5 mt-2">
             <div className="text-lg font-bold">✅ Settled</div>
@@ -169,15 +236,43 @@ export default function SettlementModal({ open, onClose, depositSig, memoId, exp
           </div>}
         </div>
 
-        <footer className="flex justify-end gap-2 p-3 px-5 border-t border-[#1d2430]">
-          {phase === 'pending'
-            ? <button className="bg-[#1c2533] border border-[#2a3953] text-[#c7d0db] px-4 py-2.5 rounded-lg cursor-pointer hover:bg-[#2a3953] transition-colors" onClick={()=>{
-                console.log(`[SettlementModal] Manual refresh requested`)
-                setSince(Date.now())
-                setPollCount(0)
-                setDebugInfo('Manual refresh triggered')
-              }}>Check again</button>
-            : <button className="bg-blue-500 border-none text-white px-4 py-2.5 rounded-lg cursor-pointer hover:bg-blue-600 transition-colors" onClick={onClose}>Close</button>}
+        <footer className="flex justify-between items-center p-3 px-5 border-t border-[#1d2430]">
+          {phase === 'pending' && (
+            <div className="text-xs text-[#8b98a5]">
+              You can close this modal and check back later. You'll get a notification when complete.
+            </div>
+          )}
+          <div className="flex gap-2">
+            {phase === 'pending' ? (
+              <>
+                <button 
+                  className="bg-[#1c2533] border border-[#2a3953] text-[#c7d0db] px-4 py-2.5 rounded-lg cursor-pointer hover:bg-[#2a3953] transition-colors" 
+                  onClick={()=>{
+                    console.log(`[SettlementModal] Manual refresh requested`)
+                    setSince(Date.now())
+                    setPollCount(0)
+                    setNextPollIn(60)
+                    setDebugInfo('Manual refresh triggered')
+                  }}
+                >
+                  Check Now
+                </button>
+                <button 
+                  className="bg-[#2a3953] border border-[#3a4a63] text-[#c7d0db] px-4 py-2.5 rounded-lg cursor-pointer hover:bg-[#3a4a63] transition-colors" 
+                  onClick={onClose}
+                >
+                  Close & Notify
+                </button>
+              </>
+            ) : (
+              <button 
+                className="bg-blue-500 border-none text-white px-4 py-2.5 rounded-lg cursor-pointer hover:bg-blue-600 transition-colors" 
+                onClick={onClose}
+              >
+                Close
+              </button>
+            )}
+          </div>
         </footer>
       </div>
     </div>

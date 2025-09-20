@@ -1,29 +1,35 @@
 {
 	"main": ".open-next/worker.js",
 	"name": "axis-protocol",
-	"compatibility_date": "2025-03-25",
+	"compatibility_date": "2025-09-15",
 	"compatibility_flags": [
 		"nodejs_compat"
 	],
-  "account_id": "d637410df2e8f923e3fe6b63955a283b",
+	"account_id": "d637410df2e8f923e3fe6b63955a283b",
 	"assets": {
 		"directory": ".open-next/assets",
 		"binding": "ASSETS"
 	},
-  "observability": {
-    "enabled": true
-  },
-  "vars": {
-    "WEBHOOK_DEBUG": "true",
-    "WEBHOOK_FAST_MODE": "true",
-    "SOLANA_RPC_URL": "https://api.devnet.solana.com",
-    "USDC_DEV_MINT": "Gh9ZwEmdLJ8DscKNTkTqPbNwLNNBjuSzaG9Vp2KGtKJr",
-    "TREASURY_USDC_ATA": "GPrfbGCK2rBEYL2jy7mMq9pYBht1tTss6ZfLUwU1jxrB",
-    "AXIS_MINT_2022": "6XJVFiPQZ9pAa6Cuhcm6jbHtV3G3ZjK3VZ2HNTanpAQ1",
-    "AXIS_DECIMALS": "9",
-    "TREASURY_OWNER": "BTcWoRe6Z9VaCPCxrcr5dQmn8cA8KNHpFdgJEVopSBsj",
-    "PYTH_PRICE_IDS": "[\"e62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43\",\"ff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace\",\"ef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d\",\"2f95862b045670cd22bee3114c39763a4a08beeb663b145d283c31d7d1101c4f\",\"ec5d399846a9209f3fe5881d70aae9268c94339ff9817e8d18ff19fa05eea1c8\",\"dcef50dd0a4cd2dcc17e45df1676dcb336a11a61c69df7a0299b0150c672d25c\",\"2a01deaec9e51a579277b34b122399984d0bbf57e2458a7e42fecd2829867a0d\",\"93da3352f9f1d105fdfe4971cfa80e9dd777bfc5d0f683ebb6e1294b92137bb7\",\"67aed5a24fdad045475e7195c98a98aea119c763f272d4523f5bac93a4f33c2b\",\"23d7315113f5b1d3ba7a83604c44b94d79f4fd69af77f804fc7f920a6dc65744\"]"
-  },
+	"observability": {
+		"enabled": true
+	},
+	"kv_namespaces": [
+		{
+			"binding": "SETTLEMENTS",
+			"id": "a112c704d42f44f690864396556857d8"
+		}
+	],
+	"vars": {
+		"WEBHOOK_DEBUG": "true",
+		"WEBHOOK_FAST_MODE": "true",
+		"SOLANA_RPC_URL": "https://api.devnet.solana.com",
+		"USDC_DEV_MINT": "Gh9ZwEmdLJ8DscKNTkTqPbNwLNNBjuSzaG9Vp2KGtKJr",
+		"TREASURY_USDC_ATA": "GPrfbGCK2rBEYL2jy7mMq9pYBht1tTss6ZfLUwU1jxrB",
+		"AXIS_MINT_2022": "6XJVFiPQZ9pAa6Cuhcm6jbHtV3G3ZjK3VZ2HNTanpAQ1",
+		"AXIS_DECIMALS": "9",
+		"TREASURY_OWNER": "BTcWoRe6Z9VaCPCxrcr5dQmn8cA8KNHpFdgJEVopSBsj",
+		"PYTH_PRICE_IDS": "[\"e62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43\",\"ff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace\",\"ef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d\",\"2f95862b045670cd22bee3114c39763a4a08beeb663b145d283c31d7d1101c4f\",\"ec5d399846a9209f3fe5881d70aae9268c94339ff9817e8d18ff19fa05eea1c8\",\"dcef50dd0a4cd2dcc17e45df1676dcb336a11a61c69df7a0299b0150c672d25c\",\"2a01deaec9e51a579277b34b122399984d0bbf57e2458a7e42fecd2829867a0d\",\"93da3352f9f1d105fdfe4971cfa80e9dd777bfc5d0f683ebb6e1294b92137bb7\",\"67aed5a24fdad045475e7195c98a98aea119c763f272d4523f5bac93a4f33c2b\",\"23d7315113f5b1d3ba7a83604c44b94d79f4fd69af77f804fc7f920a6dc65744\"]"
+	},
 	"services": [
 		{
 			"binding": "WORKER_SELF_REFERENCE",
@@ -46,14 +52,17 @@
 			]
 		}
 	],
+	"limits": {
+		"cpu_ms": 300000
+	},
 	"routes": [
-    {
-      "pattern": "axis-protocol.xyz",
-      "custom_domain": true
-    },
-    {
-      "pattern": "www.axis-protocol.xyz",
-      "custom_domain": true
-    }
-  ]
+		{
+			"pattern": "axis-protocol.xyz",
+			"custom_domain": true
+		},
+		{
+			"pattern": "www.axis-protocol.xyz",
+			"custom_domain": true
+		}
+	]
 }
