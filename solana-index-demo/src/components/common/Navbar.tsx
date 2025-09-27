@@ -12,7 +12,7 @@ const Navbar = () => {
   const pathname = usePathname();
 
   const dashboardTabs = [
-    { id: 'mint', label: 'Mint' },
+    { id: 'buy', label: 'Buy' },
     { id: 'market', label: 'Market' },
     { id: 'dashboard', label: 'Index' },
     { id: 'portfolio', label: 'Portfolio' },
