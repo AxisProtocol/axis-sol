@@ -19,11 +19,11 @@ const Sidebar = ({ activeTab, onTabChange }: SidebarProps) => {
 
   const navigationItems = [
     { id: 'home', label: 'Home', icon: <Home className="w-5 h-5" /> },
-    { id: 'mint', label: 'Mint', icon: <Coins className="w-5 h-5" /> },
+    { id: 'mint', label: 'Buy', icon: <Coins className="w-5 h-5" /> },
     { id: 'market', label: 'Market', icon: <BarChart3 className="w-5 h-5" /> },
     { id: 'dashboard', label: 'Index', icon: <Zap className="w-5 h-5" /> },
     { id: 'portfolio', label: 'Portfolio', icon: <Briefcase className="w-5 h-5" /> },
-    { id: 'challenge', label: 'Challenge', icon: <Target className="w-5 h-5" />, external: true },
+    
   ];
 
   const handleTabClick = (tabId: string, external?: boolean) => {

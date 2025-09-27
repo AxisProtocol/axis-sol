@@ -23,9 +23,9 @@ const HomeTab = ({ echartsData }: HomeTabProps) => {
   const featureCards = [
     {
       icon: <Coins className="w-6 h-6 mx-auto text-orange-400" />,
-      title: 'Mint Index',
+      title: 'Buy Index',
       subtitle: 'Buy AXIS Tokens',
-      description: 'Deposit USDC to mint AXIS tokens at current index price',
+      description: 'Deposit USDC to buy AXIS tokens at current index price',
       action: () => {
         const event = new CustomEvent('dashboard-tab-change', {
           detail: { tabId: 'mint' }

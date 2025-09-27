@@ -61,13 +61,21 @@ const MintTab = ({ echartsData }: MintTabProps) => {
             <ModernButton
               variant="primary"
               size="lg"
-              gradient
               onClick={() => setBuyModalOpen(true)}
-              className="w-full"
+              className="
+                w-full
+                font-semibold py-3 px-5 rounded-xl
+                bg-gradient-to-r from-blue-600 to-purple-600
+                hover:from-blue-700 hover:to-purple-700
+                text-white shadow-lg hover:shadow-purple-400/40
+                relative overflow-hidden
+                transition transform duration-300
+                hover:scale-105
+              "
             >
-              Buy
-
+              <span className="relative z-10">Buy</span>
             </ModernButton>
+
           </ModernCard>
 
           {/* Burn Card */}
