@@ -28,6 +28,15 @@ interface MarketTabProps {
   events: any[];
   error?: string;
 }
+type CoinMarket = {
+  id: string;
+  symbol: string;
+  name: string;
+  current_price: number;
+  market_cap: number;
+  price_change_percentage_24h: number;
+  image: string;
+};
 
 const sharedMarketData: MarketData[] = [
   {
@@ -156,8 +165,8 @@ const MarketTab = ({}: MarketTabProps) => {
 
     const ids = Object.values(CG_IDS).join(',');
     const url =
-      `https://api.coingecko.com/api/v3/simple/price` +
-      `?ids=${encodeURIComponent(ids)}&vs_currencies=usd`;
+      `https://api.coingecko.com/api/v3/coins/markets` +
+      `?vs_currency=usd&ids=${encodeURIComponent(ids)}`;
 
     (async () => {
       try {
@@ -165,17 +174,24 @@ const MarketTab = ({}: MarketTabProps) => {
           headers: { Accept: 'application/json' },
         });
         if (!res.ok) throw new Error(`CG ${res.status}`);
-        const json = (await res.json()) as Record<string, { usd: number }>;
+        const json = (await res.json()) as CoinMarket[];
 
         setMarketData((prev) =>
           prev.map((tok) => {
             const id = CG_IDS[tok.symbol];
-            const price = json[id]?.usd;
-            return typeof price === 'number' ? { ...tok, price } : tok;
+            const coin = json.find((c) => c.id === id);
+            if (!coin) return tok;
+            return {
+              ...tok,
+              price: coin.current_price,
+              change24h: coin.price_change_percentage_24h,
+              marketCap: coin.market_cap,
+              imageUrl: coin.image,
+            };
           })
         );
       } catch (e) {
-        console.error('coingecko price fetch failed', e);
+        console.error('coingecko market fetch failed', e);
       }
     })();
   }, []);
