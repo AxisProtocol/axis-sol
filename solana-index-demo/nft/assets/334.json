@@ -1,0 +1,39 @@
+{
+  "name": "Axis OG Badge #335",
+  "symbol": "AXISOG",
+  "description": "Non-transferable OG badge for early Discord OG members. Grants access to future benefits and incentives on mainnet.",
+  "image": "og_badge.png",
+  "attributes": [
+    {
+      "trait_type": "Badge",
+      "value": "OG"
+    },
+    {
+      "trait_type": "Transferability",
+      "value": "Non-Transferable"
+    },
+    {
+      "trait_type": "Whitelist",
+      "value": "Discord OG"
+    },
+    {
+      "trait_type": "Edition",
+      "value": "335/1000"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "og_badge.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
+  },
+  "collection": {
+    "name": "Axis OG Collection",
+    "family": "AXIS"
+  },
+  "external_url": "https://axis-protocol.xyz/claim",
+  "seller_fee_basis_points": 0
+}

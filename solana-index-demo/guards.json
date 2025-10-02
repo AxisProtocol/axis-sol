@@ -1,0 +1,5 @@
+{
+  "default": {
+    "mintLimit": { "id": 1, "limit": 1 }
+  }
+}

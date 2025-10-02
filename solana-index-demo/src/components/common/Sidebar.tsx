@@ -25,15 +25,10 @@ const Sidebar = ({ activeTab, onTabChange }: SidebarProps) => {
     { id: 'portfolio', label: 'Portfolio', icon: <Briefcase className="w-5 h-5" /> },
     
   ];
-
-  const handleTabClick = (tabId: string, external?: boolean) => {
-    if (external) {
-      window.location.href = '/challenge';
-    } else {
-      onTabChange(tabId);
-      setIsMobileOpen(false); // Close mobile menu when tab is selected
-    }
-  };
+  const handleTabClick = (tabId: string) => {
+       onTabChange(tabId);
+       setIsMobileOpen(false);
+     };
 
   return (
     <>
@@ -100,7 +95,7 @@ const Sidebar = ({ activeTab, onTabChange }: SidebarProps) => {
             {navigationItems.map((item) => (
               <motion.button
                 key={item.id}
-                onClick={() => handleTabClick(item.id, item.external)}
+                onClick={() => handleTabClick(item.id)}
                 className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg transition-all duration-200 ${activeTab === item.id
                   ? 'bg-primary/20 text-primary'
                   : 'text-base-content/70 hover:text-base-content hover:bg-base-200/50'

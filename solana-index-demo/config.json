@@ -1,0 +1,24 @@
+{
+  "price": 0,
+  "number": 1000,
+  "symbol": "AXISOG",
+  "sellerFeeBasisPoints": 0,
+  "isMutable": false,
+  "isSequential": true,
+  "retainAuthority": true,
+  "ruleSet": null,
+  "creators": [
+    {
+      "address": "4N2CNF2FxvW2dAmRLGovJFw72izfKbnp63qGz63Ve7RT",
+      "share": 100
+    }
+  ],
+  "guards": {
+    "default": {
+     "mintLimit": { "id": 1, "limit": 1 }
+    }
+  },
+  "uploadMethod": "bundlr",
+  "storage": "bundlr",
+  "bundlrPriceMint": "So11111111111111111111111111111111111111112"
+}

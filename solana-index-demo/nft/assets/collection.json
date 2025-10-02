@@ -1,0 +1,12 @@
+{
+    "name": "Axis OG Badge Collection",
+    "symbol": "AXISOG",
+    "description": "Exclusive OG Badge collection for the first 1000 supporters of Axis Protocol.",
+    "image": "collection.png",
+    "attributes": [],
+    "properties": {
+      "files": [{ "uri": "collection.png", "type": "image/png" }],
+      "category": "image"
+    }
+  }
+  
