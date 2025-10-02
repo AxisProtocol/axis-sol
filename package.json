@@ -1,0 +1,5 @@
+{
+	"dependencies": {
+		"@bonfida/spl-name-service": "^3.0.16"
+	}
+}

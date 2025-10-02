@@ -3,21 +3,161 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-import { LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js';
+import {
+  LAMPORTS_PER_SOL,
+  PublicKey,
+  Transaction,
+  SystemProgram,
+  clusterApiUrl,
+  Connection,
+} from '@solana/web3.js';
+import {
+  getAllDomains,
+  reverseLookup,
+  devnet as snsDev,
+} from '@bonfida/spl-name-service';
+// splana-SPLトークン発行ライブラリ
+import {
+  NATIVE_MINT,
+  TOKEN_PROGRAM_ID,
+  ASSOCIATED_TOKEN_PROGRAM_ID,
+  getAssociatedTokenAddressSync,
+  createAssociatedTokenAccountInstruction,
+  createSyncNativeInstruction,
+} from '@solana/spl-token';
 
 function shortAddr(pk: PublicKey | null) {
-  if (!pk) return ''
-  const s = pk.toBase58()
-  return `${s.slice(0, 4)}…${s.slice(-4)}`
+  if (!pk) return '';
+  const s = pk.toBase58();
+  return `${s.slice(0, 4)}…${s.slice(-4)}`;
 }
 
 const SidebarWalletButton = () => {
   const { connection } = useConnection();
   const {
-    publicKey, connected, connecting,
-    connect, disconnect, wallets, wallet, select
+    publicKey,
+    connected,
+    connecting,
+    connect,
+    disconnect,
+    wallets,
+    wallet,
+    select,
   } = useWallet();
 
+  // SNSsystem
+  const [domains, setDomains] = useState<string[]>([]);
+  const [domainsLoading, setDomainsLoading] = useState(false);
+  const [domainsError, setDomainsError] = useState<string | null>(null);
+  const [desiredName, setDesiredName] = useState('');
+  const [regBusy, setRegBusy] = useState(false);
+  const [regMsg, setRegMsg] = useState<string | null>(null);
+
+  async function ensureWSOL(
+    connection: Connection,
+    owner: PublicKey,
+    payer: any, // wallet.adapter
+    amountLamports: number
+  ) {
+    const ata = getAssociatedTokenAddressSync(
+      NATIVE_MINT,
+      owner,
+      true, // allowOwnerOffCurve
+      TOKEN_PROGRAM_ID, // ★ 明示
+      ASSOCIATED_TOKEN_PROGRAM_ID // ★ 明示
+    );
+
+    const ixs: any[] = [];
+    const ataInfo = await connection.getAccountInfo(ata);
+
+    // 1) ATA がなければ作成
+    if (!ataInfo) {
+      ixs.push(
+        createAssociatedTokenAccountInstruction(
+          owner, // payer
+          ata, // ata
+          owner, // owner
+          NATIVE_MINT, // mint
+          TOKEN_PROGRAM_ID, // ★ 明示
+          ASSOCIATED_TOKEN_PROGRAM_ID // ★ 明示
+        )
+      );
+    }
+
+    // 2) SOL を入れて同期（= wrap）
+    ixs.push(
+      SystemProgram.transfer({
+        fromPubkey: owner,
+        toPubkey: ata,
+        lamports: amountLamports,
+      }),
+      createSyncNativeInstruction(ata, TOKEN_PROGRAM_ID) // ★ 明示
+    );
+
+    const tx = new Transaction().add(...ixs);
+    tx.feePayer = owner;
+
+    // デバッグ（開発中のみ）：すべてのixに programId が入っているか確認
+    // console.log("ix programIds", ixs.map(ix => ix?.programId?.toBase58?.()));
+
+    const sig = await payer.sendTransaction(tx, connection);
+    await connection.confirmTransaction(sig, 'confirmed');
+    return ata;
+  }
+
+  // === 登録トランザクション ===
+  async function onRegister() {
+    if (!connection || !publicKey || !wallet?.adapter) return;
+    try {
+      setRegBusy(true);
+      setRegMsg(null);
+
+      const raw = desiredName.trim().replace(/\.sol$/i, '');
+      if (!raw || !/^[a-z0-9._-]+$/i.test(raw)) {
+        throw new Error('Invalid name');
+      }
+
+      // 0.1 SOL を wSOL 化（必要なら増やしてOK）
+      const wsolAta = await ensureWSOL(
+        connection,
+        publicKey,
+        wallet.adapter,
+        0.1 * LAMPORTS_PER_SOL
+      );
+
+      // devnetの登録Ix（単発 or 配列どちらでも対応）
+      const regIxOrIxs = await snsDev.bindings.registerDomainNameV2(
+        connection,
+        raw,
+        1000, // space
+        publicKey, // payer
+        wsolAta, // from
+        NATIVE_MINT // mint (wSOL)
+      );
+
+      const tx2 = new Transaction();
+      if (Array.isArray(regIxOrIxs)) {
+        tx2.add(...regIxOrIxs);
+      } else if (regIxOrIxs) {
+        tx2.add(regIxOrIxs);
+      } else {
+        throw new Error('registerDomainNameV2 returned no instruction');
+      }
+      tx2.feePayer = publicKey;
+
+      const sig2 = await wallet.adapter.sendTransaction(tx2, connection);
+      await connection.confirmTransaction(sig2, 'confirmed');
+
+      setDesiredName('');
+      setDomains((d) => (d.includes(`${raw}.sol`) ? d : [`${raw}.sol`, ...d]));
+    } catch (e: any) {
+      setRegMsg(`Error: ${e?.message ?? String(e)}`);
+    } finally {
+      setRegBusy(false);
+    }
+  }
+
+  // menu
   const [menuOpen, setMenuOpen] = useState(false);
   const [solBalance, setSolBalance] = useState<number | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -25,27 +165,69 @@ const SidebarWalletButton = () => {
   const network = useMemo(() => 'Devnet', []);
   const explorer = publicKey
     ? `https://solscan.io/account/${publicKey.toBase58()}?cluster=devnet`
-    : 'https://solscan.io/?cluster=devnet'
+    : 'https://solscan.io/?cluster=devnet';
 
   // SOL 残高（任意表示）
   useEffect(() => {
-    let sub = 0
+    let sub = 0;
     async function run() {
-      if (!connection || !publicKey) { setSolBalance(null); return }
+      if (!connection || !publicKey) {
+        setSolBalance(null);
+        return;
+      }
       try {
-        const lamports = await connection.getBalance(publicKey, 'confirmed')
-        setSolBalance(lamports / LAMPORTS_PER_SOL)
+        const lamports = await connection.getBalance(publicKey, 'confirmed');
+        setSolBalance(lamports / LAMPORTS_PER_SOL);
         // 口座変更を購読（簡易）
         sub = connection.onAccountChange(
           publicKey,
           (acc) => setSolBalance(acc.lamports / LAMPORTS_PER_SOL),
           'confirmed'
-        )
-      } catch {/* noop */}
+        );
+      } catch {
+        /* noop */
+      }
     }
-    run()
-    return () => { if (sub) connection.removeAccountChangeListener(sub) }
-  }, [connection, publicKey])
+    run();
+    return () => {
+      if (sub) connection.removeAccountChangeListener(sub);
+    };
+  }, [connection, publicKey]);
+
+  // SNS ドメイン取得
+  useEffect(() => {
+    let cancelled = false;
+    async function fetchDomains() {
+      if (!connection || !publicKey) {
+        setDomains([]);
+        return;
+      }
+      setDomainsLoading(true);
+      setDomainsError(null);
+      try {
+        const keys = await getAllDomains(connection, publicKey);
+        const names = await Promise.all(
+          keys.map((k) => reverseLookup(connection, k).catch(() => null))
+        );
+        if (!cancelled) {
+          setDomains(
+            names
+              .filter((n): n is string => !!n)
+              .map((n) => (n.endsWith('.sol') ? n : `${n}.sol`))
+          );
+        }
+      } catch (e: any) {
+        if (!cancelled)
+          setDomainsError(e?.message ?? 'Failed to fetch domains');
+      } finally {
+        if (!cancelled) setDomainsLoading(false);
+      }
+    }
+    fetchDomains();
+    return () => {
+      cancelled = true;
+    };
+  }, [connection, publicKey]);
 
   // 點擊外部關閉菜單
   useEffect(() => {
@@ -68,28 +250,28 @@ const SidebarWalletButton = () => {
     try {
       // 自前UIなので Phantom を自動選択（PhantomWalletAdapter を使っている前提）
       if (!wallet) {
-        const phantom = wallets.find(w => w.adapter.name === 'Phantom')
-        if (phantom) await select(phantom.adapter.name)
+        const phantom = wallets.find((w) => w.adapter.name === 'Phantom');
+        if (phantom) await select(phantom.adapter.name);
       }
-      await connect()
-      setMenuOpen(false)
+      await connect();
+      setMenuOpen(false);
     } catch (e) {
-      console.error('[SidebarWalletButton] connect error:', e)
+      console.error('[SidebarWalletButton] connect error:', e);
     }
   }
 
   async function handleDisconnect() {
     try {
-      await disconnect()
-      setMenuOpen(false)
+      await disconnect();
+      setMenuOpen(false);
     } catch (e) {
-      console.error('[SidebarWalletButton] disconnect error:', e)
+      console.error('[SidebarWalletButton] disconnect error:', e);
     }
   }
 
   function copyAddress() {
-    if (!publicKey) return
-    navigator.clipboard?.writeText(publicKey.toBase58()).catch(() => {})
+    if (!publicKey) return;
+    navigator.clipboard?.writeText(publicKey.toBase58()).catch(() => {});
   }
 
   // 非接続時のボタン
@@ -116,9 +298,11 @@ const SidebarWalletButton = () => {
           </span>
         </button>
 
-        <div className="mt-2 text-xs text-gray-400 text-center px-2 py-1 border border-white/15 rounded-md select-none">{network}</div>
+        <div className="mt-2 text-xs text-gray-400 text-center px-2 py-1 border border-white/15 rounded-md select-none">
+          {network}
+        </div>
       </div>
-    )
+    );
   }
 
   // 接続中のドロップダウン
@@ -127,35 +311,118 @@ const SidebarWalletButton = () => {
       <button
         type="button"
         className="w-full font-medium py-2.5 px-4 rounded-lg transition-all duration-200 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white"
-        onClick={() => setMenuOpen(v => !v)}
+        onClick={() => setMenuOpen((v) => !v)}
         aria-expanded={menuOpen}
         aria-controls="wallet-menu"
       >
-        <span className="inline-block w-2 h-2 rounded-full bg-white mr-2 animate-pulse" /> {shortAddr(publicKey)}
+        <span className="inline-block w-2 h-2 rounded-full bg-white mr-2 animate-pulse" />{' '}
+        {shortAddr(publicKey)}
       </button>
-      <div className="mt-2 text-xs text-gray-400 text-center px-2 py-1 border border-white/15 rounded-md select-none">{network}</div>
+      <div className="mt-2 text-xs text-gray-400 text-center px-2 py-1 border border-white/15 rounded-md select-none">
+        {network}
+      </div>
 
       {menuOpen && (
-        <div id="wallet-menu" role="menu" className="absolute left-0 bottom-[calc(100%+0.5rem)] w-full min-w-[280px] bg-gray-900/85 backdrop-blur-md border border-white/12 rounded-xl shadow-2xl shadow-black/45 overflow-hidden z-30">
+        <div
+          id="wallet-menu"
+          role="menu"
+          className="absolute left-0 bottom-[calc(100%+0.5rem)] w-full min-w-[280px] bg-gray-900/85 backdrop-blur-md border border-white/12 rounded-xl shadow-2xl shadow-black/45 overflow-hidden z-30"
+        >
           <div className="px-4 py-3 pb-2 border-b border-white/8">
-            <div className="font-mono text-gray-300 text-sm break-all">{publicKey?.toBase58()}</div>
+            <div className="font-mono text-gray-300 text-sm break-all">
+              {publicKey?.toBase58()}
+            </div>
+            {/* SNS ドメイン表示 */}
+            <div className="mt-1">
+              {domainsLoading ? (
+                <div className="text-xs text-gray-400">Resolving .sol…</div>
+              ) : domainsError ? (
+                <div className="text-xs text-red-400">{domainsError}</div>
+              ) : domains.length > 0 ? (
+                <div className="font-mono text-blue-400 font-bold text-sm break-all">
+                  {domains[0]}
+                </div>
+              ) : (
+                <div className="font-mono text-gray-500 text-sm break-all">
+                  No .sol on devnet
+                </div>
+              )}
+            </div>
+            {domainsError && (
+              <div className="mt-1 text-xs text-red-400">{domainsError}</div>
+            )}
+
             {solBalance != null && (
-              <div className="mt-1 text-green-300 font-semibold text-sm">{solBalance.toFixed(4)} SOL</div>
+              <div className="mt-1 text-green-300 font-semibold text-sm">
+                {solBalance.toFixed(4)} SOL
+              </div>
             )}
           </div>
-          <button role="menuitem" className="w-full text-left px-4 py-3 bg-transparent border-none text-gray-200 font-semibold cursor-pointer block no-underline hover:bg-white/6" onClick={copyAddress}>
+
+          <div
+            role="menuitem"
+            className="w-full px-4 py-3 bg-transparent block"
+          >
+            <div className="flex w-full">
+              <input
+                value={desiredName}
+                onChange={(e) => setDesiredName(e.target.value)}
+                placeholder="yourname"
+                className="
+        min-w-0 flex-1 h-10 px-3
+        bg-transparent text-white
+        border border-white/15
+        rounded-l-lg
+        outline-none
+        focus:border-white/30
+        placeholder:text-white/40
+      "
+              />
+              <button
+                onClick={onRegister}
+                disabled={regBusy || !desiredName}
+                className="
+        h-10 px-4
+        rounded-r-lg
+        font-semibold
+        bg-blue-600 hover:bg-blue-700
+        disabled:opacity-50 disabled:cursor-not-allowed
+        text-white
+        border border-l-0 border-white/15
+      "
+              >
+                {regBusy ? 'Registering…' : 'Get .sol'}
+              </button>
+            </div>
+          </div>
+          {regMsg && <div className="mt-1 text-xs text-gray-400">{regMsg}</div>}
+          <button
+            role="menuitem"
+            className="w-full text-left px-4 py-3 bg-transparent border-none text-gray-200 font-semibold cursor-pointer block no-underline hover:bg-white/6"
+            onClick={copyAddress}
+          >
             Copy address
           </button>
-          <a role="menuitem" className="w-full text-left px-4 py-3 bg-transparent border-none text-gray-200 font-semibold cursor-pointer block no-underline hover:bg-white/6" href={explorer} target="_blank" rel="noreferrer">
+          <a
+            role="menuitem"
+            className="w-full text-left px-4 py-3 bg-transparent border-none text-gray-200 font-semibold cursor-pointer block no-underline hover:bg-white/6"
+            href={explorer}
+            target="_blank"
+            rel="noreferrer"
+          >
             View on Solscan
           </a>
-          <button role="menuitem" className="w-full text-left px-4 py-3 bg-transparent border-none text-red-400 font-semibold cursor-pointer block no-underline hover:bg-white/6" onClick={handleDisconnect}>
+          <button
+            role="menuitem"
+            className="w-full text-left px-4 py-3 bg-transparent border-none text-red-400 font-semibold cursor-pointer block no-underline hover:bg-white/6"
+            onClick={handleDisconnect}
+          >
             Disconnect
           </button>
         </div>
       )}
     </div>
-  )
+  );
 };
 
 export default SidebarWalletButton;
