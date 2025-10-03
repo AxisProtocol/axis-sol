@@ -22,13 +22,14 @@ const Sidebar = ({ activeTab, onTabChange }: SidebarProps) => {
     { id: 'mint', label: 'Buy', icon: <Coins className="w-5 h-5" /> },
     { id: 'market', label: 'Market', icon: <BarChart3 className="w-5 h-5" /> },
     { id: 'dashboard', label: 'Index', icon: <Zap className="w-5 h-5" /> },
-    { id: 'portfolio', label: 'Portfolio', icon: <Briefcase className="w-5 h-5" /> },
-    
+    { id: 'portfolio', label: 'Portfolio', icon: <Briefcase className="w-5 h-5" /> }
   ];
+
   const handleTabClick = (tabId: string) => {
        onTabChange(tabId);
        setIsMobileOpen(false);
      };
+
 
   return (
     <>

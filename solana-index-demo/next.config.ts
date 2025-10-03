@@ -1,5 +1,5 @@
-import type { NextConfig } from 'next'
-import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
+import type { NextConfig } from 'next';
+import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare';
 
 // Initialize OpenNext for Cloudflare compatibility
 initOpenNextCloudflareForDev();
@@ -8,12 +8,16 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
 
   // ⬇︎ トップレベル。プロトコル無しの「ホスト名」だけを書く
-  allowedDevOrigins: [
-    '0351cfe3887d.ngrok-free.app',
-  ],
+  allowedDevOrigins: ['0351cfe3887d.ngrok-free.app'],
 
   images: {
     remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'coin-images.coingecko.com',
+        port: '',
+        pathname: '/coins/images/**',
+      },
       {
         protocol: 'https',
         hostname: 'assets.coingecko.com',
@@ -35,6 +39,6 @@ const nextConfig: NextConfig = {
     }
     return config;
   },
-}
+};
 
-export default nextConfig
+export default nextConfig;
