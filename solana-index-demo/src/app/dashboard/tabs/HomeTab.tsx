@@ -7,6 +7,7 @@ import { useIndexPrice } from '../../../hooks/useIndexPrice';
 import { Coins, BarChart3, Wallet, Heart, ArrowRight } from 'lucide-react';
 
 const WalletBar = dynamic(() => import('../../../components/crypto/WalletBar'), { ssr: false });
+const ClaimModal = dynamic(() => import('../../../components/modals/ClaimModal'), { ssr: false });
 
 interface HomeTabProps {
   initialLatestEntry: any;
@@ -18,6 +19,7 @@ interface HomeTabProps {
 
 const HomeTab = ({ echartsData }: HomeTabProps) => {
   const { data: indexPriceData, loading: priceLoading } = useIndexPrice();
+  const [claimOpen, setClaimOpen] = useState(false);
   const latestClose = (indexPriceData?.normalizedPrice ?? echartsData?.at(-1)?.[2] ?? 100) as number;
 
   const featureCards = [
@@ -56,6 +58,13 @@ const HomeTab = ({ echartsData }: HomeTabProps) => {
         });
         window.dispatchEvent(event);
       }
+    },
+    {
+      icon: <Heart className="w-6 h-6 mx-auto text-pink-500" />,
+      title: 'Claim NFT',
+      subtitle: 'Exclusive OG Badge',
+      description: 'Discord members can claim their limited edition OG NFT',
+      action: () => setClaimOpen(true),   // ✅ モーダルを開く
     }
   ];
 
@@ -161,6 +170,10 @@ const HomeTab = ({ echartsData }: HomeTabProps) => {
           )}
         </ModernCard>
       </div>
+      {claimOpen && (
+  <ClaimModal isOpen={claimOpen} onClose={() => setClaimOpen(false)} />
+)}
+
 
       {/* Quick Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">

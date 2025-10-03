@@ -26,9 +26,10 @@ const Sidebar = ({ activeTab, onTabChange }: SidebarProps) => {
   ];
 
   const handleTabClick = (tabId: string) => {
-    onTabChange(tabId);
-    setIsMobileOpen(false); // Close mobile menu when tab is selected
-  };
+       onTabChange(tabId);
+       setIsMobileOpen(false);
+     };
+
 
   return (
     <>

@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 
 import { PageLayout, ModernCard, GridLayout } from '../../components/common'
+import { useSearchParams } from 'next/navigation'
 
 const BuyModal = dynamic(() => import('@/components/dashboard/Modal/BuyModal'), { ssr: false })
 const BurnModal = dynamic(() => import('@/components/dashboard/Modal/BurnModal'), { ssr: false })
@@ -49,11 +50,19 @@ interface DashboardClientProps {
 }
 
 const DashboardClient = ({ initialLatestEntry, initialDailyChange, events, echartsData, error }: DashboardClientProps) => {
+  const searchParams = useSearchParams(); 
   const [assets,      setAssets]      = useState<RealTimeAsset[]>([])
   const [loading,     setLoading]     = useState(true)
   const [modalOpen,   setModalOpen]   = useState(false)
+  const [claimOpen,   setClaimOpen]   = useState(false)
   const [burnOpen,    setBurnOpen]    = useState(false)
   const [currentIdx,  setCurrentIdx]  = useState<number | null>(null)
+
+  useEffect(() => {
+       if (searchParams.get('claim') === '1') {
+          setClaimOpen(true);
+     }
+      }, [searchParams]);
 
   useEffect(() => {
     const es = new EventSource('/api/price-stream')
@@ -145,6 +154,8 @@ const DashboardClient = ({ initialLatestEntry, initialDailyChange, events, echar
               Burn Index
             </motion.button>
           </div>
+
+          
 
           {/* Portfolio Link */}
           <div className="flex justify-center">

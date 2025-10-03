@@ -98,24 +98,13 @@ const SidebarWalletButton = () => {
       <div className="relative w-full">
         <button
           type="button"
-          className="
-            w-full font-semibold py-3 px-5 rounded-xl
-            bg-gradient-to-r from-blue-600 to-purple-600
-            hover:from-blue-700 hover:to-purple-700
-            text-white shadow-lg hover:shadow-purple-400/40
-            relative overflow-hidden
-            transition transform duration-300
-            hover:scale-105
-          "
+          className="w-full font-medium py-2.5 px-4 rounded-lg transition-all duration-200 bg-gradient-to-r from-orange-500 to-blue-500 hover:from-orange-600 hover:to-blue-600 text-white"
           onClick={handleConnect}
           aria-busy={connecting}
           aria-label="Connect Solana wallet"
         >
-          <span className="relative z-10">
-            {connecting ? 'Connecting…' : 'Connect Wallet'}
-          </span>
+          {connecting ? 'Connecting…' : 'Connect Wallet'}
         </button>
-
         <div className="mt-2 text-xs text-gray-400 text-center px-2 py-1 border border-white/15 rounded-md select-none">{network}</div>
       </div>
     )
