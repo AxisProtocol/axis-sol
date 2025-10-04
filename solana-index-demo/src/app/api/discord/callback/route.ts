@@ -59,9 +59,20 @@ export async function GET(req: NextRequest) {
   const res = NextResponse.redirect(new URL('/dashboard?claim=1', req.url))
 
   res.cookies.set('discord_session', cookieValue, {
-    httpOnly: true, secure: true, sameSite: 'lax', maxAge: tokenJson.expires_in, path: '/',
+    httpOnly: true,
+    secure: true,
+    sameSite: 'lax',
+    maxAge: tokenJson.expires_in,
+    path: '/',
+    domain: '.axis-protocol.xyz',    // ★ 揃える
   });
-  // state クッキーは不要になったので削除
-  res.cookies.set('discord_oauth_state', '', { maxAge: 0, path: '/' });
-  return res;
+  
+  res.cookies.set('discord_oauth_state', '', {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'lax',
+    maxAge: 0,
+    path: '/',
+    domain: '.axis-protocol.xyz',    // ★ 揃える（削除も同条件で上書き）
+  });
 }
