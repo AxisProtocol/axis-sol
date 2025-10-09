@@ -66,7 +66,7 @@ export async function GET(req: NextRequest) {
     path: '/',
     domain: '.axis-protocol.xyz',    // ★ 揃える
   });
-  
+
   res.cookies.set('discord_oauth_state', '', {
     httpOnly: true,
     secure: true,
@@ -75,4 +75,6 @@ export async function GET(req: NextRequest) {
     path: '/',
     domain: '.axis-protocol.xyz',    // ★ 揃える（削除も同条件で上書き）
   });
+
+  return res;
 }
