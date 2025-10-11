@@ -25,6 +25,8 @@
     "@metaplex-foundation/umi-signer-wallet-adapters": "^1.4.1",
     "@metaplex-foundation/umi-web3js-adapters": "^1.4.1",
     "@opennextjs/cloudflare": "^1.6.5",
+    "@prisma/client": "^6.17.1",
+    "@prisma/extension-accelerate": "^2.0.2",
     "@pythnetwork/client": "^2.22.1",
     "@pythnetwork/hermes-client": "^2.0.0",
     "@solana/spl-token": "^0.4.13",
@@ -71,6 +73,8 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "daisyui": "^5.0.54",
+    "prisma": "^6.17.1",
+    "tsx": "^4.20.6",
     "typescript": "^5.8.3"
   },
   "packageManager": "pnpm@10.10.0+sha512.d615db246fe70f25dcfea6d8d73dee782ce23e2245e3c4f6f888249fb568149318637dca73c2c5c8ef2a4ca0d5657fb9567188bfab47f566d1ee6ce987815c39"
