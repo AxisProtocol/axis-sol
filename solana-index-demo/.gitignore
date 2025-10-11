@@ -42,3 +42,5 @@ next-env.d.ts
 
 # opennext
 .open-next
+
+/generated/prisma
