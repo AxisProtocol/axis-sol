@@ -44,3 +44,4 @@ next-env.d.ts
 .open-next
 
 /generated/prisma
+prisma/dev.db
