@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/common';
 import { validateEmail } from '@/utils/validation';
@@ -10,6 +10,14 @@ export default function WaitlistForm() {
   const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'exists' | 'error'>('idle');
   const [error, setError] = useState<string | null>(null);
+  const [count, setCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    fetch('/api/waitlist/count')
+      .then(r => r.json())
+      .then(d => setCount(d.count))
+      .catch(() => setCount(null));
+  }, []);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -43,6 +51,7 @@ export default function WaitlistForm() {
         setStatus('success');
         setEmail('');
         setConsent(false);
+        setCount(c => (c !== null ? c + 1 : c));
         return;
       }
       if (res.status === 409) {
@@ -73,6 +82,11 @@ export default function WaitlistForm() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, delay: 0.6 }}
     >
+      {count !== null && (
+        <p className="text-gray-300 text-sm">
+          {count.toLocaleString()} people have already joined 🚀
+        </p>
+      )}
       <div className="flex gap-4 justify-center flex-wrap">
         <input
           type="text"
