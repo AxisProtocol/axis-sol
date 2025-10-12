@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { validateEmail } from '@/utils/validation';
-import { Prisma } from '@prisma/client';
+import { Prisma } from '@prisma/client/edge';
 import crypto from 'crypto';
 
 function getClientIp(req: Request): string {
