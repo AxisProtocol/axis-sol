@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { validateEmail } from '@/utils/validation';
-import { Prisma } from '@prisma/client/edge';
 import crypto from 'crypto';
 
 function getClientIp(req: Request): string {
@@ -52,8 +51,8 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json({ ok: true }, { status: 201 });
-  } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === 'P2002') {
+  } catch (e: any) {
+    if (e && e.code === 'P2002') {
       return NextResponse.json({ ok: false, error: 'ALREADY_EXISTS' }, { status: 409 });
     }
     console.error('waitlist joining error: ', e);
