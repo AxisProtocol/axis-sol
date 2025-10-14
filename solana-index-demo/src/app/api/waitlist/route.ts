@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { getCloudflareContext } from '@opennextjs/cloudflare';
 import { getPrisma, prisma } from '@/lib/prisma';
 import { validateEmail } from '@/utils/validation';
 import crypto from 'crypto';
@@ -9,11 +10,7 @@ function getClientIp(req: Request): string {
   return req.headers.get('x-real-ip') || req.headers.get('cf-connecting-ip') || '';
 }
 
-export async function POST(
-  request: Request,
-  context: { params: Promise<unknown>; cloudflare?: { env?: CloudflareEnv } }
-) {
-  const { cloudflare } = context;
+export async function POST(request: Request) {
   let body: unknown;
 
   try {
@@ -43,7 +40,14 @@ export async function POST(
   const userAgent = request.headers.get('user-agent') || null;
 
   // Use D1 in production (Cloudflare), local SQLite in dev
-  const db = cloudflare?.env?.DB ? getPrisma(cloudflare.env.DB) : prisma;
+  let db;
+  try {
+    const { env } = getCloudflareContext();
+    db = env.DB ? getPrisma(env.DB) : prisma;
+  } catch {
+    // Fallback to local prisma if getCloudflareContext fails (e.g., in dev)
+    db = prisma;
+  }
 
   try {
     await db.waitlist.create({
