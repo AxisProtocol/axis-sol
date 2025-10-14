@@ -9,7 +9,9 @@
     "lint": "next lint",
     "test": "jest",
     "preview": "OPEN_NEXT_DEBUG=true opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "prisma generate && opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "deploy": "prisma generate && pnpm run db:migrate:prod && opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "db:migrate:prod": "wrangler d1 migrations apply axis_waitlist --remote",
+    "db:migrate:local": "wrangler d1 migrations apply axis_waitlist --local",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "test:webhook": "ts-node scripts/test-webhook.ts"
   },
