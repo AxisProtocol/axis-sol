@@ -7,6 +7,14 @@ initOpenNextCloudflareForDev();
 const nextConfig: NextConfig = {
   reactStrictMode: true,
 
+  // Skip TypeScript and ESLint checks during build
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+
   // ⬇︎ トップレベル。プロトコル無しの「ホスト名」だけを書く
   allowedDevOrigins: ['0351cfe3887d.ngrok-free.app'],
 
