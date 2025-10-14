@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
       headers: { Authorization: `Bearer ${access_token}` },
     })
     if (!userRes.ok) throw new Error('failed to fetch user')
-    const user = await userRes.json()
+    const user = await userRes.json() as { id: string; username: string; avatar?: string }
 
     // 参加ギルド一覧（要 scope=guilds）
     const guildsRes = await fetch('https://discord.com/api/users/@me/guilds', {
