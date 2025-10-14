@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
+    "test": "jest",
     "preview": "OPEN_NEXT_DEBUG=true opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "deploy": "prisma generate && opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "test:webhook": "ts-node scripts/test-webhook.ts"
   },
@@ -25,6 +26,8 @@
     "@metaplex-foundation/umi-signer-wallet-adapters": "^1.4.1",
     "@metaplex-foundation/umi-web3js-adapters": "^1.4.1",
     "@opennextjs/cloudflare": "^1.6.5",
+    "@prisma/client": "^6.17.1",
+    "@prisma/extension-accelerate": "^2.0.2",
     "@pythnetwork/client": "^2.22.1",
     "@pythnetwork/hermes-client": "^2.0.0",
     "@solana/spl-token": "^0.4.13",
@@ -67,10 +70,15 @@
     "wrangler": "^4.37.1"
   },
   "devDependencies": {
+    "@types/jest": "^30.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "daisyui": "^5.0.54",
+    "jest": "^30.2.0",
+    "prisma": "^6.17.1",
+    "ts-jest": "^29.4.5",
+    "tsx": "^4.20.6",
     "typescript": "^5.8.3"
   },
   "packageManager": "pnpm@10.10.0+sha512.d615db246fe70f25dcfea6d8d73dee782ce23e2245e3c4f6f888249fb568149318637dca73c2c5c8ef2a4ca0d5657fb9567188bfab47f566d1ee6ce987815c39"
