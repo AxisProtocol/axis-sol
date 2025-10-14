@@ -19,6 +19,14 @@
 			"id": "a112c704d42f44f690864396556857d8"
 		}
 	],
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "axis_waitlist",
+			"database_id": "9a506cf6-fda9-4ac7-97da-259864686209",
+			"migrations_dir": "prisma/migrations"
+		}
+	],
 	"vars": {
 		"WEBHOOK_DEBUG": "true",
 		"WEBHOOK_FAST_MODE": "true",

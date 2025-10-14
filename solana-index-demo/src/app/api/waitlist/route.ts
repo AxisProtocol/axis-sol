@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { getPrisma, prisma } from '@/lib/prisma';
 import { validateEmail } from '@/utils/validation';
 import crypto from 'crypto';
 
@@ -9,7 +9,11 @@ function getClientIp(req: Request): string {
   return req.headers.get('x-real-ip') || req.headers.get('cf-connecting-ip') || '';
 }
 
-export async function POST(request: Request) {
+export async function POST(
+  request: Request,
+  context: { params: Promise<unknown>; cloudflare?: { env?: CloudflareEnv } }
+) {
+  const { cloudflare } = context;
   let body: unknown;
 
   try {
@@ -38,8 +42,11 @@ export async function POST(request: Request) {
   const ipHash = ip ? crypto.createHash('sha256').update(`${ip}${salt}`).digest('hex') : null;
   const userAgent = request.headers.get('user-agent') || null;
 
+  // Use D1 in production (Cloudflare), local SQLite in dev
+  const db = cloudflare?.env?.DB ? getPrisma(cloudflare.env.DB) : prisma;
+
   try {
-    await prisma.waitlist.create({
+    await db.waitlist.create({
       data: {
         email: normalized,
         consentMarketing: !!consentMarketing,

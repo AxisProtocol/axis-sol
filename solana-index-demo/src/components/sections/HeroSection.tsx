@@ -47,14 +47,7 @@ const HeroSection = () => (
         Pitch Deck →
       </Button>
     </motion.div>
-    <motion.p
-      className="text-white font-extrabold tracking-tight leading-tight text-[clamp(1rem,5vw,2rem)] mt-15 mb-2"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 0.4 }}
-    >
-      Join the waitlist
-    </motion.p>
+
     <WaitlistForm />
   </div>
 );

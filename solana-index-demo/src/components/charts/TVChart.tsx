@@ -317,7 +317,7 @@ export default function TVChart({
         if (!res.ok) {
           console.error('[TVChart] /tv/history failed', { status: res.status, statusText: res.statusText });
         }
-        const data = await res.json();
+        const data = await res.json() as { s?: string; t?: number[]; c?: number[]; o?: number[]; h?: number[]; l?: number[]; v?: number[] };
         console.log('[TVChart] /tv/history response', { s: data?.s, points: Array.isArray(data?.t) ? data.t.length : null });
         if (data.s !== 'ok') {
           seriesRef.current.setData([]);
