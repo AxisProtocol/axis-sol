@@ -9,7 +9,11 @@ function getClientIp(req: Request): string {
   return req.headers.get('x-real-ip') || req.headers.get('cf-connecting-ip') || '';
 }
 
-export async function POST(request: Request, { cloudflare }: { cloudflare?: { env?: CloudflareEnv } }) {
+export async function POST(
+  request: Request,
+  context: { params: Promise<unknown>; cloudflare?: { env?: CloudflareEnv } }
+) {
+  const { cloudflare } = context;
   let body: unknown;
 
   try {
