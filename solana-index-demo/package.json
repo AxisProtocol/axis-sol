@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@axis-protocol/sdk": "^1.0.2",
+    "@cloudflare/next-on-pages": "^1.13.16",
     "@headlessui/react": "^2.2.9",
     "@jup-ag/api": "^6.0.44",
     "@metaplex-foundation/js": "^0.20.1",
@@ -28,6 +29,7 @@
     "@metaplex-foundation/umi-signer-wallet-adapters": "^1.4.1",
     "@metaplex-foundation/umi-web3js-adapters": "^1.4.1",
     "@opennextjs/cloudflare": "^1.6.5",
+    "@prisma/adapter-d1": "^6.17.1",
     "@prisma/client": "^6.17.1",
     "@prisma/extension-accelerate": "^2.0.2",
     "@pythnetwork/client": "^2.22.1",
