@@ -14,6 +14,8 @@
   },
   "dependencies": {
     "@axis-protocol/sdk": "^1.0.2",
+    "@bonfida/spl-name-service": "^3.0.16",
+    "@bonfida/sub-register": "^0.1.0",
     "@jup-ag/api": "^6.0.44",
     "@opennextjs/cloudflare": "^1.6.5",
     "@pythnetwork/client": "^2.22.1",

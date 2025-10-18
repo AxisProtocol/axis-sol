@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion } from 'framer-motion';
+import dynamic from 'next/dynamic';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import {
   LAMPORTS_PER_SOL,
@@ -11,6 +12,8 @@ import {
   clusterApiUrl,
   Connection,
 } from '@solana/web3.js';
+import UnifiedDashboard from '../../app/dashboard/UnifiedDashboard';
+import ModernButton from './ModernButton';
 import {
   getAllDomains,
   reverseLookup,
@@ -25,6 +28,11 @@ import {
   createAssociatedTokenAccountInstruction,
   createSyncNativeInstruction,
 } from '@solana/spl-token';
+import { P } from 'node_modules/framer-motion/dist/types.d-Cjd591yU';
+
+const SnsModal = dynamic(() => import('../dashboard/Modal/snsModal'), {
+  ssr: false,
+});
 
 function shortAddr(pk: PublicKey | null) {
   if (!pk) return '';
@@ -52,6 +60,7 @@ const SidebarWalletButton = () => {
   const [desiredName, setDesiredName] = useState('');
   const [regBusy, setRegBusy] = useState(false);
   const [regMsg, setRegMsg] = useState<string | null>(null);
+  const [snsOpen, setSnsOpen] = useState(false);
 
   async function ensureWSOL(
     connection: Connection,
@@ -162,7 +171,7 @@ const SidebarWalletButton = () => {
   const [solBalance, setSolBalance] = useState<number | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  const network = useMemo(() => 'Devnet', []);
+  const network = useMemo(() => 'devnet', []);
   const explorer = publicKey
     ? `https://solscan.io/account/${publicKey.toBase58()}?cluster=devnet`
     : 'https://solscan.io/?cluster=devnet';
@@ -194,14 +203,18 @@ const SidebarWalletButton = () => {
     };
   }, [connection, publicKey]);
 
-  // SNS ドメイン取得
+  /// SNS ドメイン取得
   useEffect(() => {
     let cancelled = false;
     async function fetchDomains() {
       if (!connection || !publicKey) {
+        // ✅ 未接続時は状態をクリアしてローディングも false に戻す
         setDomains([]);
+        setDomainsError(null);
+        setDomainsLoading(false);
         return;
       }
+
       setDomainsLoading(true);
       setDomainsError(null);
       try {
@@ -228,7 +241,6 @@ const SidebarWalletButton = () => {
       cancelled = true;
     };
   }, [connection, publicKey]);
-
   // 點擊外部關閉菜單
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -277,7 +289,7 @@ const SidebarWalletButton = () => {
   // 非接続時のボタン
   if (!connected) {
     return (
-      <div className="relative w-full">
+      <div className="w-full ">
         <button
           type="button"
           className="
@@ -297,10 +309,30 @@ const SidebarWalletButton = () => {
             {connecting ? 'Connecting…' : 'Connect Wallet'}
           </span>
         </button>
-
-        <div className="mt-2 text-xs text-gray-400 text-center px-2 py-1 border border-white/15 rounded-md select-none">
-          {network}
-        </div>
+        {snsOpen && (
+          <SnsModal
+            isOpen={snsOpen}
+            onClose={() => setSnsOpen(false)}
+            indexPrice={null}
+            onRegistered={(fqdn) => {
+              // 楽観更新で即反映（後でEffectでもう一度フェッチされる）
+              setDomains((d) => (d.includes(fqdn) ? d : [fqdn, ...d]));
+              setSnsOpen(false); // 念のためクローズ（モーダル側でも閉じるが二重OK）
+            }}
+          />
+        )}
+        {domains.length === 0 && !domainsLoading && (
+          <div className="relative w-full mt-4">
+            <ModernButton
+              variant="primary"
+              size="lg"
+              onClick={() => setSnsOpen(true)}
+              className="w-full font-semibold py-3 px-5 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-purple-400/40 transition transform duration-300 hover:scale-105"
+            >
+              Get own .sol
+            </ModernButton>
+          </div>
+        )}
       </div>
     );
   }
@@ -316,11 +348,36 @@ const SidebarWalletButton = () => {
         aria-controls="wallet-menu"
       >
         <span className="inline-block w-2 h-2 rounded-full bg-white mr-2 animate-pulse" />{' '}
-        {shortAddr(publicKey)}
+        {domains.length > 0 ? domains[0] : shortAddr(publicKey)}
       </button>
-      <div className="mt-2 text-xs text-gray-400 text-center px-2 py-1 border border-white/15 rounded-md select-none">
-        {network}
-      </div>
+      {domains.length === 0 && !domainsLoading && (
+        <div className="relative w-full mt-4">
+          <ModernButton
+            variant="primary"
+            size="lg"
+            onClick={() => setSnsOpen(true)}
+            className="w-full font-semibold py-3 px-5 rounded-xl
+                     bg-gradient-to-r from-blue-600 to-purple-600
+                     hover:from-blue-700 hover:to-purple-700
+                     text-white shadow-lg hover:shadow-purple-400/40
+                     transition transform duration-300 hover:scale-105"
+          >
+            Get own .sol
+          </ModernButton>
+        </div>
+      )}
+
+      {snsOpen && (
+        <SnsModal
+          isOpen={snsOpen}
+          onClose={() => setSnsOpen(false)}
+          indexPrice={null}
+          onRegistered={(fqdn) => {
+            setDomains((d) => (d.includes(fqdn) ? d : [fqdn, ...d]));
+            setSnsOpen(false);
+          }}
+        />
+      )}
 
       {menuOpen && (
         <div
@@ -332,22 +389,7 @@ const SidebarWalletButton = () => {
             <div className="font-mono text-gray-300 text-sm break-all">
               {publicKey?.toBase58()}
             </div>
-            {/* SNS ドメイン表示 */}
-            <div className="mt-1">
-              {domainsLoading ? (
-                <div className="text-xs text-gray-400">Resolving .sol…</div>
-              ) : domainsError ? (
-                <div className="text-xs text-red-400">{domainsError}</div>
-              ) : domains.length > 0 ? (
-                <div className="font-mono text-blue-400 font-bold text-sm break-all">
-                  {domains[0]}
-                </div>
-              ) : (
-                <div className="font-mono text-gray-500 text-sm break-all">
-                  No .sol on devnet
-                </div>
-              )}
-            </div>
+
             {domainsError && (
               <div className="mt-1 text-xs text-red-400">{domainsError}</div>
             )}
@@ -359,43 +401,6 @@ const SidebarWalletButton = () => {
             )}
           </div>
 
-          <div
-            role="menuitem"
-            className="w-full px-4 py-3 bg-transparent block"
-          >
-            <div className="flex w-full">
-              <input
-                value={desiredName}
-                onChange={(e) => setDesiredName(e.target.value)}
-                placeholder="yourname"
-                className="
-        min-w-0 flex-1 h-10 px-3
-        bg-transparent text-white
-        border border-white/15
-        rounded-l-lg
-        outline-none
-        focus:border-white/30
-        placeholder:text-white/40
-      "
-              />
-              <button
-                onClick={onRegister}
-                disabled={regBusy || !desiredName}
-                className="
-        h-10 px-4
-        rounded-r-lg
-        font-semibold
-        bg-blue-600 hover:bg-blue-700
-        disabled:opacity-50 disabled:cursor-not-allowed
-        text-white
-        border border-l-0 border-white/15
-      "
-              >
-                {regBusy ? 'Registering…' : 'Get .sol'}
-              </button>
-            </div>
-          </div>
-          {regMsg && <div className="mt-1 text-xs text-gray-400">{regMsg}</div>}
           <button
             role="menuitem"
             className="w-full text-left px-4 py-3 bg-transparent border-none text-gray-200 font-semibold cursor-pointer block no-underline hover:bg-white/6"
