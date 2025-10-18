@@ -15,6 +15,7 @@ const sectionVariants: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: 'easeInOut' } },
 };
 
+
 export default function IndexValueCard({ indexValue, dailyChange }: IndexValueCardProps) {
   return (
     <DashboardCard 
@@ -29,7 +30,7 @@ export default function IndexValueCard({ indexValue, dailyChange }: IndexValueCa
         <div className="text-4xl md:text-6xl font-bold leading-none bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
           <CountUp end={indexValue} decimals={2} duration={0.2} separator="," />
         </div>
-        
+
         {dailyChange !== null && (
           <div className={`text-2xl md:text-3xl font-semibold flex items-center gap-2 ${
             dailyChange >= 0 ? 'text-green-500' : 'text-red-500'

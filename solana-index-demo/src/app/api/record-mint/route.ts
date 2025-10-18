@@ -15,7 +15,12 @@ let mintRecords: MintRecord[] = []
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json()
+    const body = await request.json() as {
+      walletAddress?: string
+      tokenAmount?: number
+      indexType?: string
+      transactionHash?: string
+    }
     const { walletAddress, tokenAmount, indexType, transactionHash } = body
 
     // Validate required fields

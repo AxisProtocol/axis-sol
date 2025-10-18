@@ -1,52 +1,26 @@
 'use client';
 
-import dynamic from 'next/dynamic';
-import { useCallback, useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import dynamic from 'next/dynamic'
+import { useCallback, useEffect, useState } from 'react'
+import { motion } from 'framer-motion'
 
-import { PageLayout, ModernCard, GridLayout } from '../../components/common';
+import { PageLayout, ModernCard, GridLayout } from '../../components/common'
+import { useSearchParams } from 'next/navigation'
 
-const BuyModal = dynamic(
-  () => import('@/components/dashboard/Modal/BuyModal'),
-  { ssr: false }
-);
-const BurnModal = dynamic(
-  () => import('@/components/dashboard/Modal/BurnModal'),
-  { ssr: false }
-);
-const WalletBar = dynamic(() => import('@/components/crypto/WalletBar'), {
-  ssr: false,
-});
-const IndexValueCard = dynamic(
-  () => import('@/components/dashboard/IndexValueCard'),
-  { ssr: false }
-);
-const ConstituentsGrid = dynamic(
-  () => import('@/components/dashboard/ConstituentsGrid'),
-  { ssr: false }
-);
-const ChartSection = dynamic(
-  () => import('@/components/dashboard/ChartSection'),
-  { ssr: false }
-);
-const EventTimeline = dynamic(
-  () => import('@/components/dashboard/EventTimeline'),
-  { ssr: false }
-);
+const BuyModal = dynamic(() => import('@/components/dashboard/Modal/BuyModal'), { ssr: false })
+const BurnModal = dynamic(() => import('@/components/dashboard/Modal/BurnModal'), { ssr: false })
+const WalletBar = dynamic(() => import('@/components/crypto/WalletBar'), { ssr: false })
+const IndexValueCard = dynamic(() => import('@/components/dashboard/IndexValueCard'), { ssr: false })
+const ConstituentsGrid = dynamic(() => import('@/components/dashboard/ConstituentsGrid'), { ssr: false })
+const ChartSection = dynamic(() => import('@/components/dashboard/ChartSection'), { ssr: false })
+const EventTimeline = dynamic(() => import('@/components/dashboard/EventTimeline'), { ssr: false })
 
-const API_BASE = 'https://api.axis-protocol.xyz';
+const API_BASE = 'https://api.axis-protocol.xyz'
 
-type EChartsData = (string | number)[][];
+type EChartsData = (string | number)[][]
 
-interface LatestEntry {
-  created_at: string;
-  index_value: number;
-}
-interface MarketEvent {
-  event_date: string;
-  title: string;
-  description: string;
-}
+interface LatestEntry  { created_at: string; index_value: number }
+interface MarketEvent  { event_date: string; title: string; description: string }
 
 interface RealTimeAsset {
   symbol: string;
@@ -75,21 +49,23 @@ interface DashboardClientProps {
   error?: string;
 }
 
-const DashboardClient = ({
-  initialLatestEntry,
-  initialDailyChange,
-  events,
-  echartsData,
-  error,
-}: DashboardClientProps) => {
-  const [assets, setAssets] = useState<RealTimeAsset[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [burnOpen, setBurnOpen] = useState(false);
-  const [currentIdx, setCurrentIdx] = useState<number | null>(null);
+const DashboardClient = ({ initialLatestEntry, initialDailyChange, events, echartsData, error }: DashboardClientProps) => {
+  const searchParams = useSearchParams(); 
+  const [assets,      setAssets]      = useState<RealTimeAsset[]>([])
+  const [loading,     setLoading]     = useState(true)
+  const [modalOpen,   setModalOpen]   = useState(false)
+  const [claimOpen,   setClaimOpen]   = useState(false)
+  const [burnOpen,    setBurnOpen]    = useState(false)
+  const [currentIdx,  setCurrentIdx]  = useState<number | null>(null)
 
   useEffect(() => {
-    const es = new EventSource('/api/price-stream');
+       if (searchParams.get('claim') === '1') {
+          setClaimOpen(true);
+     }
+      }, [searchParams]);
+
+  useEffect(() => {
+    const es = new EventSource('/api/price-stream')
     es.onmessage = (ev) => {
       try {
         const msg = JSON.parse(ev.data);
@@ -172,6 +148,8 @@ const DashboardClient = ({
               Burn Index
             </motion.button>
           </div>
+
+          
 
           {/* Portfolio Link */}
           <div className="flex justify-center">
