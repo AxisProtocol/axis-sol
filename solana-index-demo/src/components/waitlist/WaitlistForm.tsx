@@ -14,9 +14,9 @@ export default function WaitlistForm() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    fetch('/api/waitlist/count')
+    fetch('https://api.axis-protocol.xyz/api/waitlist/count')
       .then(r => r.json())
-      .then(d => setCount(d.count))
+      .then((d: { count?: number }) => setCount(d.count ?? null))
       .catch(() => setCount(null));
   }, []);
 
@@ -48,9 +48,9 @@ export default function WaitlistForm() {
     setStatus('loading');
 
     try {
-      const res = await fetch('/api/waitlist', {
+      const res = await fetch('https://api.axis-protocol.xyz/api/waitlist', {
         method: 'POST',
-        headers: { 'content-type': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: normalized,
           consentMarketing: consent,
@@ -62,7 +62,11 @@ export default function WaitlistForm() {
         setStatus('success');
         setEmail('');
         setConsent(false);
-        setCount(c => (c !== null ? c + 1 : c));
+        // Refresh count from API
+        fetch('https://api.axis-protocol.xyz/api/waitlist/count')
+          .then(r => r.json())
+          .then((d: { count?: number }) => setCount(d.count ?? null))
+          .catch(() => {});
         return;
       }
       if (res.status === 409) {
@@ -70,8 +74,8 @@ export default function WaitlistForm() {
         return;
       }
 
-      const data = await res.json().catch(() => ({}));
-      setError(data?.error === 'INVALID_EMAIL'
+      const data = await res.json().catch(() => ({} as { error?: string }));
+      setError((data as { error?: string })?.error === 'INVALID_EMAIL'
         ? 'Invalid email address.'
         : 'Something went wrong. Please try again.');
       setStatus('error');
@@ -79,7 +83,7 @@ export default function WaitlistForm() {
       setError('Network error. Please try again.');
       setStatus('error');
     } finally {
-      setStatus((prev) => (prev === 'loading' ? 'idle' : prev));
+      setStatus((prev: 'idle' | 'loading' | 'success' | 'exists' | 'error') => (prev === 'loading' ? 'idle' : prev));
     }
   }
 
