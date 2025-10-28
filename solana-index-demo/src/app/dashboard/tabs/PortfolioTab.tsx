@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import dynamic from 'next/dynamic';
-import { ModernCard, GridLayout } from '../../../components/common';
-import Image from 'next/image';
+import { useState } from "react";
+import dynamic from "next/dynamic";
+import { ModernCard, GridLayout } from "../../../components/common";
+import Image from "next/image";
 import {
   Briefcase,
   ClipboardList,
@@ -11,10 +11,10 @@ import {
   Coins,
   Flame,
   RefreshCcw,
-} from 'lucide-react';
+} from "lucide-react";
 
 const PortfolioStats = dynamic(
-  () => import('../../../components/portfolio/PortfolioStats'),
+  () => import("../../../components/portfolio/PortfolioStats"),
   { ssr: false }
 );
 
@@ -54,11 +54,11 @@ const PortfolioTab = ({}: PortfolioTabProps) => {
   const [portfolioData, setPortfolioData] = useState<PortfolioData | null>({
     totalValue: 125000,
     totalChange: 8.5,
-    mintDate: '2024-01-15',
+    mintDate: "2024-01-15",
     tokens: [
       {
-        symbol: 'BTC',
-        name: 'Bitcoin',
+        symbol: "BTC",
+        name: "Bitcoin",
         allocation: 10,
         currentPrice: 43520.5,
         mintPrice: 42000,
@@ -66,16 +66,16 @@ const PortfolioTab = ({}: PortfolioTabProps) => {
         volume24h: 15.2e9,
         change24h: 2.5,
         changeSinceMint: 3.6,
-        icon: '₿',
+        icon: "₿",
         imageUrl:
-          'https://assets.coingecko.com/coins/images/1/large/bitcoin.png',
-        originalChainAddress: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
-        proofOfReserve: 'https://axis-protocol.xyz/404',
-        chain: 'Ethereum',
+          "https://assets.coingecko.com/coins/images/1/large/bitcoin.png",
+        originalChainAddress: "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        proofOfReserve: "https://axis-protocol.xyz/404",
+        chain: "Ethereum",
       },
       {
-        symbol: 'ETH',
-        name: 'Ethereum',
+        symbol: "ETH",
+        name: "Ethereum",
         allocation: 10,
         currentPrice: 2640.75,
         mintPrice: 2500,
@@ -83,16 +83,16 @@ const PortfolioTab = ({}: PortfolioTabProps) => {
         volume24h: 8.5e9,
         change24h: -1.2,
         changeSinceMint: 5.6,
-        icon: 'Ξ',
+        icon: "Ξ",
         imageUrl:
-          'https://assets.coingecko.com/coins/images/279/large/ethereum.png',
-        originalChainAddress: '0x0000000000000000000000000000000000000000',
-        proofOfReserve: 'https://axis-protocol.xyz/404',
-        chain: 'Ethereum',
+          "https://assets.coingecko.com/coins/images/279/large/ethereum.png",
+        originalChainAddress: "0x0000000000000000000000000000000000000000",
+        proofOfReserve: "https://axis-protocol.xyz/404",
+        chain: "Ethereum",
       },
       {
-        symbol: 'SOL',
-        name: 'Solana',
+        symbol: "SOL",
+        name: "Solana",
         allocation: 10,
         currentPrice: 98.45,
         mintPrice: 95,
@@ -100,16 +100,16 @@ const PortfolioTab = ({}: PortfolioTabProps) => {
         volume24h: 2.1e9,
         change24h: 5.8,
         changeSinceMint: 3.6,
-        icon: '◎',
+        icon: "◎",
         imageUrl:
-          'https://assets.coingecko.com/coins/images/4128/large/solana.png',
-        originalChainAddress: 'So11111111111111111111111111111111111111112',
-        proofOfReserve: 'https://axis-protocol.xyz/404',
-        chain: 'Solana',
+          "https://assets.coingecko.com/coins/images/4128/large/solana.png",
+        originalChainAddress: "So11111111111111111111111111111111111111112",
+        proofOfReserve: "https://axis-protocol.xyz/404",
+        chain: "Solana",
       },
       {
-        symbol: 'BNB',
-        name: 'BNB',
+        symbol: "BNB",
+        name: "BNB",
         allocation: 10,
         currentPrice: 305.2,
         mintPrice: 300,
@@ -117,16 +117,16 @@ const PortfolioTab = ({}: PortfolioTabProps) => {
         volume24h: 1.8e9,
         change24h: 1.1,
         changeSinceMint: 1.7,
-        icon: 'B',
+        icon: "B",
         imageUrl:
-          'https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png',
-        originalChainAddress: '0xB8c77482e45F1F44dE1745F52C74426C631bDD52',
-        proofOfReserve: 'https://axis-protocol.xyz/404',
-        chain: 'BSC',
+          "https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png",
+        originalChainAddress: "0xB8c77482e45F1F44dE1745F52C74426C631bDD52",
+        proofOfReserve: "https://axis-protocol.xyz/404",
+        chain: "BSC",
       },
       {
-        symbol: 'XRP',
-        name: 'Ripple',
+        symbol: "XRP",
+        name: "Ripple",
         allocation: 10,
         currentPrice: 0.6245,
         mintPrice: 0.6,
@@ -134,16 +134,16 @@ const PortfolioTab = ({}: PortfolioTabProps) => {
         volume24h: 1.2e9,
         change24h: -0.8,
         changeSinceMint: 4.1,
-        icon: 'X',
+        icon: "X",
         imageUrl:
-          'https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png',
-        originalChainAddress: 'rN7n7otQDd6FczFgLdSqtcsAUxDkw6fzRH',
-        proofOfReserve: 'https://axis-protocol.xyz/404',
-        chain: 'XRP Ledger',
+          "https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png",
+        originalChainAddress: "rN7n7otQDd6FczFgLdSqtcsAUxDkw6fzRH",
+        proofOfReserve: "https://axis-protocol.xyz/404",
+        chain: "XRP Ledger",
       },
       {
-        symbol: 'ADA',
-        name: 'Cardano',
+        symbol: "ADA",
+        name: "Cardano",
         allocation: 10,
         currentPrice: 0.4825,
         mintPrice: 0.45,
@@ -151,17 +151,17 @@ const PortfolioTab = ({}: PortfolioTabProps) => {
         volume24h: 890e6,
         change24h: 3.2,
         changeSinceMint: 7.2,
-        icon: '₳',
+        icon: "₳",
         imageUrl:
-          'https://assets.coingecko.com/coins/images/975/large/cardano.png',
+          "https://assets.coingecko.com/coins/images/975/large/cardano.png",
         originalChainAddress:
-          'addr1q9d8v2yhx69p8nxw8fv4j4tkvwe7ylvun2y3aqh0kcp9t6f3wk2r3qmxwqcx00tay7wlrfkk4z0w4fnycl3w2qssw5d0sqet',
-        proofOfReserve: 'https://axis-protocol.xyz/404',
-        chain: 'Cardano',
+          "addr1q9d8v2yhx69p8nxw8fv4j4tkvwe7ylvun2y3aqh0kcp9t6f3wk2r3qmxwqcx00tay7wlrfkk4z0w4fnycl3w2qssw5d0sqet",
+        proofOfReserve: "https://axis-protocol.xyz/404",
+        chain: "Cardano",
       },
       {
-        symbol: 'DOGE',
-        name: 'Dogecoin',
+        symbol: "DOGE",
+        name: "Dogecoin",
         allocation: 10,
         currentPrice: 0.0845,
         mintPrice: 0.08,
@@ -169,16 +169,16 @@ const PortfolioTab = ({}: PortfolioTabProps) => {
         volume24h: 650e6,
         change24h: -2.1,
         changeSinceMint: 5.6,
-        icon: 'Ð',
+        icon: "Ð",
         imageUrl:
-          'https://assets.coingecko.com/coins/images/5/large/dogecoin.png',
-        originalChainAddress: 'D7Y55CM5bB68XzJ5t2bBZqLqLqLqLqLqLqLqLqLqLqLqLq',
-        proofOfReserve: 'https://axis-protocol.xyz/404',
-        chain: 'Dogecoin',
+          "https://assets.coingecko.com/coins/images/5/large/dogecoin.png",
+        originalChainAddress: "D7Y55CM5bB68XzJ5t2bBZqLqLqLqLqLqLqLqLqLqLqLqLq",
+        proofOfReserve: "https://axis-protocol.xyz/404",
+        chain: "Dogecoin",
       },
       {
-        symbol: 'AVAX',
-        name: 'Avalanche',
+        symbol: "AVAX",
+        name: "Avalanche",
         allocation: 10,
         currentPrice: 35.67,
         mintPrice: 32,
@@ -186,16 +186,16 @@ const PortfolioTab = ({}: PortfolioTabProps) => {
         volume24h: 520e6,
         change24h: 4.5,
         changeSinceMint: 11.5,
-        icon: 'A',
+        icon: "A",
         imageUrl:
-          'https://assets.coingecko.com/coins/images/12559/large/Avalanche_Circle_RedWhite_Trans.png',
-        originalChainAddress: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
-        proofOfReserve: 'https://axis-protocol.xyz/404',
-        chain: 'Avalanche',
+          "https://assets.coingecko.com/coins/images/12559/large/Avalanche_Circle_RedWhite_Trans.png",
+        originalChainAddress: "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
+        proofOfReserve: "https://axis-protocol.xyz/404",
+        chain: "Avalanche",
       },
       {
-        symbol: 'TRX',
-        name: 'Tron',
+        symbol: "TRX",
+        name: "Tron",
         allocation: 10,
         currentPrice: 0.1045,
         mintPrice: 0.1,
@@ -203,16 +203,16 @@ const PortfolioTab = ({}: PortfolioTabProps) => {
         volume24h: 380e6,
         change24h: 1.8,
         changeSinceMint: 4.5,
-        icon: 'T',
+        icon: "T",
         imageUrl:
-          'https://assets.coingecko.com/coins/images/1094/large/tron-logo.png',
-        originalChainAddress: 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t',
-        proofOfReserve: 'https://axis-protocol.xyz/404',
-        chain: 'Tron',
+          "https://assets.coingecko.com/coins/images/1094/large/tron-logo.png",
+        originalChainAddress: "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+        proofOfReserve: "https://axis-protocol.xyz/404",
+        chain: "Tron",
       },
       {
-        symbol: 'SUI',
-        name: 'Sui',
+        symbol: "SUI",
+        name: "Sui",
         allocation: 10,
         currentPrice: 1.85,
         mintPrice: 1.5,
@@ -220,12 +220,12 @@ const PortfolioTab = ({}: PortfolioTabProps) => {
         volume24h: 240e6,
         change24h: 7.2,
         changeSinceMint: 23.3,
-        icon: 'S',
+        icon: "S",
         imageUrl:
-          'https://assets.coingecko.com/coins/images/26375/large/sui_asset.jpeg',
-        originalChainAddress: '0x2::sui::SUI',
-        proofOfReserve: 'https://axis-protocol.xyz/404',
-        chain: 'Sui',
+          "https://assets.coingecko.com/coins/images/26375/large/sui_asset.jpeg",
+        originalChainAddress: "0x2::sui::SUI",
+        proofOfReserve: "https://axis-protocol.xyz/404",
+        chain: "Sui",
       },
     ],
   });
@@ -249,7 +249,7 @@ const PortfolioTab = ({}: PortfolioTabProps) => {
         </h3>
         <p className="text-base-content/70 text-lg mb-6">
           {error ||
-            'Connect your wallet and mint some tokens to see your portfolio'}
+            "Connect your wallet and mint some tokens to see your portfolio"}
         </p>
         <button className="px-6 py-2 bg-primary text-primary-content font-semibold rounded-lg hover:opacity-90 transition-colors">
           Mint Tokens
@@ -259,7 +259,7 @@ const PortfolioTab = ({}: PortfolioTabProps) => {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-5 pt-16">
       {/* Portfolio Stats - Compact */}
       <ModernCard className="p-4" gradient>
         <h2 className="text-xl font-bold text-base-content mb-4 text-center flex items-center justify-center space-x-2">
@@ -355,18 +355,18 @@ const PortfolioTab = ({}: PortfolioTabProps) => {
                   </td>
                   <td
                     className={`text-right py-2 px-3 text-xs ${
-                      token.change24h >= 0 ? 'text-success' : 'text-error'
+                      token.change24h >= 0 ? "text-success" : "text-error"
                     }`}
                   >
-                    {token.change24h >= 0 ? '+' : ''}
+                    {token.change24h >= 0 ? "+" : ""}
                     {token.change24h.toFixed(2)}%
                   </td>
                   <td
                     className={`text-right py-2 px-3 text-xs ${
-                      token.changeSinceMint >= 0 ? 'text-success' : 'text-error'
+                      token.changeSinceMint >= 0 ? "text-success" : "text-error"
                     }`}
                   >
-                    {token.changeSinceMint >= 0 ? '+' : ''}
+                    {token.changeSinceMint >= 0 ? "+" : ""}
                     {token.changeSinceMint.toFixed(2)}%
                   </td>
                   <td className="text-left py-2 px-3 text-base-content/60 text-xs hidden lg:table-cell">

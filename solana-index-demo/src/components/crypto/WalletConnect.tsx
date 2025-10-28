@@ -125,11 +125,14 @@ export default function WalletConnect() {
         <div
           id="wallet-menu"
           role="menu"
+          // 親が relative の右上から少し下に出す
           className="absolute right-0 top-[calc(100%+0.5rem)] min-w-[280px]
                bg-gray-900/90 backdrop-blur-md border border-white/12
-               rounded-xl shadow-2xl shadow-black/45 z-[9999]"
+               rounded-xl shadow-2xl shadow-black/45 z-[9999] p-1"
+          onClick={(e) => e.stopPropagation()} // メニュー内クリックで閉じない
         >
-          <div className="px-4 py-3 pb-2 border-b border-white/8">
+          {/* ヘッダー（アドレス＆残高） */}
+          <div className="px-4 py-3 pb-2 border-b border-white/10">
             <div className="font-mono text-gray-300 text-sm break-all">
               {publicKey?.toBase58()}
             </div>
@@ -140,29 +143,37 @@ export default function WalletConnect() {
             )}
           </div>
 
-          <button
-            role="menuitem"
-            className="w-full text-left px-4 py-3 text-gray-200 font-semibold hover:bg-white/6"
-            onClick={copyAddress}
-          >
-            Copy address
-          </button>
-          <a
-            role="menuitem"
-            className="w-full text-left px-4 py-3 text-gray-200 font-semibold hover:bg-white/6"
-            href={explorer}
-            target="_blank"
-            rel="noreferrer"
-          >
-            View on Solscan
-          </a>
-          <button
-            role="menuitem"
-            className="w-full text-left px-4 py-3 text-red-400 font-semibold hover:bg-white/6"
-            onClick={handleDisconnect}
-          >
-            Disconnect
-          </button>
+          {/* メニュー項目を縦に配置 */}
+          <div className="flex flex-col">
+            <button
+              role="menuitem"
+              className="w-full text-left px-4 py-3 text-gray-200 font-semibold
+                   hover:bg-white/10 focus:bg-white/10 outline-none"
+              onClick={copyAddress}
+            >
+              Copy address
+            </button>
+
+            <a
+              role="menuitem"
+              className="w-full text-left px-4 py-3 text-gray-200 font-semibold
+                   hover:bg-white/10 focus:bg-white/10 outline-none"
+              href={explorer}
+              target="_blank"
+              rel="noreferrer"
+            >
+              View on Solscan
+            </a>
+
+            <button
+              role="menuitem"
+              className="w-full text-left px-4 py-3 text-red-400 font-semibold
+                   hover:bg-white/10 focus:bg-white/10 outline-none"
+              onClick={handleDisconnect}
+            >
+              Disconnect
+            </button>
+          </div>
         </div>
       )}
     </div>

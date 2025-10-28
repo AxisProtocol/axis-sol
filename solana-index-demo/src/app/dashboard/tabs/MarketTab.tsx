@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { ModernCard, GridLayout } from '../../../components/common';
-import Image from 'next/image';
-import { Coins, BarChart3 } from 'lucide-react';
-import dynamic from 'next/dynamic';
+import { useState, useEffect } from "react";
+import { ModernCard, GridLayout } from "../../../components/common";
+import Image from "next/image";
+import { Coins, BarChart3 } from "lucide-react";
+import dynamic from "next/dynamic";
 
-const TVChart = dynamic(() => import('../../../components/charts/TVChart'), {
+const TVChart = dynamic(() => import("../../../components/charts/TVChart"), {
   ssr: false,
 });
 
@@ -40,110 +40,110 @@ type CoinMarket = {
 
 const sharedMarketData: MarketData[] = [
   {
-    symbol: 'BTC',
-    name: 'Bitcoin',
+    symbol: "BTC",
+    name: "Bitcoin",
     price: 43520.5,
     change24h: 2.5,
     volume24h: 15.2e9,
     marketCap: 850.5e9,
     allocation: 10,
-    imageUrl: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png',
+    imageUrl: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png",
   },
   {
-    symbol: 'ETH',
-    name: 'Ethereum',
+    symbol: "ETH",
+    name: "Ethereum",
     price: 2640.75,
     change24h: -1.2,
     volume24h: 8.5e9,
     marketCap: 317.2e9,
     allocation: 10,
     imageUrl:
-      'https://assets.coingecko.com/coins/images/279/large/ethereum.png',
+      "https://assets.coingecko.com/coins/images/279/large/ethereum.png",
   },
   {
-    symbol: 'SOL',
-    name: 'Solana',
+    symbol: "SOL",
+    name: "Solana",
     price: 98.45,
     change24h: 5.8,
     volume24h: 2.1e9,
     marketCap: 42.8e9,
     allocation: 10,
-    imageUrl: 'https://assets.coingecko.com/coins/images/4128/large/solana.png',
+    imageUrl: "https://assets.coingecko.com/coins/images/4128/large/solana.png",
   },
   {
-    symbol: 'BNB',
-    name: 'BNB',
+    symbol: "BNB",
+    name: "BNB",
     price: 305.2,
     change24h: 1.1,
     volume24h: 1.8e9,
     marketCap: 46.2e9,
     allocation: 10,
     imageUrl:
-      'https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png',
+      "https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png",
   },
   {
-    symbol: 'XRP',
-    name: 'Ripple',
+    symbol: "XRP",
+    name: "Ripple",
     price: 0.6245,
     change24h: -0.8,
     volume24h: 1.2e9,
     marketCap: 33.5e9,
     allocation: 10,
     imageUrl:
-      'https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png',
+      "https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png",
   },
   {
-    symbol: 'ADA',
-    name: 'Cardano',
+    symbol: "ADA",
+    name: "Cardano",
     price: 0.4825,
     change24h: 3.2,
     volume24h: 890e6,
     marketCap: 17.1e9,
     allocation: 10,
-    imageUrl: 'https://assets.coingecko.com/coins/images/975/large/cardano.png',
+    imageUrl: "https://assets.coingecko.com/coins/images/975/large/cardano.png",
   },
   {
-    symbol: 'DOGE',
-    name: 'Dogecoin',
+    symbol: "DOGE",
+    name: "Dogecoin",
     price: 0.0845,
     change24h: -2.1,
     volume24h: 650e6,
     marketCap: 12.1e9,
     allocation: 10,
-    imageUrl: 'https://assets.coingecko.com/coins/images/5/large/dogecoin.png',
+    imageUrl: "https://assets.coingecko.com/coins/images/5/large/dogecoin.png",
   },
   {
-    symbol: 'AVAX',
-    name: 'Avalanche',
+    symbol: "AVAX",
+    name: "Avalanche",
     price: 35.67,
     change24h: 4.5,
     volume24h: 520e6,
     marketCap: 13.2e9,
     allocation: 10,
     imageUrl:
-      'https://assets.coingecko.com/coins/images/12559/large/Avalanche_Circle_RedWhite_Trans.png',
+      "https://assets.coingecko.com/coins/images/12559/large/Avalanche_Circle_RedWhite_Trans.png",
   },
   {
-    symbol: 'TRX',
-    name: 'Tron',
+    symbol: "TRX",
+    name: "Tron",
     price: 0.1045,
     change24h: 1.8,
     volume24h: 380e6,
     marketCap: 9.2e9,
     allocation: 10,
     imageUrl:
-      'https://assets.coingecko.com/coins/images/1094/large/tron-logo.png',
+      "https://assets.coingecko.com/coins/images/1094/large/tron-logo.png",
   },
   {
-    symbol: 'SUI',
-    name: 'Sui',
+    symbol: "SUI",
+    name: "Sui",
     price: 1.85,
     change24h: 7.2,
     volume24h: 240e6,
     marketCap: 4.8e9,
     allocation: 10,
     imageUrl:
-      'https://assets.coingecko.com/coins/images/26375/large/sui_asset.jpeg',
+      "https://assets.coingecko.com/coins/images/26375/large/sui_asset.jpeg",
   },
 ];
 
@@ -151,19 +151,19 @@ const MarketTab = ({}: MarketTabProps) => {
   const [marketData, setMarketData] = useState<MarketData[]>(sharedMarketData);
   useEffect(() => {
     const CG_IDS: Record<string, string> = {
-      BTC: 'bitcoin',
-      ETH: 'ethereum',
-      SOL: 'solana',
-      BNB: 'binancecoin',
-      XRP: 'ripple',
-      ADA: 'cardano',
-      DOGE: 'dogecoin',
-      AVAX: 'avalanche-2',
-      TRX: 'tron',
-      SUI: 'sui',
+      BTC: "bitcoin",
+      ETH: "ethereum",
+      SOL: "solana",
+      BNB: "binancecoin",
+      XRP: "ripple",
+      ADA: "cardano",
+      DOGE: "dogecoin",
+      AVAX: "avalanche-2",
+      TRX: "tron",
+      SUI: "sui",
     };
 
-    const ids = Object.values(CG_IDS).join(',');
+    const ids = Object.values(CG_IDS).join(",");
     const url =
       `https://api.coingecko.com/api/v3/coins/markets` +
       `?vs_currency=usd&ids=${encodeURIComponent(ids)}`;
@@ -171,7 +171,7 @@ const MarketTab = ({}: MarketTabProps) => {
     (async () => {
       try {
         const res = await fetch(url, {
-          headers: { Accept: 'application/json' },
+          headers: { Accept: "application/json" },
         });
         if (!res.ok) throw new Error(`CG ${res.status}`);
         const json = (await res.json()) as CoinMarket[];
@@ -191,7 +191,7 @@ const MarketTab = ({}: MarketTabProps) => {
           })
         );
       } catch (e) {
-        console.error('coingecko market fetch failed', e);
+        console.error("coingecko market fetch failed", e);
       }
     })();
   }, []);
@@ -218,9 +218,9 @@ const MarketTab = ({}: MarketTabProps) => {
     marketData.length;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 pt-15">
       {/* TradingView-like Chart connected to TV API */}
-      <ModernCard className="p-3 sm:p-4">
+      <ModernCard className="p-3 sm:p-4 ">
         <TVChart
           initialSymbol="INDEX:FAMC"
           initialResolution="60"
@@ -242,10 +242,10 @@ const MarketTab = ({}: MarketTabProps) => {
             <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-1" />
             <div
               className={`text-sm sm:text-lg font-bold ${
-                averageChange >= 0 ? 'text-success' : 'text-error'
+                averageChange >= 0 ? "text-success" : "text-error"
               }`}
             >
-              {averageChange >= 0 ? '+' : ''}
+              {averageChange >= 0 ? "+" : ""}
               {averageChange.toFixed(2)}%
             </div>
             <div className="text-base-content/70 text-xs">24h Change</div>
@@ -329,10 +329,10 @@ const MarketTab = ({}: MarketTabProps) => {
                   </td>
                   <td
                     className={`text-right py-2 px-2 sm:px-3 font-medium text-xs ${
-                      token.change24h >= 0 ? 'text-success' : 'text-error'
+                      token.change24h >= 0 ? "text-success" : "text-error"
                     }`}
                   >
-                    {token.change24h >= 0 ? '+' : ''}
+                    {token.change24h >= 0 ? "+" : ""}
                     {token.change24h.toFixed(2)}%
                   </td>
                   <td className="text-right py-2 px-2 sm:px-3 text-base-content text-xs hidden lg:table-cell">

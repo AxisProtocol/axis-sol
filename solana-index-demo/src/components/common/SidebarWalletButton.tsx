@@ -443,9 +443,9 @@ const SidebarWalletButton = ({
           id="wallet-menu"
           role="menu"
           className="absolute right-0 top-[calc(100%+0.5rem)] min-w-[280px]
-          bg-gray-900/85 backdrop-blur-md border border-white/12
-          rounded-xl shadow-2xl shadow-black/45 overflow-hidden
-           z-[9999]"
+    bg-gray-900/85 backdrop-blur-md border border-white/12
+    rounded-xl shadow-2xl shadow-black/45
+    z-[9999] max-h-[80vh] overflow-y-auto"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="px-4 py-3 pb-2 border-b border-white/8">
@@ -462,29 +462,33 @@ const SidebarWalletButton = ({
             )}
           </div>
 
-          <button
-            role="menuitem"
-            className="w-full text-left px-4 py-3 text-gray-200 font-semibold hover:bg-white/6"
-            onClick={copyAddress}
-          >
-            Copy address
-          </button>
-          <a
-            role="menuitem"
-            className="w-full text-left px-4 py-3 text-gray-200 font-semibold hover:bg-white/6"
-            href={explorer}
-            target="_blank"
-            rel="noreferrer"
-          >
-            View on Solscan
-          </a>
-          <button
-            role="menuitem"
-            className="w-full text-left px-4 py-3 text-red-400 font-semibold hover:bg-white/6"
-            onClick={handleDisconnect}
-          >
-            Disconnect
-          </button>
+          <div className="flex flex-col">
+            <button
+              role="menuitem"
+              className="w-full text-left px-4 py-3 text-gray-200 font-semibold hover:bg-white/6"
+              onClick={copyAddress}
+            >
+              Copy address
+            </button>
+
+            <a
+              role="menuitem"
+              className="w-full text-left px-4 py-3 text-gray-200 font-semibold hover:bg-white/6"
+              href={explorer}
+              target="_blank"
+              rel="noreferrer"
+            >
+              View on Solscan
+            </a>
+
+            <button
+              role="menuitem"
+              className="w-full text-left px-4 py-3 text-red-400 font-semibold hover:bg-white/6"
+              onClick={handleDisconnect}
+            >
+              Disconnect
+            </button>
+          </div>
         </div>
       )}
     </div>
