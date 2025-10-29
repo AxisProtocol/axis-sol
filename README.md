@@ -1,5 +1,7 @@
 # Axis
 
+![GitHub License](https://img.shields.io/github/license/AxisProtocol/axis-sol) ![NPM Downloads](https://img.shields.io/npm/d18m/%40axis-protocol%2Fsdk)
+
 **Axis** is the first crypto index built on Solana that lets investors gain diversified exposure to the digital asset market with a single token.
 
 ## Axis index
