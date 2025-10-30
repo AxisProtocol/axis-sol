@@ -92,59 +92,6 @@ const sharedMarketData: MarketData[] = [
     imageUrl:
       "https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png",
   },
-  {
-    symbol: "ADA",
-    name: "Cardano",
-    price: 0.4825,
-    change24h: 3.2,
-    volume24h: 890e6,
-    marketCap: 17.1e9,
-    allocation: 10,
-    imageUrl: "https://assets.coingecko.com/coins/images/975/large/cardano.png",
-  },
-  {
-    symbol: "DOGE",
-    name: "Dogecoin",
-    price: 0.0845,
-    change24h: -2.1,
-    volume24h: 650e6,
-    marketCap: 12.1e9,
-    allocation: 10,
-    imageUrl: "https://assets.coingecko.com/coins/images/5/large/dogecoin.png",
-  },
-  {
-    symbol: "AVAX",
-    name: "Avalanche",
-    price: 35.67,
-    change24h: 4.5,
-    volume24h: 520e6,
-    marketCap: 13.2e9,
-    allocation: 10,
-    imageUrl:
-      "https://assets.coingecko.com/coins/images/12559/large/Avalanche_Circle_RedWhite_Trans.png",
-  },
-  {
-    symbol: "TRX",
-    name: "Tron",
-    price: 0.1045,
-    change24h: 1.8,
-    volume24h: 380e6,
-    marketCap: 9.2e9,
-    allocation: 10,
-    imageUrl:
-      "https://assets.coingecko.com/coins/images/1094/large/tron-logo.png",
-  },
-  {
-    symbol: "SUI",
-    name: "Sui",
-    price: 1.85,
-    change24h: 7.2,
-    volume24h: 240e6,
-    marketCap: 4.8e9,
-    allocation: 10,
-    imageUrl:
-      "https://assets.coingecko.com/coins/images/26375/large/sui_asset.jpeg",
-  },
 ];
 
 const MarketTab = ({}: MarketTabProps) => {

@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { ModernCard, ModernButton } from '../../../components/common';
-import { Target, Coins, XCircle, PlusCircle, RefreshCcw } from 'lucide-react';
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { ModernCard, ModernButton } from "../../../components/common";
+import { Target, Coins, XCircle, PlusCircle, RefreshCcw } from "lucide-react";
 
 interface ChallengeTabProps {
   initialLatestEntry: any;
@@ -14,18 +14,29 @@ interface ChallengeTabProps {
 }
 
 const ChallengeTab = ({}: ChallengeTabProps) => {
-  const [constituents, setConstituents] = useState<string[]>(['BTC', 'ETH', 'SOL', 'BNB', 'XRP', 'ADA', 'DOGE', 'AVAX', 'TRX', 'SUI']);
+  const [constituents, setConstituents] = useState<string[]>([
+    "BTC",
+    "ETH",
+    "SOL",
+    "BNB",
+    "XRP",
+    "ADA",
+    "DOGE",
+    "AVAX",
+    "TRX",
+    "SUI",
+  ]);
   const [removedTokens, setRemovedTokens] = useState<string[]>([]);
   const [addedTokens, setAddedTokens] = useState<string[]>([]);
 
   const handleRemove = (symbol: string) => {
     if (removedTokens.length >= 3) return;
-    setConstituents(constituents.filter(s => s !== symbol));
+    setConstituents(constituents.filter((s) => s !== symbol));
     setRemovedTokens([...removedTokens, symbol]);
   };
 
   const handleRevertRemove = (symbol: string) => {
-    setRemovedTokens(removedTokens.filter(s => s !== symbol));
+    setRemovedTokens(removedTokens.filter((s) => s !== symbol));
     setConstituents([...constituents, symbol].sort());
   };
 
@@ -39,9 +50,13 @@ const ChallengeTab = ({}: ChallengeTabProps) => {
       >
         <ModernCard className="p-6 text-center" gradient>
           <Target className="w-10 h-10 mx-auto mb-3" />
-          <h2 className="text-2xl font-bold text-base-content mb-4">Axis Index Challenge</h2>
-          <p className="text-base-content/60 mb-6">Remove up to 3 tokens and add up to 3 new ones</p>
-          
+          <h2 className="text-2xl font-bold text-base-content mb-4">
+            Axis Index Challenge
+          </h2>
+          <p className="text-base-content/60 mb-6">
+            Remove up to 3 tokens and add up to 3 new ones
+          </p>
+
           <ModernButton
             variant="primary"
             size="lg"
@@ -64,7 +79,7 @@ const ChallengeTab = ({}: ChallengeTabProps) => {
             <Coins className="w-5 h-5" />
             <span>Current Index</span>
           </h3>
-          
+
           <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
             {constituents.map((symbol) => (
               <motion.button
@@ -75,8 +90,12 @@ const ChallengeTab = ({}: ChallengeTabProps) => {
                 whileTap={{ scale: 0.98 }}
               >
                 <div className="text-center">
-                  <div className="text-lg font-bold text-base-content">{symbol}</div>
-                  <div className="text-xs text-base-content/60">Click to remove</div>
+                  <div className="text-lg font-bold text-base-content">
+                    {symbol}
+                  </div>
+                  <div className="text-xs text-base-content/60">
+                    Click to remove
+                  </div>
                 </div>
               </motion.button>
             ))}
@@ -96,7 +115,7 @@ const ChallengeTab = ({}: ChallengeTabProps) => {
               <XCircle className="w-5 h-5 text-red-400" />
               <span>Removed Tokens</span>
             </h3>
-            
+
             <div className="grid grid-cols-3 gap-3">
               {removedTokens.map((symbol) => (
                 <motion.div
@@ -130,7 +149,7 @@ const ChallengeTab = ({}: ChallengeTabProps) => {
             <PlusCircle className="w-5 h-5" />
             <span>Add New Tokens</span>
           </h3>
-          
+
           <div className="max-w-md mx-auto space-y-4">
             <div className="flex space-x-2">
               <input
@@ -146,7 +165,7 @@ const ChallengeTab = ({}: ChallengeTabProps) => {
                 Add
               </ModernButton>
             </div>
-            
+
             <div className="text-center text-sm text-gray-400">
               You can add up to 3 new tokens
             </div>

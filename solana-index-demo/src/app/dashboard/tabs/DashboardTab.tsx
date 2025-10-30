@@ -28,6 +28,13 @@ const ChartSection = dynamic(
   () => import("../../../components/dashboard/ChartSection"),
   { ssr: false }
 );
+const TVChart = dynamic(() => import("../../../components/charts/TVChart"), {
+  ssr: false,
+});
+const RightTradePanel = dynamic(
+  () => import("../../../components/dashboard/RightTradePanel"),
+  { ssr: false }
+);
 
 interface TokenData {
   symbol: string;
@@ -98,56 +105,6 @@ const sharedTokenData: TokenData[] = [
     marketCap: 33.5e9,
     allocation: 10,
     imageUrl: getCoinIcon("XRP"),
-  },
-  {
-    symbol: "ADA",
-    name: "Cardano",
-    price: 0.4825,
-    change24h: 3.2,
-    volume24h: 890e6,
-    marketCap: 17.1e9,
-    allocation: 10,
-    imageUrl: getCoinIcon("ADA"),
-  },
-  {
-    symbol: "DOGE",
-    name: "Dogecoin",
-    price: 0.0845,
-    change24h: -2.1,
-    volume24h: 650e6,
-    marketCap: 12.1e9,
-    allocation: 10,
-    imageUrl: getCoinIcon("DOGE"),
-  },
-  {
-    symbol: "AVAX",
-    name: "Avalanche",
-    price: 35.67,
-    change24h: 4.5,
-    volume24h: 520e6,
-    marketCap: 13.2e9,
-    allocation: 10,
-    imageUrl: getCoinIcon("AVAX"),
-  },
-  {
-    symbol: "TRX",
-    name: "Tron",
-    price: 0.1045,
-    change24h: 1.8,
-    volume24h: 380e6,
-    marketCap: 9.2e9,
-    allocation: 10,
-    imageUrl: getCoinIcon("TRX"),
-  },
-  {
-    symbol: "SUI",
-    name: "Sui",
-    price: 1.85,
-    change24h: 7.2,
-    volume24h: 240e6,
-    marketCap: 4.8e9,
-    allocation: 10,
-    imageUrl: getCoinIcon("SUI"),
   },
 ];
 
@@ -222,23 +179,137 @@ const DashboardTab = ({
   const displayedIdx = indexPriceData?.normalizedPrice ?? null;
 
   return (
-    <div className="space-y-4">
-      {/* Index Value Card - Top */}
-      <div className="flex justify-center mt-20">
-        {priceLoading || displayedIdx === null ? (
-          <div className="flex items-center justify-center h-24">
-            <span className="loading loading-spinner loading-lg text-blue-500"></span>
-          </div>
-        ) : (
-          <IndexValueCard
-            indexValue={displayedIdx}
-            dailyChange={initialDailyChange}
+    <div className="w-full min-h-screen flex flex-col lg:flex-row gap-5 px-4 lg:px-8 mx-auto max-w-none">
+      {/* LEFT SIDE */}
+      <div className="flex-1 min-w-0 space-y-4 ">
+        <ModernCard className="p-5 sm:p-4 mt-20 h-[calc(100vh-140px)]">
+          <TVChart
+            initialSymbol="INDEX:FAMC"
+            initialResolution="60"
+            initialBars={1000}
           />
-        )}
+        </ModernCard>
+
+        <ModernCard className="p-4">
+          <h3 className="text-lg font-bold text-base-content mb-4 text-center flex items-center justify-center space-x-2">
+            <Coins className="w-5 h-5" />
+            <span>Index Constituents</span>
+          </h3>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-xs sm:text-sm">
+              <thead>
+                <tr className="border-b border-base-300">
+                  <th className="text-left py-2 px-2 sm:px-3 text-base-content/70 font-medium">
+                    Token
+                  </th>
+                  <th className="text-right py-2 px-2 sm:px-3 text-base-content/70 font-medium hidden sm:table-cell">
+                    Allocation
+                  </th>
+                  <th className="text-right py-2 px-2 sm:px-3 text-base-content/70 font-medium">
+                    Price
+                  </th>
+                  <th className="text-right py-2 px-2 sm:px-3 text-base-content/70 font-medium">
+                    24h Change
+                  </th>
+                  <th className="text-right py-2 px-2 sm:px-3 text-base-content/70 font-medium hidden lg:table-cell">
+                    Market Cap
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {sharedTokenData.map((token) => (
+                  <tr
+                    key={token.symbol}
+                    className="border-b border-base-300 hover:bg-base-200/30"
+                  >
+                    <td className="py-2 px-2 sm:px-3">
+                      <div className="flex items-center space-x-1 sm:space-x-2">
+                        <div className="w-5 h-5 sm:w-6 sm:h-6 relative flex-shrink-0">
+                          <Image
+                            src={token.imageUrl}
+                            alt={token.symbol}
+                            fill
+                            className="object-contain"
+                            sizes="24px"
+                          />
+                        </div>
+                        <div className="min-w-0">
+                          <div className="font-semibold text-base-content text-xs sm:text-sm truncate">
+                            {token.symbol}
+                          </div>
+                          <div className="text-base-content/60 text-xs truncate hidden sm:block">
+                            {token.name}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="text-right py-2 px-2 sm:px-3 hidden sm:table-cell">
+                      <div className="flex items-center justify-end space-x-1 sm:space-x-2">
+                        <div className="w-8 sm:w-10 bg-base-300 rounded-full h-1">
+                          <div
+                            className="bg-primary h-1 rounded-full"
+                            style={{
+                              width: `${(token.allocation / 10) * 100}%`,
+                            }}
+                          />
+                        </div>
+                        <span className="text-base-content font-medium text-xs">
+                          {token.allocation}%
+                        </span>
+                      </div>
+                    </td>
+                    <td className="text-right py-2 px-2 sm:px-3 text-base-content font-medium text-xs">
+                      {formatPrice(token.price)}
+                    </td>
+                    <td
+                      className={`text-right py-2 px-2 sm:px-3 font-medium text-xs ${
+                        token.change24h >= 0 ? "text-success" : "text-error"
+                      }`}
+                    >
+                      {token.change24h >= 0 ? "+" : ""}
+                      {token.change24h.toFixed(2)}%
+                    </td>
+                    <td className="text-right py-2 px-2 sm:px-3 text-base-content text-xs hidden lg:table-cell">
+                      {formatLargeNumber(token.marketCap)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </ModernCard>
       </div>
 
-      {/* Tokenomics Section */}
-      <ModernCard className="p-4" gradient>
+      {/* RIGHT SIDE */}
+      {/* Index Value Card - Top */}
+      <div className="w-full lg:w-[420px] xl:w-[480px] shrink-0 lg:sticky lg:top-20 self-start flex flex-col gap-1">
+        <div className="flex justify-center mt-8">
+          {priceLoading || displayedIdx === null ? (
+            <div className="flex items-center justify-center h-24">
+              <span className="loading loading-spinner loading-lg text-blue-500"></span>
+            </div>
+          ) : (
+            <IndexValueCard
+              indexValue={displayedIdx}
+              dailyChange={initialDailyChange}
+            />
+          )}
+        </div>
+        {/* Trade Panel */}
+        <RightTradePanel indexPrice={displayedIdx} />
+      </div>
+    </div>
+  );
+};
+
+export default DashboardTab;
+
+{
+  /* Tokenomics Section */
+}
+{
+  /* <ModernCard className="p-4" gradient>
         <h3 className="text-lg font-bold text-base-content mb-3 text-center flex items-center justify-center space-x-2">
           <Zap className="w-5 h-5" />
           <span>AXIS Tokenomics</span>
@@ -258,10 +329,14 @@ const DashboardTab = ({
             </div>
           ))}
         </GridLayout>
-      </ModernCard>
+      </ModernCard> */
+}
 
-      {/* Staking Stats */}
-      <ModernCard className="p-4">
+{
+  /* Staking Stats */
+}
+{
+  /* <ModernCard className="p-4">
         <h3 className="text-lg font-bold text-base-content mb-3 text-center flex items-center justify-center space-x-2">
           <Lock className="w-5 h-5" />
           <span>Staking</span>
@@ -278,103 +353,13 @@ const DashboardTab = ({
             </ModernCard>
           ))}
         </GridLayout>
-      </ModernCard>
+      </ModernCard> */
+}
 
-      {/* Token Constituents - Market Style */}
-      <ModernCard className="p-4">
-        <h3 className="text-lg font-bold text-base-content mb-4 text-center flex items-center justify-center space-x-2">
-          <Coins className="w-5 h-5" />
-          <span>Index Constituents</span>
-        </h3>
+{
+  /* Token Constituents - Market Style */
+}
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-xs sm:text-sm">
-            <thead>
-              <tr className="border-b border-base-300">
-                <th className="text-left py-2 px-2 sm:px-3 text-base-content/70 font-medium">
-                  Token
-                </th>
-                <th className="text-right py-2 px-2 sm:px-3 text-base-content/70 font-medium hidden sm:table-cell">
-                  Allocation
-                </th>
-                <th className="text-right py-2 px-2 sm:px-3 text-base-content/70 font-medium">
-                  Price
-                </th>
-                <th className="text-right py-2 px-2 sm:px-3 text-base-content/70 font-medium">
-                  24h Change
-                </th>
-                <th className="text-right py-2 px-2 sm:px-3 text-base-content/70 font-medium hidden lg:table-cell">
-                  Market Cap
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {sharedTokenData.map((token) => (
-                <tr
-                  key={token.symbol}
-                  className="border-b border-base-300 hover:bg-base-200/30"
-                >
-                  <td className="py-2 px-2 sm:px-3">
-                    <div className="flex items-center space-x-1 sm:space-x-2">
-                      <div className="w-5 h-5 sm:w-6 sm:h-6 relative flex-shrink-0">
-                        <Image
-                          src={token.imageUrl}
-                          alt={token.symbol}
-                          fill
-                          className="object-contain"
-                          sizes="24px"
-                        />
-                      </div>
-                      <div className="min-w-0">
-                        <div className="font-semibold text-base-content text-xs sm:text-sm truncate">
-                          {token.symbol}
-                        </div>
-                        <div className="text-base-content/60 text-xs truncate hidden sm:block">
-                          {token.name}
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="text-right py-2 px-2 sm:px-3 hidden sm:table-cell">
-                    <div className="flex items-center justify-end space-x-1 sm:space-x-2">
-                      <div className="w-8 sm:w-10 bg-base-300 rounded-full h-1">
-                        <div
-                          className="bg-primary h-1 rounded-full"
-                          style={{ width: `${(token.allocation / 10) * 100}%` }}
-                        />
-                      </div>
-                      <span className="text-base-content font-medium text-xs">
-                        {token.allocation}%
-                      </span>
-                    </div>
-                  </td>
-                  <td className="text-right py-2 px-2 sm:px-3 text-base-content font-medium text-xs">
-                    {formatPrice(token.price)}
-                  </td>
-                  <td
-                    className={`text-right py-2 px-2 sm:px-3 font-medium text-xs ${
-                      token.change24h >= 0 ? "text-success" : "text-error"
-                    }`}
-                  >
-                    {token.change24h >= 0 ? "+" : ""}
-                    {token.change24h.toFixed(2)}%
-                  </td>
-                  <td className="text-right py-2 px-2 sm:px-3 text-base-content text-xs hidden lg:table-cell">
-                    {formatLargeNumber(token.marketCap)}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </ModernCard>
-
-      {/* Chart Section */}
-      <ModernCard className="p-3 sm:p-4" dark>
-        <ChartSection echartsData={echartsData} events={[]} />
-      </ModernCard>
-    </div>
-  );
-};
-
-export default DashboardTab;
+{
+  /* Chart Section */
+}

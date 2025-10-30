@@ -25,18 +25,18 @@ export default function IndexValueCard({
 }: IndexValueCardProps) {
   return (
     <DashboardCard variants={sectionVariants} className="text-center">
-      <h3 className="text-lg md:text-xl text-gray-300 font-medium mb-4">
+      <h3 className="text-sm md:text-xl text-gray-300 font-medium ">
         Current Index Value (Base: 100)
       </h3>
 
       <div className="flex flex-col md:flex-row items-baseline justify-center gap-4 md:gap-6">
-        <div className="text-4xl md:text-6xl font-bold leading-none bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        <div className="text-lg md:text-5xl font-bold leading-none bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
           <CountUp end={indexValue} decimals={2} duration={0.2} separator="," />
         </div>
 
         {dailyChange !== null && (
           <div
-            className={`text-2xl md:text-3xl font-semibold flex items-center gap-2 ${
+            className={`text-1xl md:text-2xl font-semibold flex items-center gap-2 ${
               dailyChange >= 0 ? "text-green-500" : "text-red-500"
             }`}
           >

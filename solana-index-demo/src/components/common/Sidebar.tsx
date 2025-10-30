@@ -103,7 +103,7 @@ const Sidebar = ({ activeTab, onTabChange }: SidebarProps) => {
         </Link>
 
         {/* 中：メニュー（PC表示） */}
-        <div className="hidden lg:flex items-center gap-2">
+        <div className="hidden lg:flex items-center gap-2 ml-[60px]">
           {navigationItems.map((item) => (
             <motion.button
               key={item.id}
