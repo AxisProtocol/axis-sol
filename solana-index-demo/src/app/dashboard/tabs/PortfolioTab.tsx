@@ -21,13 +21,14 @@ const PortfolioStats = dynamic(
 interface TokenData {
   symbol: string;
   name: string;
-  allocation: number;
+
   currentPrice: number;
   mintPrice: number;
   marketCap: number;
   volume24h: number;
-  change24h: number;
-  changeSinceMint: number;
+  change1d: number;
+  change30d: number;
+  history: string;
   icon: string;
   imageUrl: string;
   originalChainAddress: string;
@@ -57,89 +58,36 @@ const PortfolioTab = ({}: PortfolioTabProps) => {
     mintDate: "2024-01-15",
     tokens: [
       {
-        symbol: "BTC",
-        name: "Bitcoin",
-        allocation: 10,
+        symbol: "AXIS",
+        name: "AXIS Index Token",
         currentPrice: 43520.5,
         mintPrice: 42000,
         marketCap: 850.5e9,
         volume24h: 15.2e9,
-        change24h: 2.5,
-        changeSinceMint: 3.6,
+        change1d: 2.5,
+        change30d: 3.6,
+        history: "2025-10-01",
         icon: "₿",
-        imageUrl:
-          "https://assets.coingecko.com/coins/images/1/large/bitcoin.png",
+        imageUrl: "/Axis_index_token.png",
         originalChainAddress: "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
         proofOfReserve: "https://axis-protocol.xyz/404",
         chain: "Ethereum",
       },
       {
-        symbol: "ETH",
-        name: "Ethereum",
-        allocation: 10,
-        currentPrice: 2640.75,
-        mintPrice: 2500,
-        marketCap: 317.2e9,
-        volume24h: 8.5e9,
-        change24h: -1.2,
-        changeSinceMint: 5.6,
-        icon: "Ξ",
-        imageUrl:
-          "https://assets.coingecko.com/coins/images/279/large/ethereum.png",
-        originalChainAddress: "0x0000000000000000000000000000000000000000",
+        symbol: "Cap5",
+        name: "Index Token CaP5",
+        currentPrice: 43520.5,
+        mintPrice: 42000,
+        marketCap: 850.5e9,
+        volume24h: 15.2e9,
+        change1d: 2.5,
+        change30d: 3.6,
+        history: "2025-10-03",
+        icon: "₿",
+        imageUrl: "/cap5.png",
+        originalChainAddress: "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
         proofOfReserve: "https://axis-protocol.xyz/404",
         chain: "Ethereum",
-      },
-      {
-        symbol: "SOL",
-        name: "Solana",
-        allocation: 10,
-        currentPrice: 98.45,
-        mintPrice: 95,
-        marketCap: 42.8e9,
-        volume24h: 2.1e9,
-        change24h: 5.8,
-        changeSinceMint: 3.6,
-        icon: "◎",
-        imageUrl:
-          "https://assets.coingecko.com/coins/images/4128/large/solana.png",
-        originalChainAddress: "So11111111111111111111111111111111111111112",
-        proofOfReserve: "https://axis-protocol.xyz/404",
-        chain: "Solana",
-      },
-      {
-        symbol: "BNB",
-        name: "BNB",
-        allocation: 10,
-        currentPrice: 305.2,
-        mintPrice: 300,
-        marketCap: 46.2e9,
-        volume24h: 1.8e9,
-        change24h: 1.1,
-        changeSinceMint: 1.7,
-        icon: "B",
-        imageUrl:
-          "https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png",
-        originalChainAddress: "0xB8c77482e45F1F44dE1745F52C74426C631bDD52",
-        proofOfReserve: "https://axis-protocol.xyz/404",
-        chain: "BSC",
-      },
-      {
-        symbol: "XRP",
-        name: "Ripple",
-        allocation: 10,
-        currentPrice: 0.6245,
-        mintPrice: 0.6,
-        marketCap: 33.5e9,
-        volume24h: 1.2e9,
-        change24h: -0.8,
-        changeSinceMint: 4.1,
-        icon: "X",
-        imageUrl:
-          "https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png",
-        originalChainAddress: "rN7n7otQDd6FczFgLdSqtcsAUxDkw6fzRH",
-        proofOfReserve: "https://axis-protocol.xyz/404",
-        chain: "XRP Ledger",
       },
     ],
   });
@@ -195,35 +143,27 @@ const PortfolioTab = ({}: PortfolioTabProps) => {
         </h3>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-xs">
+          <table className="w-full text-xs table-fixed">
             <thead>
               <tr className="border-b border-base-300">
-                <th className="text-left py-2 px-3 text-base-content/70">
+                <th className="text-left py-2 px-3 text-base-content/70 ">
                   Token
                 </th>
-                <th className="text-right py-2 px-3 text-base-content/70">
-                  Allocation
+                <th className="text-right py-2 px-3 text-base-content/70 align-middle">
+                  Balance
                 </th>
-                <th className="text-right py-2 px-3 text-base-content/70">
-                  Current Price
+                <th className="text-right py-2 px-3 text-base-content/70 align-middle">
+                  1day Change
                 </th>
-                <th className="text-right py-2 px-3 text-base-content/70">
-                  24h Change
+                <th className="text-right py-2 px-3 text-base-content/70 align-middle">
+                  30day Change
                 </th>
-                <th className="text-right py-2 px-3 text-base-content/70">
-                  Since Mint
-                </th>
-                <th className="text-left py-2 px-3 text-base-content/70 hidden lg:table-cell">
-                  Chain
-                </th>
-                <th className="text-left py-2 px-3 text-base-content/70 hidden xl:table-cell">
-                  Address
-                </th>
-                <th className="text-center py-2 px-3 text-base-content/70 hidden xl:table-cell">
-                  Proof of Reserve
+                <th className="text-right py-2 px-3 text-base-content/70 align-middle">
+                  Buy History
                 </th>
               </tr>
             </thead>
+
             <tbody>
               {portfolioData.tokens.map((token) => (
                 <tr
@@ -232,7 +172,7 @@ const PortfolioTab = ({}: PortfolioTabProps) => {
                 >
                   <td className="py-2 px-3">
                     <div className="flex items-center space-x-2">
-                      <div className="w-5 h-5 relative flex-shrink-0">
+                      <div className="w-10 h-10 relative flex-shrink-0">
                         <Image
                           src={token.imageUrl}
                           alt={token.symbol}
@@ -251,59 +191,29 @@ const PortfolioTab = ({}: PortfolioTabProps) => {
                       </div>
                     </div>
                   </td>
-                  <td className="text-right py-2 px-3">
-                    <div className="flex items-center justify-end space-x-2">
-                      <div className="w-8 bg-base-300 rounded-full h-1">
-                        <div
-                          className="bg-primary h-1 rounded-full"
-                          style={{ width: `${token.allocation}%` }}
-                        />
-                      </div>
-                      <span className="text-base-content font-medium text-xs">
-                        {token.allocation.toFixed(1)}%
-                      </span>
-                    </div>
-                  </td>
+
                   <td className="text-right py-2 px-3 text-base-content text-xs">
-                    ${token.currentPrice.toFixed(4)}
+                    ${token.currentPrice.toFixed(2)}
                   </td>
                   <td
                     className={`text-right py-2 px-3 text-xs ${
-                      token.change24h >= 0 ? "text-success" : "text-error"
+                      token.change1d >= 0 ? "text-success" : "text-error"
                     }`}
                   >
-                    {token.change24h >= 0 ? "+" : ""}
-                    {token.change24h.toFixed(2)}%
+                    {token.change1d >= 0 ? "+" : ""}
+                    {token.change1d.toFixed(2)}%
                   </td>
                   <td
                     className={`text-right py-2 px-3 text-xs ${
-                      token.changeSinceMint >= 0 ? "text-success" : "text-error"
+                      token.change30d >= 0 ? "text-success" : "text-error"
                     }`}
                   >
-                    {token.changeSinceMint >= 0 ? "+" : ""}
-                    {token.changeSinceMint.toFixed(2)}%
+                    {token.change30d >= 0 ? "+" : ""}
+                    {token.change30d.toFixed(2)}%
                   </td>
-                  <td className="text-left py-2 px-3 text-base-content/60 text-xs hidden lg:table-cell">
-                    {token.chain}
-                  </td>
-                  <td className="text-left py-2 px-3 text-base-content/60 text-xs hidden xl:table-cell">
-                    <div
-                      className="max-w-24 truncate"
-                      title={token.originalChainAddress}
-                    >
-                      {token.originalChainAddress.slice(0, 8)}...
-                      {token.originalChainAddress.slice(-6)}
-                    </div>
-                  </td>
-                  <td className="text-center py-2 px-3 hidden xl:table-cell">
-                    <a
-                      href={token.proofOfReserve}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-400 hover:text-blue-300 text-xs underline"
-                    >
-                      View
-                    </a>
+
+                  <td className="text-right py-2 px-3 text-base-content text-xs">
+                    {token.history}
                   </td>
                 </tr>
               ))}
