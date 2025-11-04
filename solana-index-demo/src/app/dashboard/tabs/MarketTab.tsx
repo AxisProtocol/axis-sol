@@ -17,7 +17,7 @@ interface MarketData {
   change24h: number;
   volume24h: number;
   marketCap: number;
-  allocation: number;
+
   imageUrl: string;
 }
 
@@ -46,7 +46,7 @@ const sharedMarketData: MarketData[] = [
     change24h: 2.5,
     volume24h: 15.2e9,
     marketCap: 850.5e9,
-    allocation: 10,
+
     imageUrl: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png",
   },
   {
@@ -56,7 +56,7 @@ const sharedMarketData: MarketData[] = [
     change24h: -1.2,
     volume24h: 8.5e9,
     marketCap: 317.2e9,
-    allocation: 10,
+
     imageUrl:
       "https://assets.coingecko.com/coins/images/279/large/ethereum.png",
   },
@@ -67,7 +67,7 @@ const sharedMarketData: MarketData[] = [
     change24h: 5.8,
     volume24h: 2.1e9,
     marketCap: 42.8e9,
-    allocation: 10,
+
     imageUrl: "https://assets.coingecko.com/coins/images/4128/large/solana.png",
   },
   {
@@ -77,7 +77,7 @@ const sharedMarketData: MarketData[] = [
     change24h: 1.1,
     volume24h: 1.8e9,
     marketCap: 46.2e9,
-    allocation: 10,
+
     imageUrl:
       "https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png",
   },
@@ -88,7 +88,7 @@ const sharedMarketData: MarketData[] = [
     change24h: -0.8,
     volume24h: 1.2e9,
     marketCap: 33.5e9,
-    allocation: 10,
+
     imageUrl:
       "https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png",
   },
@@ -217,9 +217,6 @@ const MarketTab = ({}: MarketTabProps) => {
                 <th className="text-left py-2 px-2 sm:px-3 text-base-content/70 font-medium">
                   Token
                 </th>
-                <th className="text-right py-2 px-2 sm:px-3 text-base-content/70 font-medium hidden sm:table-cell">
-                  Allocation
-                </th>
                 <th className="text-right py-2 px-2 sm:px-3 text-base-content/70 font-medium">
                   Price
                 </th>
@@ -256,19 +253,6 @@ const MarketTab = ({}: MarketTabProps) => {
                           {token.name}
                         </div>
                       </div>
-                    </div>
-                  </td>
-                  <td className="text-right py-2 px-2 sm:px-3 hidden sm:table-cell">
-                    <div className="flex items-center justify-end space-x-1 sm:space-x-2">
-                      <div className="w-8 sm:w-10 bg-base-300 rounded-full h-1">
-                        <div
-                          className="bg-primary h-1 rounded-full"
-                          style={{ width: `${(token.allocation / 20) * 100}%` }}
-                        />
-                      </div>
-                      <span className="text-base-content font-medium text-xs">
-                        {token.allocation}%
-                      </span>
                     </div>
                   </td>
                   <td className="text-right py-2 px-2 sm:px-3 text-base-content font-medium text-xs">

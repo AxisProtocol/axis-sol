@@ -149,15 +149,23 @@ export default function SellPanel({ indexPrice }: Props) {
 
   return (
     <aside className="bg-base-200/50 border border-base-300 rounded-2xl p-4 space-y-6">
-      <div className="flex items-baseline justify-between">
-        <h3 className="text-lg font-semibold">Sell / Redeem</h3>
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <h3 className="text-lg font-semibold">Sell / Redeem</h3>
+          <img
+            src="/cap5.png"
+            alt="CaP5 Logo"
+            className="w-15 h-15 object-contain ml-5"
+          />
+        </div>
+
         <span className="text-xs text-base-content/50">{networkName}</span>
       </div>
 
       <BalanceDisplay
         items={[
           {
-            label: "Your AXIS Balance",
+            label: "Your CaP5 balances",
             value: axisBalance,
             decimals: AXIS_DECIMALS,
           },

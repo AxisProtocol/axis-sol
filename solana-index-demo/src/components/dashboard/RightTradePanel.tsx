@@ -11,7 +11,6 @@ const BuyPanel = dynamic(() => import("./Modal/BuyPanel"), { ssr: false });
 const SellPanel = dynamic(() => import("./Modal//SellPanel"), { ssr: false });
 
 type Side = "buy" | "sell";
-type OrderType = "market" | "limit";
 
 export default function RightTradePanel({
   indexPrice,
@@ -19,7 +18,6 @@ export default function RightTradePanel({
   indexPrice: number | null;
 }) {
   const [side, setSide] = useState<Side>("buy");
-  const [orderType, setOrderType] = useState<OrderType>("market");
 
   return (
     <aside className="w-full lg:w-[420px] xl:w-[480px] shrink-0 lg:sticky lg:top-20 self-start">

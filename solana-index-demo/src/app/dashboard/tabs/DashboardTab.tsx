@@ -19,6 +19,7 @@ import {
   BarChart3,
 } from "lucide-react";
 import { useIndexPrice } from "../../../hooks/useIndexPrice";
+import { motion } from "framer-motion";
 
 const IndexValueCard = dynamic(
   () => import("../../../components/dashboard/IndexValueCard"),
@@ -43,7 +44,7 @@ interface TokenData {
   change24h: number;
   volume24h: number;
   marketCap: number;
-  allocation: number;
+
   imageUrl: string;
 }
 
@@ -63,7 +64,6 @@ const sharedTokenData: TokenData[] = [
     change24h: 2.5,
     volume24h: 15.2e9,
     marketCap: 850.5e9,
-    allocation: 10,
     imageUrl: getCoinIcon("BTC"),
   },
   {
@@ -73,7 +73,7 @@ const sharedTokenData: TokenData[] = [
     change24h: -1.2,
     volume24h: 8.5e9,
     marketCap: 317.2e9,
-    allocation: 10,
+
     imageUrl: getCoinIcon("ETH"),
   },
   {
@@ -83,7 +83,7 @@ const sharedTokenData: TokenData[] = [
     change24h: 5.8,
     volume24h: 2.1e9,
     marketCap: 42.8e9,
-    allocation: 10,
+
     imageUrl: getCoinIcon("SOL"),
   },
   {
@@ -93,7 +93,7 @@ const sharedTokenData: TokenData[] = [
     change24h: 1.1,
     volume24h: 1.8e9,
     marketCap: 46.2e9,
-    allocation: 10,
+
     imageUrl: getCoinIcon("BNB"),
   },
   {
@@ -103,7 +103,7 @@ const sharedTokenData: TokenData[] = [
     change24h: -0.8,
     volume24h: 1.2e9,
     marketCap: 33.5e9,
-    allocation: 10,
+
     imageUrl: getCoinIcon("XRP"),
   },
 ];
@@ -177,6 +177,80 @@ const DashboardTab = ({
 
   const { data: indexPriceData, loading: priceLoading } = useIndexPrice();
   const displayedIdx = indexPriceData?.normalizedPrice ?? null;
+  const ringBackground = (colors: string[]) =>
+    `conic-gradient(${colors
+      .map((c, i) => `${c} ${i * 20}% ${(i + 1) * 20}%`)
+      .join(",")})`;
+
+  type AssetRow = {
+    name: string;
+    symbol: string;
+    weight: number;
+    price: number;
+    mcap: number;
+    vol: number;
+    change24h: number;
+    color: string;
+    chainBadges: string[];
+  };
+
+  const ASSETS: AssetRow[] = [
+    {
+      name: "Bitcoin",
+      symbol: "BTC",
+      weight: 10,
+      price: 115961.4736,
+      mcap: 2309e9,
+      vol: 29.8e9,
+      change24h: -0.0,
+      color: "#F7931A",
+      chainBadges: ["BTC"],
+    },
+    {
+      name: "Ethereum",
+      symbol: "ETH",
+      weight: 10,
+      price: 4667.4302,
+      mcap: 563.2e9,
+      vol: 30.3e9,
+      change24h: -0.9,
+      color: "#627EEA",
+      chainBadges: ["ETH"],
+    },
+    {
+      name: "XRP",
+      symbol: "XRP",
+      weight: 10,
+      price: 3.1227,
+      mcap: 186.1e9,
+      vol: 4.9e9,
+      change24h: +0.6,
+      color: "#00AAE4",
+      chainBadges: ["XRP"],
+    },
+    {
+      name: "Solana",
+      symbol: "SOL",
+      weight: 10,
+      price: 242.6701,
+      mcap: 131.6e9,
+      vol: 7.5e9,
+      change24h: +0.1,
+      color: "#14F195",
+      chainBadges: ["SOL"],
+    },
+    {
+      name: "BNB",
+      symbol: "BNB",
+      weight: 10,
+      price: 933.8972,
+      mcap: 129.9e9,
+      vol: 1.6e9,
+      change24h: +0.6,
+      color: "#F3BA2F",
+      chainBadges: ["BNB"],
+    },
+  ];
 
   return (
     <div className="w-full min-h-screen flex flex-col lg:flex-row gap-5 px-4 lg:px-8 mx-auto max-w-none">
@@ -195,6 +269,29 @@ const DashboardTab = ({
             <Coins className="w-5 h-5" />
             <span>Index Constituents</span>
           </h3>
+          <div className="my-10">
+            <motion.div
+              className="lg:col-span-1 flex items-center justify-center"
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <div
+                className="relative w-44 h-44 md:w-52 md:h-52 rounded-full"
+                style={{
+                  background: ringBackground(ASSETS.map((a) => a.color)),
+                }}
+              >
+                <div className="absolute inset-3 bg-[#0B1020] rounded-full flex items-center justify-center text-gray-300">
+                  <div className="text-center">
+                    <div className="text-3xl font-bold">5</div>
+                    <div className="text-sm opacity-70">Assets</div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
 
           <div className="overflow-x-auto">
             <table className="w-full text-xs sm:text-sm">
@@ -202,9 +299,6 @@ const DashboardTab = ({
                 <tr className="border-b border-base-300">
                   <th className="text-left py-2 px-2 sm:px-3 text-base-content/70 font-medium">
                     Token
-                  </th>
-                  <th className="text-right py-2 px-2 sm:px-3 text-base-content/70 font-medium hidden sm:table-cell">
-                    Allocation
                   </th>
                   <th className="text-right py-2 px-2 sm:px-3 text-base-content/70 font-medium">
                     Price
@@ -244,21 +338,7 @@ const DashboardTab = ({
                         </div>
                       </div>
                     </td>
-                    <td className="text-right py-2 px-2 sm:px-3 hidden sm:table-cell">
-                      <div className="flex items-center justify-end space-x-1 sm:space-x-2">
-                        <div className="w-8 sm:w-10 bg-base-300 rounded-full h-1">
-                          <div
-                            className="bg-primary h-1 rounded-full"
-                            style={{
-                              width: `${(token.allocation / 10) * 100}%`,
-                            }}
-                          />
-                        </div>
-                        <span className="text-base-content font-medium text-xs">
-                          {token.allocation}%
-                        </span>
-                      </div>
-                    </td>
+
                     <td className="text-right py-2 px-2 sm:px-3 text-base-content font-medium text-xs">
                       {formatPrice(token.price)}
                     </td>

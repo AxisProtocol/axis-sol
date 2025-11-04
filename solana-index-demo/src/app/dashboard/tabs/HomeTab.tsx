@@ -117,7 +117,7 @@ const HomeTab = ({ echartsData }: HomeTabProps) => {
 
       {/* Connect Wallet Banner */}
       <div className="bg-gradient-to-r from-base-200/50 to-base-300/50 border border-base-300 rounded-xl p-4 sm:p-6 lg:p-8 text-center">
-        <h2 className="text-lg sm:text-xl font-semibold text-base-content mb-4">
+        <h2 className="text-lg sm:text-xl font-semibold text-base-content ">
           Connect your wallet to view your index positions
         </h2>
         <div className="flex justify-center">
@@ -211,7 +211,7 @@ const HomeTab = ({ echartsData }: HomeTabProps) => {
       )}
 
       {/* Quick Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 pb-15">
         <ModernCard className="p-3 sm:p-4 text-center" gradient>
           <Coins className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-2" />
           <div className="text-base sm:text-lg font-bold text-base-content">

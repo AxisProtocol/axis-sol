@@ -58,8 +58,8 @@ const PortfolioTab = ({}: PortfolioTabProps) => {
     mintDate: "2024-01-15",
     tokens: [
       {
-        symbol: "AXIS",
-        name: "AXIS Index Token",
+        symbol: "Axis",
+        name: "Governance Token",
         currentPrice: 43520.5,
         mintPrice: 42000,
         marketCap: 850.5e9,
@@ -172,7 +172,7 @@ const PortfolioTab = ({}: PortfolioTabProps) => {
                 >
                   <td className="py-2 px-3">
                     <div className="flex items-center space-x-2">
-                      <div className="w-10 h-10 relative flex-shrink-0">
+                      <div className="w-12 h-12 relative flex-shrink-0">
                         <Image
                           src={token.imageUrl}
                           alt={token.symbol}

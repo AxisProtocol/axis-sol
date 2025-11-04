@@ -75,7 +75,14 @@ export default function BuyPanel({
 
   return (
     <aside className="bg-base-200/50 border border-base-300 rounded-2xl p-4 space-y-4">
-      <h3 className="text-lg font-semibold">Buy AXIS</h3>
+      <div className="flex items-center gap-2 ">
+        <h3 className="text-lg font-semibold">Buy CaP5</h3>
+        <img
+          src="/cap5.png"
+          alt="CaP5 Logo"
+          className="w-15 h-15 object-contain ml-5"
+        />
+      </div>
 
       <BalanceDisplay
         items={[
@@ -112,7 +119,7 @@ export default function BuyPanel({
           { label: "Spending Token (USDC)", value: USDC_MINT.toBase58() },
         ]}
         expectedValue={{
-          label: "Expected AXIS",
+          label: "Expected CaP5",
           value: expectedAxis ? `~ ${expectedAxis.toFixed(6)}` : "—",
           formula: "Q_AXIS = Q_USDC / Index",
         }}
@@ -120,7 +127,7 @@ export default function BuyPanel({
 
       {connected ? (
         <ModalButton onClick={handleBuy} disabled={busy || !publicKey}>
-          {busy ? "Processing…" : "Buy AXIS"}
+          {busy ? "Processing…" : "Buy CaP5"}
         </ModalButton>
       ) : (
         <div className="mt-2">

@@ -90,16 +90,15 @@ const Sidebar = ({ activeTab, onTabChange }: SidebarProps) => {
       >
         {/* 左：ロゴ */}
         <Link href="/" className="flex items-center gap-2">
-          <div className="relative w-10 h-10">
+          <div className="relative w-20 h-20">
             <Image
               src="/logo.png"
               alt="AXIS"
               fill
               className="object-contain"
-              sizes="40px"
+              sizes="52px"
             />
           </div>
-          <span className="hidden sm:inline text-lg font-bold">AXIS</span>
         </Link>
 
         {/* 中：メニュー（PC表示） */}
