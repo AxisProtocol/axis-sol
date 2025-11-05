@@ -25,7 +25,7 @@ const AxisLandingPage: NextPage = () => {
     message: '' 
   });
 
-  const fullText = "Because markets can't grow up without a good guide.";
+  const fullText = "Let's build the future of the crypto economy, together.";
 
   const sections = [
     { id: 'hero', component: HeroSection },
