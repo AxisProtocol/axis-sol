@@ -9,6 +9,12 @@
 The **Axis Index** is the first full fledged benchmark on Solana that reflects the performance of top tier assets from across the entire crypto market.
 Composed of a multi-chain basket of assets, it serves as a new financial Lego block for the DeFi ecosystem.
 
+> **Research & Methodology:**
+> The quantitative methodology behind the index construction (Inverse Volatility Weighting) and its 5-year empirical backtest are detailed in the following research paper, authored by our founder, **Yusuke Kikuta (Muse)**.
+>
+> **Kikuta, Yusuke (Muse). (2025). *An Empirical Analysis of the Inverse Volatility Weighted Top-5 Crypto Index (AXIS): A Comparison with MCW_Cap40 and SOL Buy-and-Hold*. Zenodo.**
+> **[https://doi.org/10.5281/zenodo.17521527](https://doi.org/10.5281/zenodo.17521527)**
+
 ## Axis token
 
 The **Axis Token** tracks the performance of the Axis Index.
