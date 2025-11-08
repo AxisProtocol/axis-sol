@@ -1,8 +1,9 @@
+// IndexOverviewSection.tsx
 'use client';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Card } from '../common';
-import { TrendingUp, ShieldCheck, Wallet } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import { getCoinIcon } from '../common';
 
@@ -17,7 +18,7 @@ const fmtUSD = (n: number) => {
 };
 const fmtPct = (n: number) => `${n >= 0 ? '+' : ''}${n.toFixed(2)}%`;
 
-/* ========= 構成銘柄（静的） ========= */
+/* ========= 構成銘柄（既存） ========= */
 type AssetRow = {
   name: string; symbol: string; weight: number;
   price: number; mcap: number; vol: number; change24h: number;
@@ -30,92 +31,135 @@ const ASSETS: AssetRow[] = [
   { name:'XRP',       symbol:'XRP', weight:10, price:3.1227,     mcap:186.1e9, vol:4.9e9,   change24h:+0.6, color:'#00AAE4', chainBadges:['XRP'] },
   { name:'Solana',    symbol:'SOL', weight:10, price:242.6701,   mcap:131.6e9, vol:7.5e9,   change24h:+0.1, color:'#14F195', chainBadges:['SOL'] },
   { name:'BNB',       symbol:'BNB', weight:10, price:933.8972,   mcap:129.9e9, vol:1.6e9,   change24h:+0.6, color:'#F3BA2F', chainBadges:['BNB'] },
-  { name:'Cardano',   symbol:'ADA', weight:10, price:0.93030,    mcap:34.0e9,  vol:2.4e9,   change24h:+0.3, color:'#2A6DF4', chainBadges:['ADA'] },
-  { name:'TRON',      symbol:'TRX', weight:10, price:0.34971,    mcap:33.1e9,  vol:0.675e9, change24h:-0.6, color:'#E50914', chainBadges:['TRX'] },
-  { name:'Chainlink', symbol:'LINK',weight:10, price:24.9000,    mcap:16.9e9,  vol:1.0e9,   change24h:-0.7, color:'#2A5ADA', chainBadges:['ETH','NEAR','POLYGON'] },
-  { name:'Hyperliquid',symbol:'HLP',weight:10, price:54.7210,    mcap:14.8e9,  vol:0.198e9, change24h:-1.4, color:'#00E5A8', chainBadges:['HL'] },
-  { name:'Stellar',   symbol:'XLM', weight:10, price:0.40523,    mcap:12.9e9,  vol:0.271e9, change24h:+0.2, color:'#06B6D4', chainBadges:['XLM'] },
 ];
 
-/* ========= ドーナツ & カード ========= */
-const ringBackground = (colors: string[]) =>
-  `conic-gradient(${colors.map((c, i) => `${c} ${i * 10}% ${(i + 1) * 10}%`).join(',')})`;
+// Top5（ロゴグリッド用）
+const TOP5 = ASSETS.slice(0, 5);
 
-const CARDS = [
-  { icon: TrendingUp, title: 'Top-10 Index Token',
-    desc: 'One token that holds the top 10 crypto assets in equal 10% weights, reviewed and rebalanced quarterly.' },
-  { icon: ShieldCheck, title: 'Bridge-Free & PoR-Backed',
-    desc: 'Collateral remains on native chains while AXIS circulates on Solana. Proof-of-Reserves and price oracles verify full backing on-chain.' },
-  { icon: Wallet, title: 'Buy on Axis Dashboard',
-    desc: 'Connect your wallet and purchase directly on the Axis dashboard. Sell AXIS anytime to redeem the underlying value.' },
-];
+/* ========= アニメーション ========= */
+const sectionVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.12 } },
+};
+const itemVariants = {
+  hidden: { opacity: 0, y: 14 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+};
 
-/* ========= Section ========= */
 export default function IndexOverviewSection() {
   return (
-    <section className="py-12">
-      {/* タイトル（大きめ） */}
-      <div className="max-w-[1200px] mx-auto mb-10">
-        <h1 className="text-[clamp(2.8rem,7vw,4.2rem)] leading-tight font-extrabold">Axis Index</h1>
-        <p className="text-[clamp(1.1rem,2.4vw,1.35rem)] text-gray-300 mt-3">
-          Live performance and current constituents of the equal-weighted top-10 index.
-        </p>
+    <motion.section
+      className="py-20 lg:py-24"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.12 }}
+      variants={sectionVariants}
+    >
+      {/* ヘッダー */}
+      <div className="max-w-[1200px] mx-auto mb-12">
+        <motion.h1
+          className="text-[clamp(2.6rem,7vw,4rem)] leading-tight font-extrabold italic"
+          variants={itemVariants}
+        >
+          Axis CaP5 Index
+        </motion.h1>
+        <motion.p
+          className="text-[clamp(1.05rem,2.4vw,1.25rem)] text-gray-300 mt-3 italic"  
+          variants={itemVariants}
+        >
+          Live performance and current constituents of the index.
+        </motion.p>
       </div>
 
-      {/* 上段：ドーナツ + 3カード */}
-      <div className="max-w-[1200px] mx-auto mb-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
+      {/* --- パート1: CaP5（ロゴ + Top5ロゴグリッド） --- */}
+      <div className="max-w-[1200px] mx-auto mb-14">
+        {/* CaP5 ロゴ（1枚） */}
         <motion.div
-          className="lg:col-span-1 flex items-center justify-center"
-          initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          className="flex items-center justify-center mb-8"
+          variants={itemVariants}
         >
-          <div
-            className="relative w-44 h-44 md:w-52 md:h-52 rounded-full"
-            style={{ background: ringBackground(ASSETS.map(a => a.color)) }}
-          >
-            <div className="absolute inset-3 bg-[#0B1020] rounded-full flex items-center justify-center text-gray-300">
-              <div className="text-center">
-                <div className="text-3xl font-bold">10</div>
-                <div className="text-sm opacity-70">Assets</div>
-              </div>
-            </div>
-          </div>
+          {/* ここをCaP5ロゴの実ファイルパスに合わせてください */}
+          <Image
+            src="/cap5.png"
+            alt="CaP5 logo"
+            width={900}
+            height={270}
+            className="w-auto h-20 md:h-28 lg:h-36 object-contain"
+            sizes="(min-width:1024px) 36rem, (min-width:768px) 28rem, 20rem"
+            priority
+          />
         </motion.div>
 
-        <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-6">
-          {CARDS.map((c, i) => (
-            <motion.div key={c.title}
-              initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.06 * i }}
+        <motion.div className="text-center mb-6" variants={itemVariants}>
+          <h2 className="text-2xl md:text-3xl font-bold">
+            The Axis <span className="text-cyan-400">CaP5</span> Constituents
+          </h2>
+          <p className="text-gray-400 mt-3">
+            Diversified exposure to five leading assets, optimized by rules.
+          </p>
+        </motion.div>
+
+        {/* 構成銘柄のロゴは従来通り getCoinIcon を使用 */}
+        <div className="flex flex-wrap items-center justify-center gap-7 lg:gap-10">
+          {TOP5.map((a) => (
+            <motion.div
+              key={a.symbol}
+              className="flex flex-col items-center gap-3 text-center"
+              whileHover={{ scale: 1.08 }}
             >
-              <Card className="h-full text-left">
-                <div className="flex items-center gap-3 mb-3">
-                  <motion.div whileHover={{ rotate: 8, scale: 1.05 }}
-                    className="bg-blue-500/20 text-blue-400 rounded-full w-10 h-10 flex items-center justify-center">
-                    <c.icon className="w-5 h-5" />
-                  </motion.div>
-                  <h3 className="font-semibold">{c.title}</h3>
-                </div>
-                <p className="text-gray-400 text-sm leading-relaxed">{c.desc}</p>
-              </Card>
+              <span className="inline-flex items-center justify-center w-18 h-18 lg:w-24 lg:h-24 rounded-full overflow-hidden bg-white/5 ring-1 ring-white/10">
+                <Image
+                  src={getCoinIcon(a.symbol)}
+                  alt={`${a.name} logo`}
+                  width={96}
+                  height={96}
+                  className="object-contain"
+                />
+              </span>
+              <span className="text-sm font-medium italic">{a.symbol}</span>
             </motion.div>
           ))}
         </div>
       </div>
 
-      {/* 下段：Index Components（フル幅） */}
+      {/* --- パート2: Methodology（要約 + CTA遷移） --- */}
+      <div className="max-w-[1200px] mx-auto mb-16">
+        <motion.div
+          className="mx-auto max-w-[900px] text-center"
+          variants={itemVariants}
+        >
+          <h3 className="text-2xl md:text-3xl font-bold">Methodology (Summary)</h3>
+          <p className="text-gray-300 mt-3 leading-relaxed">
+            Inverse-volatility weighting, quarterly rebalancing (via Jito BAM),
+            strict liquidity & safety screens, and on-chain Proof of Reserves.
+          </p>
+
+          {/* CTA：詳細は別ページへ */}
+          <div className="mt-6 flex items-center justify-center">
+            <a
+              href="/methodology"
+              className="inline-flex items-center gap-2 rounded-lg border border-cyan-400/40 bg-cyan-400/10 px-4 py-2 text-sm font-semibold text-cyan-200 hover:bg-cyan-400/15 hover:border-cyan-400/60 transition-colors"
+            >
+              Read full methodology
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* --- 既存：Index Components（テーブル） --- */}
       <div className="max-w-[1200px] mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={itemVariants}
         >
           <Card className="p-5">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold">Index Components</h3>
               <div className="flex gap-2 text-sm">
-                <span className="px-3 py-1.5 rounded-md bg-white text-black">Current</span>
+                <span className="px-3 py-1.5 rounded-md bg-cyan-400 text-black">Current</span>
                 <span className="px-3 py-1.5 rounded-md bg-white/5 text-gray-300">Logs</span>
               </div>
             </div>
@@ -140,7 +184,7 @@ export default function IndexOverviewSection() {
                         <div className="flex items-center gap-3">
                           <span className="inline-flex items-center justify-center w-7 h-7 rounded-full overflow-hidden bg-white/5">
                             <Image
-                              src={getCoinIcon(a.symbol)}
+                              src={getCoinIcon(a.symbol)} // ← ここも従来どおり
                               alt={a.symbol}
                               width={28}
                               height={28}
@@ -185,6 +229,6 @@ export default function IndexOverviewSection() {
           </Card>
         </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }

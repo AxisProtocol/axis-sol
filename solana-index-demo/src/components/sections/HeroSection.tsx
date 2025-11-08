@@ -25,7 +25,6 @@ const HeroSection = () => (
   <div className="absolute inset-0 bg-black/40" aria-hidden />
   </div>
 
-    {/* コンテンツは中央寄せ＋幅制限 */}
     <div className="relative z-10 flex min-h-screen items-center justify-center">
       <div className="container italic mx-auto px-6 text-center">
         <motion.h1 className="text-white font-bold tracking-tight leading-tight text-[clamp(2rem,10vw,4rem)] mb-8"
@@ -33,7 +32,7 @@ const HeroSection = () => (
           Axis is solana’s first on-chain index
         </motion.h1>
 
-        <motion.p className="text-gray-300 mb-12 max-w-[600px] mx-auto text-[clamp(1rem,4vw,1.25rem)] leading-relaxed"
+        <motion.p className="text-gray-300 mb-12 max-w-[600px] mx-auto text-[clamp(1rem,4vw,1.5rem)] leading-relaxed"
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.4 }}>
           Your smartest move? Do nothing. <br /> Own the top five cryptos with one token
         </motion.p>
