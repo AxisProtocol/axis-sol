@@ -255,8 +255,8 @@ const DashboardTab = ({
   return (
     <div className="w-full min-h-screen flex flex-col lg:flex-row gap-5 px-4 lg:px-8 mx-auto max-w-none">
       {/* LEFT SIDE */}
-      <div className="flex-1 min-w-0 space-y-4 ">
-        <ModernCard className="p-5 sm:p-4 mt-20 h-[calc(100vh-140px)]">
+      <div className="contents lg:block lg:flex-1 lg:min-w-0">
+        <ModernCard className="order-1 lg:order-none p-5 sm:p-4 mt-20 h-[calc(100vh-140px)] mb-4 lg:mb-0">
           <TVChart
             initialSymbol="INDEX:FAMC"
             initialResolution="60"
@@ -264,7 +264,7 @@ const DashboardTab = ({
           />
         </ModernCard>
 
-        <ModernCard className="p-4">
+        <ModernCard className="order-3 lg:order-none p-4">
           <h3 className="text-lg font-bold text-base-content mb-4 text-center flex items-center justify-center space-x-2">
             <Coins className="w-5 h-5" />
             <span>Index Constituents</span>
@@ -363,7 +363,7 @@ const DashboardTab = ({
 
       {/* RIGHT SIDE */}
       {/* Index Value Card - Top */}
-      <div className="w-full lg:w-[420px] xl:w-[480px] shrink-0 lg:sticky lg:top-20 self-start flex flex-col gap-1">
+      <div className="order-2 lg:order-none w-full lg:w-[420px] xl:w-[480px] shrink-0 lg:sticky lg:top-20 self-start flex flex-col gap-1">
         <div className="flex justify-center mt-8">
           {priceLoading || displayedIdx === null ? (
             <div className="flex items-center justify-center h-24">
