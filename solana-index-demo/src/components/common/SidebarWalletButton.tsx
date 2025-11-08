@@ -302,16 +302,13 @@ const SidebarWalletButton = ({
     return (
       <div
         className={cx(
-          inline
-            ? "inline-flex items-center gap-2 whitespace-nowrap"
-            : "w-full flex flex-col",
-          className
+          inline ? "inline-flex items-center gap-2 " : "w-full flex flex-col"
         )}
       >
         <button
           type="button"
           className={cx(
-            "inline-flex items-center justify-center align-middle leading-none font-medium rounded-lg transition-all duration-200 text-white",
+            "inline-flex items-center justify-center leading-none font-medium rounded-lg transition-all duration-200 text-white",
             inline
               ? "h-10 px-4 bg-gradient-to-r from-orange-500 to-blue-500 hover:from-orange-600 hover:to-blue-600"
               : "w-full py-2.5 px-4 bg-gradient-to-r from-orange-500 to-blue-500 hover:from-orange-600 hover:to-blue-600"
@@ -329,12 +326,10 @@ const SidebarWalletButton = ({
             <ModernButton
               onClick={() => setSnsOpen(true)}
               className="
-              ml-2 inline-flex items-center justify-center align-middle
-              h-10 px-4 rounded-lg leading-none font-black
-              bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700
-              text-white whitespace-nowrap text-lg
-
-
+             inline-flex items-center justify-center sm:ml-2 h-10 px-4 rounded-lg leading-none font-bold
+   bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700
+  text-white text-sm sm:text-base
+   basis-full sm:basis-auto w-full sm:w-auto 
             "
             >
               Get own .sol
@@ -375,7 +370,7 @@ const SidebarWalletButton = ({
       ref={menuRef}
       className={cx(
         inline
-          ? "relative inline-flex items-center gap-2 whitespace-nowrap"
+          ? "relative flex items-center gap-2 min-w-0 max-w-full flex-nowrap"
           : "relative w-full flex flex-col",
         className
       )}
@@ -385,26 +380,27 @@ const SidebarWalletButton = ({
         className={cx(
           "font-medium rounded-lg transition-all duration-200 text-white",
           inline
-            ? "h-10 px-4 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600"
+            ? "h-10 px-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 "
             : "w-full py-2.5 px-4 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600"
         )}
         onClick={() => setMenuOpen((v) => !v)}
         aria-expanded={menuOpen}
         aria-controls="wallet-menu"
       >
-        <span className="inline-block w-2 h-2 rounded-full bg-white mr-2 animate-pulse" />{" "}
-        {domains.length > 0 ? domains[0] : shortAddr(publicKey)}
+        <span className="block w-full truncate">
+          {" "}
+          {domains.length > 0 ? domains[0] : shortAddr(publicKey)}
+        </span>
       </button>
       {domains.length === 0 &&
         !domainsLoading &&
         (inline ? (
           <ModernButton
             onClick={() => setSnsOpen(true)}
-            className="
-        ml-2 inline-flex items-center justify-center align-middle
-        h-10 px-4 rounded-lg leading-none font-bold
-        bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700
-        text-white whitespace-nowrap text-lg
+            className="inline-flex items-center justify-center sm:ml-2 h-10 px-4 rounded-lg leading-none font-bold
+   bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700
+  text-white text-sm sm:text-base
+   basis-full sm:basis-auto w-full sm:w-auto 
       "
           >
             Get own .sol
@@ -414,11 +410,11 @@ const SidebarWalletButton = ({
             <ModernButton
               onClick={() => setSnsOpen(true)}
               className="
-          w-full font-semibold py-3 px-5 rounded-xl
-          bg-gradient-to-r from-blue-600 to-purple-600
-          hover:from-blue-700 hover:to-purple-700
-          text-white shadow-lg hover:shadow-purple-400/40
-          transition transform duration-300 hover:scale-105
+       w-full font-semibold py-3 px-5 rounded-xl
+                         bg-gradient-to-r from-blue-600 to-purple-600
+                         hover:from-blue-700 hover:to-purple-700
+                         text-white shadow-lg hover:shadow-purple-400/40
+                         transition transform duration-300 hover:scale-105
         "
             >
               Get own .sol
@@ -442,8 +438,9 @@ const SidebarWalletButton = ({
         <div
           id="wallet-menu"
           role="menu"
-          className="absolute right-0 top-[calc(100%+0.5rem)] min-w-[280px]
-    bg-gray-900/85 backdrop-blur-md border border-white/12
+          className="absolute top-[calc(100%+0.5rem)] right-2 sm:right-0
+           w-[92vw] sm:w-auto sm:min-w-[280px]
+           bg-gray-900/85 backdrop-blur-md border border-white/12
     rounded-xl shadow-2xl shadow-black/45
     z-[9999] max-h-[80vh] overflow-y-auto"
           onClick={(e) => e.stopPropagation()}

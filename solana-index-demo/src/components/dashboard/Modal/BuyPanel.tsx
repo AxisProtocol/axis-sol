@@ -17,6 +17,7 @@ import {
   getUserUsdcBalance,
   calculateExpectedTokens,
 } from "./modalUtils";
+import { disconnect } from "process";
 
 export default function BuyPanel({
   indexPrice,
@@ -76,11 +77,11 @@ export default function BuyPanel({
   return (
     <aside className="bg-base-200/50 border border-base-300 rounded-2xl p-4 space-y-4">
       <div className="flex items-center gap-2 ">
-        <h3 className="text-lg font-semibold">Buy CaP5</h3>
+        <h3 className="text-lg font-semibold">Buy</h3>
         <img
           src="/cap5.png"
           alt="CaP5 Logo"
-          className="w-15 h-15 object-contain ml-5"
+          className="w-15 h-15 object-contain "
         />
       </div>
 
@@ -127,7 +128,7 @@ export default function BuyPanel({
 
       {connected ? (
         <ModalButton onClick={handleBuy} disabled={busy || !publicKey}>
-          {busy ? "Processing…" : "Buy CaP5"}
+          {busy ? "Processing…" : <>Buy Cap5</>}
         </ModalButton>
       ) : (
         <div className="mt-2">
