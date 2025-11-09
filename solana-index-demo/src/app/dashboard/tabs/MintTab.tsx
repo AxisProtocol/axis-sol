@@ -1,25 +1,25 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import dynamic from 'next/dynamic';
+import { useState } from "react";
+import dynamic from "next/dynamic";
 import {
   ModernCard,
   ModernButton,
   GridLayout,
-} from '../../../components/common';
-import { useIndexPrice } from '../../../hooks/useIndexPrice';
-import { Coins, Flame, BarChart3 } from 'lucide-react';
+} from "../../../components/common";
+import { useIndexPrice } from "../../../hooks/useIndexPrice";
+import { Coins, Flame, BarChart3 } from "lucide-react";
 
 const BuyModal = dynamic(
-  () => import('../../../components/dashboard/Modal/BuyModal'),
+  () => import("../../../components/dashboard/Modal/BuyModal"),
   { ssr: false }
 );
 const BurnModal = dynamic(
-  () => import('../../../components/dashboard/Modal/BurnModal'),
+  () => import("../../../components/dashboard/Modal/BurnModal"),
   { ssr: false }
 );
 const WalletBar = dynamic(
-  () => import('../../../components/crypto/WalletBar'),
+  () => import("../../../components/crypto/WalletBar"),
   { ssr: false }
 );
 
@@ -42,18 +42,18 @@ const MintTab = ({ echartsData }: MintTabProps) => {
 
   const mintStats = [
     {
-      label: 'Index Price',
+      label: "Index Price",
       value: `$${latestClose.toFixed(4)}`,
       icon: <Coins className="w-5 h-5 mx-auto" />,
     },
     {
-      label: 'Total Supply',
-      value: '1M',
+      label: "Total Supply",
+      value: "1M",
       icon: <Coins className="w-5 h-5 mx-auto" />,
     },
     {
-      label: 'Market Cap',
-      value: '$25.5M',
+      label: "Market Cap",
+      value: "$25.5M",
       icon: <BarChart3 className="w-5 h-5 mx-auto" />,
     },
   ];
@@ -122,10 +122,11 @@ const MintTab = ({ echartsData }: MintTabProps) => {
             <div className="text-base-content/70 text-sm mb-6">
               Current Index Price
             </div>
+            setBurnModalOpen
             <ModernButton
               variant="secondary"
               size="lg"
-              onClick={() => setBurnModalOpen(true)}
+              onClick={() => true}
               className="w-full"
             >
               Sell

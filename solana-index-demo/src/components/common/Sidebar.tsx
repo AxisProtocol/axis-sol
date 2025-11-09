@@ -1,15 +1,25 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import Image from 'next/image';
-import { Home, Coins, BarChart3, Zap, Briefcase, Target, ChevronLeft, ChevronRight } from 'lucide-react';
-import SidebarWalletButton from './SidebarWalletButton';
-import Link from 'next/link';
-import ThemeSwitcher from './ThemeSwitcher';
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import {
+  Home,
+  Coins,
+  BarChart3,
+  Zap,
+  Briefcase,
+  Target,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+import SidebarWalletButton from "./SidebarWalletButton";
+import Link from "next/link";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 interface SidebarProps {
   activeTab: string;
+
   onTabChange: (tabId: string) => void;
 }
 
@@ -18,32 +28,44 @@ const Sidebar = ({ activeTab, onTabChange }: SidebarProps) => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const navigationItems = [
-    { id: 'home', label: 'Home', icon: <Home className="w-5 h-5" /> },
-    { id: 'mint', label: 'Buy', icon: <Coins className="w-5 h-5" /> },
-    { id: 'market', label: 'Market', icon: <BarChart3 className="w-5 h-5" /> },
-    { id: 'dashboard', label: 'Index', icon: <Zap className="w-5 h-5" /> },
-    { id: 'portfolio', label: 'Portfolio', icon: <Briefcase className="w-5 h-5" /> }
+    {
+      id: "portfolio",
+      label: "Portfolio",
+      icon: <Briefcase className="w-5 h-5" />,
+    },
+    { id: "dashboard", label: "Index", icon: <Zap className="w-5 h-5" /> },
+    { id: "market", label: "Market", icon: <BarChart3 className="w-5 h-5" /> },
   ];
 
   const handleTabClick = (tabId: string) => {
-       onTabChange(tabId);
-       setIsMobileOpen(false);
-     };
-
+    onTabChange(tabId);
+    setIsMobileOpen(false);
+  };
 
   return (
     <>
-      {/* Mobile Hamburger Button */}
+      {/* モバイル：ハンバーガー */}
       <button
-        onClick={() => setIsMobileOpen(!isMobileOpen)}
+        onClick={() => setIsMobileOpen((v) => !v)}
         className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-base-200/80 backdrop-blur-xl border border-base-300 rounded-lg text-base-content hover:bg-base-300/80 transition-colors"
+        aria-label="Open menu"
       >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M4 6h16M4 12h16M4 18h16"
+          />
         </svg>
       </button>
 
-      {/* Mobile Overlay */}
+      {/* モバイル：背面オーバーレイ */}
       <AnimatePresence>
         {isMobileOpen && (
           <motion.div
@@ -56,108 +78,89 @@ const Sidebar = ({ activeTab, onTabChange }: SidebarProps) => {
         )}
       </AnimatePresence>
 
-      {/* Sidebar */}
-      <motion.div
-        className={`bg-base-100/80 backdrop-blur-xl border-r border-base-300 h-screen fixed left-0 top-0 z-40 transition-all duration-300 ${isCollapsed ? 'w-16' : 'w-64'
-          } ${isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
-          }`}
-        initial={{ x: -300 }}
-        animate={{ x: 0 }}
+      {/* 上ナビ本体（左/中/右） */}
+      <motion.nav
+        className="fixed top-0 left-0 w-full h-16 z-50
+    flex items-center justify-between
+    bg-base-100/80 backdrop-blur-xl border-b border-base-300 px-4 sm:px-6
+    overflow-visible "
+        initial={{ y: -80 }}
+        animate={{ y: 0 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
       >
-        <div className="flex flex-col h-full">
-          {/* Logo */}
-          <div className="p-4 border-b border-base-300">
-            <div className="flex items-center space-x-3">
-              <div className="w-20 h-20 relative">
-                <Link href="/">
-                <Image
-                  src="/logo.png"
-                  alt="AXIS"
-                  fill
-                  className="object-contain"
-                  sizes="20px"
-                /></Link>
-              </div>
-              {!isCollapsed && (
-                <motion.span
-                  className="text-base-content font-bold text-lg"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.1 }}
-                >
-                </motion.span>
-              )}
-            </div>
+        {/* 左：ロゴ */}
+        <Link href="/" className="flex items-center gap-2">
+          <div className="relative w-20 h-20">
+            <Image
+              src="/logo.png"
+              alt="AXIS"
+              fill
+              className="object-contain"
+              sizes="52px"
+            />
           </div>
+        </Link>
 
-          {/* Navigation */}
-          <nav className="flex-1 p-4 space-y-2">
-            {navigationItems.map((item) => (
-              <motion.button
-                key={item.id}
-                onClick={() => handleTabClick(item.id)}
-                className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg transition-all duration-200 ${activeTab === item.id
-                  ? 'bg-primary/20 text-primary'
-                  : 'text-base-content/70 hover:text-base-content hover:bg-base-200/50'
-                  }`}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <span className="text-lg">{item.icon}</span>
-                {!isCollapsed && (
-                  <motion.span
-                    className="font-medium"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.1 }}
-                  >
-                    {item.label}
-                  </motion.span>
-                )}
-              </motion.button>
-            ))}
-          </nav>
-
-          {/* Theme Switcher */}
-          <div className="px-4 pb-2">
-            <div className="flex items-center justify-between mb-2 text-xs text-base-content/60">
-              <span className="flex items-center gap-2">
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary"></span>
-                Theme
-              </span>
-            </div>
-            <ThemeSwitcher size="sm" className="w-full justify-center" />
-          </div>
-
-          {/* Connect Wallet Button */}
-          <div className="p-4 border-t border-base-300">
-            <div className="space-y-3">
-              <div className="w-full">
-                <SidebarWalletButton />
-              </div>
-              {!isCollapsed && (
-                <motion.div
-                  className="text-xs text-base-content/50 text-center"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.1 }}
-                >
-                  https://axis-protocol.xyz
-                </motion.div>
-              )}
-            </div>
-          </div>
-
-          {/* Collapse Toggle - Hidden on mobile */}
-          <button
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className="hidden lg:flex absolute top-1/2 -right-3 w-6 h-6 bg-base-200 border border-base-300 rounded-full items-center justify-center text-base-content/70 hover:text-base-content transition-colors"
-          >
-            {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
-          </button>
+        {/* 中：メニュー（PC表示） */}
+        <div className="hidden lg:flex items-center gap-2 ml-[60px]">
+          {navigationItems.map((item) => (
+            <motion.button
+              key={item.id}
+              onClick={() => handleTabClick(item.id)}
+              className={`inline-flex items-center gap-2 px-3 py-2 rounded-md transition-all duration-200 ${
+                activeTab === item.id
+                  ? "bg-primary/20 text-primary"
+                  : "text-base-content/70 hover:text-base-content hover:bg-base-200/50"
+              }`}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              aria-selected={activeTab === item.id}
+            >
+              <span className="text-lg">{item.icon}</span>
+              <span className="font-medium">{item.label}</span>
+            </motion.button>
+          ))}
         </div>
-      </motion.div>
+
+        {/* 右：テーマ & ウォレット */}
+        <div className="flex items-center gap-2 align-middle">
+          <ThemeSwitcher size="sm" className="shrink-0" />
+          <SidebarWalletButton layout="inline" />
+        </div>
+      </motion.nav>
+
+      {/* モバイル：メニュー展開（上ナビ直下） */}
+      <AnimatePresence>
+        {isMobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            className="fixed top-16 left-0 w-full bg-base-100 border-b border-base-300 p-3 z-30"
+          >
+            <div className="flex flex-col gap-2">
+              {navigationItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => handleTabClick(item.id)}
+                  className={`text-left px-3 py-2 rounded-md ${
+                    activeTab === item.id
+                      ? "bg-primary/20 text-primary"
+                      : "hover:bg-base-200"
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+              {/* モバイルにもウォレット/Themeを出したいならここに追加してOK */}
+              {/* <div className="mt-2 flex items-center gap-3">
+                <ThemeSwitcher size="sm" className="shrink-0" />
+                <SidebarWalletButton layout="inline" />
+              </div> */}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

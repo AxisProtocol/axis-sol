@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useRef, useMemo } from 'react';
-import { motion } from 'framer-motion';
-import dynamic from 'next/dynamic';
-import { useConnection, useWallet } from '@solana/wallet-adapter-react';
+import { useState, useEffect, useRef, useMemo } from "react";
+import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import {
   LAMPORTS_PER_SOL,
   PublicKey,
@@ -11,14 +11,14 @@ import {
   SystemProgram,
   clusterApiUrl,
   Connection,
-} from '@solana/web3.js';
-import UnifiedDashboard from '../../app/dashboard/UnifiedDashboard';
-import ModernButton from './ModernButton';
+} from "@solana/web3.js";
+import UnifiedDashboard from "../../app/dashboard/UnifiedDashboard";
+import ModernButton from "./ModernButton";
 import {
   getAllDomains,
   reverseLookup,
   devnet as snsDev,
-} from '@bonfida/spl-name-service';
+} from "@bonfida/spl-name-service";
 // splana-SPLトークン発行ライブラリ
 import {
   NATIVE_MINT,
@@ -27,20 +27,31 @@ import {
   getAssociatedTokenAddressSync,
   createAssociatedTokenAccountInstruction,
   createSyncNativeInstruction,
-} from '@solana/spl-token';
-import { P } from 'node_modules/framer-motion/dist/types.d-Cjd591yU';
+} from "@solana/spl-token";
+import { P } from "node_modules/framer-motion/dist/types.d-Cjd591yU";
 
-const SnsModal = dynamic(() => import('../dashboard/Modal/snsModal'), {
+type SidebarWalletButtonProps = {
+  layout?: "stack" | "inline";
+  className?: string;
+};
+
+const SnsModal = dynamic(() => import("../dashboard/Modal/snsModal"), {
   ssr: false,
 });
 
 function shortAddr(pk: PublicKey | null) {
-  if (!pk) return '';
+  if (!pk) return "";
   const s = pk.toBase58();
   return `${s.slice(0, 4)}…${s.slice(-4)}`;
 }
+const cx = (...c: (string | false | undefined)[]) =>
+  c.filter(Boolean).join(" ");
 
-const SidebarWalletButton = () => {
+const SidebarWalletButton = ({
+  layout = "stack",
+  className = "",
+}: SidebarWalletButtonProps) => {
+  const inline = layout === "inline";
   const { connection } = useConnection();
   const {
     publicKey,
@@ -57,7 +68,7 @@ const SidebarWalletButton = () => {
   const [domains, setDomains] = useState<string[]>([]);
   const [domainsLoading, setDomainsLoading] = useState(false);
   const [domainsError, setDomainsError] = useState<string | null>(null);
-  const [desiredName, setDesiredName] = useState('');
+  const [desiredName, setDesiredName] = useState("");
   const [regBusy, setRegBusy] = useState(false);
   const [regMsg, setRegMsg] = useState<string | null>(null);
   const [snsOpen, setSnsOpen] = useState(false);
@@ -110,7 +121,7 @@ const SidebarWalletButton = () => {
     // console.log("ix programIds", ixs.map(ix => ix?.programId?.toBase58?.()));
 
     const sig = await payer.sendTransaction(tx, connection);
-    await connection.confirmTransaction(sig, 'confirmed');
+    await connection.confirmTransaction(sig, "confirmed");
     return ata;
   }
 
@@ -121,9 +132,9 @@ const SidebarWalletButton = () => {
       setRegBusy(true);
       setRegMsg(null);
 
-      const raw = desiredName.trim().replace(/\.sol$/i, '');
+      const raw = desiredName.trim().replace(/\.sol$/i, "");
       if (!raw || !/^[a-z0-9._-]+$/i.test(raw)) {
-        throw new Error('Invalid name');
+        throw new Error("Invalid name");
       }
 
       // 0.1 SOL を wSOL 化（必要なら増やしてOK）
@@ -150,14 +161,14 @@ const SidebarWalletButton = () => {
       } else if (regIxOrIxs) {
         tx2.add(regIxOrIxs);
       } else {
-        throw new Error('registerDomainNameV2 returned no instruction');
+        throw new Error("registerDomainNameV2 returned no instruction");
       }
       tx2.feePayer = publicKey;
 
       const sig2 = await wallet.adapter.sendTransaction(tx2, connection);
-      await connection.confirmTransaction(sig2, 'confirmed');
+      await connection.confirmTransaction(sig2, "confirmed");
 
-      setDesiredName('');
+      setDesiredName("");
       setDomains((d) => (d.includes(`${raw}.sol`) ? d : [`${raw}.sol`, ...d]));
     } catch (e: any) {
       setRegMsg(`Error: ${e?.message ?? String(e)}`);
@@ -171,10 +182,10 @@ const SidebarWalletButton = () => {
   const [solBalance, setSolBalance] = useState<number | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  const network = useMemo(() => 'devnet', []);
+  const network = useMemo(() => "devnet", []);
   const explorer = publicKey
     ? `https://solscan.io/account/${publicKey.toBase58()}?cluster=devnet`
-    : 'https://solscan.io/?cluster=devnet';
+    : "https://solscan.io/?cluster=devnet";
 
   // SOL 残高（任意表示）
   useEffect(() => {
@@ -185,13 +196,13 @@ const SidebarWalletButton = () => {
         return;
       }
       try {
-        const lamports = await connection.getBalance(publicKey, 'confirmed');
+        const lamports = await connection.getBalance(publicKey, "confirmed");
         setSolBalance(lamports / LAMPORTS_PER_SOL);
         // 口座変更を購読（簡易）
         sub = connection.onAccountChange(
           publicKey,
           (acc) => setSolBalance(acc.lamports / LAMPORTS_PER_SOL),
-          'confirmed'
+          "confirmed"
         );
       } catch {
         /* noop */
@@ -226,12 +237,12 @@ const SidebarWalletButton = () => {
           setDomains(
             names
               .filter((n): n is string => !!n)
-              .map((n) => (n.endsWith('.sol') ? n : `${n}.sol`))
+              .map((n) => (n.endsWith(".sol") ? n : `${n}.sol`))
           );
         }
       } catch (e: any) {
         if (!cancelled)
-          setDomainsError(e?.message ?? 'Failed to fetch domains');
+          setDomainsError(e?.message ?? "Failed to fetch domains");
       } finally {
         if (!cancelled) setDomainsLoading(false);
       }
@@ -250,11 +261,11 @@ const SidebarWalletButton = () => {
     };
 
     if (menuOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [menuOpen]);
 
@@ -262,13 +273,13 @@ const SidebarWalletButton = () => {
     try {
       // 自前UIなので Phantom を自動選択（PhantomWalletAdapter を使っている前提）
       if (!wallet) {
-        const phantom = wallets.find((w) => w.adapter.name === 'Phantom');
+        const phantom = wallets.find((w) => w.adapter.name === "Phantom");
         if (phantom) await select(phantom.adapter.name);
       }
       await connect();
       setMenuOpen(false);
     } catch (e) {
-      console.error('[SidebarWalletButton] connect error:', e);
+      console.error("[SidebarWalletButton] connect error:", e);
     }
   }
 
@@ -277,7 +288,7 @@ const SidebarWalletButton = () => {
       await disconnect();
       setMenuOpen(false);
     } catch (e) {
-      console.error('[SidebarWalletButton] disconnect error:', e);
+      console.error("[SidebarWalletButton] disconnect error:", e);
     }
   }
 
@@ -289,74 +300,127 @@ const SidebarWalletButton = () => {
   // 非接続時のボタン
   if (!connected) {
     return (
-      <div className="w-full ">
+      <div
+        className={cx(
+          inline ? "inline-flex items-center gap-2 " : "w-full flex flex-col"
+        )}
+      >
         <button
           type="button"
-          className="w-full font-medium py-2.5 px-4 rounded-lg transition-all duration-200 bg-gradient-to-r from-orange-500 to-blue-500 hover:from-orange-600 hover:to-blue-600 text-white"
+          className={cx(
+            "inline-flex items-center justify-center leading-none font-medium rounded-lg transition-all duration-200 text-white",
+            inline
+              ? "h-10 px-4 bg-gradient-to-r from-orange-500 to-blue-500 hover:from-orange-600 hover:to-blue-600"
+              : "w-full py-2.5 px-4 bg-gradient-to-r from-orange-500 to-blue-500 hover:from-orange-600 hover:to-blue-600"
+          )}
           onClick={handleConnect}
           aria-busy={connecting}
           aria-label="Connect Solana wallet"
         >
-          {connecting ? 'Connecting…' : 'Connect Wallet'}
+          {connecting ? "Connecting…" : "Connect Wallet"}
         </button>
+
+        {domains.length === 0 &&
+          !domainsLoading &&
+          (inline ? (
+            <ModernButton
+              onClick={() => setSnsOpen(true)}
+              className="
+             inline-flex items-center justify-center sm:ml-2 h-10 px-4 rounded-lg leading-none font-bold
+   bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700
+  text-white text-sm sm:text-base
+   basis-full sm:basis-auto w-full sm:w-auto 
+            "
+            >
+              Get own .sol
+            </ModernButton>
+          ) : (
+            <div className="relative w-full mt-4">
+              <ModernButton
+                onClick={() => setSnsOpen(true)}
+                className="w-full font-semibold py-3 px-5 rounded-xl
+                         bg-gradient-to-r from-blue-600 to-purple-600
+                         hover:from-blue-700 hover:to-purple-700
+                         text-white shadow-lg hover:shadow-purple-400/40
+                         transition transform duration-300 hover:scale-105"
+              >
+                Get own .sol
+              </ModernButton>
+            </div>
+          ))}
+
         {snsOpen && (
           <SnsModal
             isOpen={snsOpen}
             onClose={() => setSnsOpen(false)}
             indexPrice={null}
             onRegistered={(fqdn) => {
-              // 楽観更新で即反映（後でEffectでもう一度フェッチされる）
               setDomains((d) => (d.includes(fqdn) ? d : [fqdn, ...d]));
-              setSnsOpen(false); // 念のためクローズ（モーダル側でも閉じるが二重OK）
+              setSnsOpen(false);
             }}
           />
         )}
-        {domains.length === 0 && !domainsLoading && (
-          <div className="relative w-full mt-4">
-            <ModernButton
-              variant="primary"
-              size="lg"
-              onClick={() => setSnsOpen(true)}
-              className="w-full font-semibold py-3 px-5 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-purple-400/40 transition transform duration-300 hover:scale-105"
-            >
-              Get own .sol
-            </ModernButton>
-          </div>
-        )}
-        <div className="mt-2 text-xs text-gray-400 text-center px-2 py-1 border border-white/15 rounded-md select-none">{network}</div>
       </div>
     );
   }
 
   // 接続中のドロップダウン
   return (
-    <div className="relative w-full" ref={menuRef}>
+    <div
+      ref={menuRef}
+      className={cx(
+        inline
+          ? "relative flex items-center gap-2 min-w-0 max-w-full flex-nowrap"
+          : "relative w-full flex flex-col",
+        className
+      )}
+    >
       <button
         type="button"
-        className="w-full font-medium py-2.5 px-4 rounded-lg transition-all duration-200 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white"
+        className={cx(
+          "font-medium rounded-lg transition-all duration-200 text-white",
+          inline
+            ? "h-10 px-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 "
+            : "w-full py-2.5 px-4 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600"
+        )}
         onClick={() => setMenuOpen((v) => !v)}
         aria-expanded={menuOpen}
         aria-controls="wallet-menu"
       >
-        <span className="inline-block w-2 h-2 rounded-full bg-white mr-2 animate-pulse" />{' '}
-        {domains.length > 0 ? domains[0] : shortAddr(publicKey)}
+        <span className="block w-full truncate">
+          {" "}
+          {domains.length > 0 ? domains[0] : shortAddr(publicKey)}
+        </span>
       </button>
-      {domains.length === 0 && !domainsLoading && (
-        <div className="relative w-full mt-4">
+      {domains.length === 0 &&
+        !domainsLoading &&
+        (inline ? (
           <ModernButton
-            variant="primary"
-            size="lg"
             onClick={() => setSnsOpen(true)}
-            className="w-full font-semibold py-3 px-5 rounded-xl
-                     bg-gradient-to-r from-blue-600 to-purple-600
-                     hover:from-blue-700 hover:to-purple-700
-                     text-white shadow-lg hover:shadow-purple-400/40
-                     transition transform duration-300 hover:scale-105"
+            className="inline-flex items-center justify-center sm:ml-2 h-10 px-4 rounded-lg leading-none font-bold
+   bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700
+  text-white text-sm sm:text-base
+   basis-full sm:basis-auto w-full sm:w-auto 
+      "
           >
             Get own .sol
           </ModernButton>
-        </div>
-      )}
+        ) : (
+          <div className="relative w-full mt-4">
+            <ModernButton
+              onClick={() => setSnsOpen(true)}
+              className="
+       w-full font-semibold py-3 px-5 rounded-xl
+                         bg-gradient-to-r from-blue-600 to-purple-600
+                         hover:from-blue-700 hover:to-purple-700
+                         text-white shadow-lg hover:shadow-purple-400/40
+                         transition transform duration-300 hover:scale-105
+        "
+            >
+              Get own .sol
+            </ModernButton>
+          </div>
+        ))}
 
       {snsOpen && (
         <SnsModal
@@ -374,17 +438,20 @@ const SidebarWalletButton = () => {
         <div
           id="wallet-menu"
           role="menu"
-          className="absolute left-0 bottom-[calc(100%+0.5rem)] w-full min-w-[280px] bg-gray-900/85 backdrop-blur-md border border-white/12 rounded-xl shadow-2xl shadow-black/45 overflow-hidden z-30"
+          className="absolute top-[calc(100%+0.5rem)] right-2 sm:right-0
+           w-[92vw] sm:w-auto sm:min-w-[280px]
+           bg-gray-900/85 backdrop-blur-md border border-white/12
+    rounded-xl shadow-2xl shadow-black/45
+    z-[9999] max-h-[80vh] overflow-y-auto"
+          onClick={(e) => e.stopPropagation()}
         >
           <div className="px-4 py-3 pb-2 border-b border-white/8">
             <div className="font-mono text-gray-300 text-sm break-all">
               {publicKey?.toBase58()}
             </div>
-
             {domainsError && (
               <div className="mt-1 text-xs text-red-400">{domainsError}</div>
             )}
-
             {solBalance != null && (
               <div className="mt-1 text-green-300 font-semibold text-sm">
                 {solBalance.toFixed(4)} SOL
@@ -392,29 +459,33 @@ const SidebarWalletButton = () => {
             )}
           </div>
 
-          <button
-            role="menuitem"
-            className="w-full text-left px-4 py-3 bg-transparent border-none text-gray-200 font-semibold cursor-pointer block no-underline hover:bg-white/6"
-            onClick={copyAddress}
-          >
-            Copy address
-          </button>
-          <a
-            role="menuitem"
-            className="w-full text-left px-4 py-3 bg-transparent border-none text-gray-200 font-semibold cursor-pointer block no-underline hover:bg-white/6"
-            href={explorer}
-            target="_blank"
-            rel="noreferrer"
-          >
-            View on Solscan
-          </a>
-          <button
-            role="menuitem"
-            className="w-full text-left px-4 py-3 bg-transparent border-none text-red-400 font-semibold cursor-pointer block no-underline hover:bg-white/6"
-            onClick={handleDisconnect}
-          >
-            Disconnect
-          </button>
+          <div className="flex flex-col">
+            <button
+              role="menuitem"
+              className="w-full text-left px-4 py-3 text-gray-200 font-semibold hover:bg-white/6"
+              onClick={copyAddress}
+            >
+              Copy address
+            </button>
+
+            <a
+              role="menuitem"
+              className="w-full text-left px-4 py-3 text-gray-200 font-semibold hover:bg-white/6"
+              href={explorer}
+              target="_blank"
+              rel="noreferrer"
+            >
+              View on Solscan
+            </a>
+
+            <button
+              role="menuitem"
+              className="w-full text-left px-4 py-3 text-red-400 font-semibold hover:bg-white/6"
+              onClick={handleDisconnect}
+            >
+              Disconnect
+            </button>
+          </div>
         </div>
       )}
     </div>
