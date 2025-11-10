@@ -81,8 +81,7 @@ export default function WaitlistForm() {
 
   return (
     <>
-      {/* ── 常時表示トグル（左上・四角・グラス） ── */}
-      /* ── 常時表示トグル：左上・アイコンのみ・枠線なしガラス + しっかり読めるTooltip ── */
+      
 <div
   className="
     fixed z-[2000] group
