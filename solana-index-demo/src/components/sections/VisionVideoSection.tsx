@@ -43,8 +43,9 @@ const VisionVideoSection: React.FC = () => {
             </motion.span>
 
             <motion.h2
-              className="text-[clamp(2.4rem,6vw,4rem)] font-bold italic leading-[1.05] mb-6"
+              className="text-[clamp(4rem,14vw,7rem)]  leading-[1.05] mb-6"
               variants={itemVariants}
+              style={{ fontFamily: 'var(--font-serif)' }}
             >
               Our Mission
             </motion.h2>

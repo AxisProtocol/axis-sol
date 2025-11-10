@@ -57,38 +57,31 @@ export default function IndexOverviewSection() {
     >
       {/* ヘッダー */}
       <div className="max-w-[1200px] mx-auto mb-12">
-        <motion.h1
-          className="text-[clamp(2.6rem,7vw,4rem)] leading-tight font-extrabold italic"
-          variants={itemVariants}
-        >
-          Axis CaP5 Index
-        </motion.h1>
-        <motion.p
-          className="text-[clamp(1.05rem,2.4vw,1.25rem)] text-gray-300 mt-3 italic"  
-          variants={itemVariants}
-        >
-          Live performance and current constituents of the index.
-        </motion.p>
-      </div>
+  {/* 見出し行：h1 を flex にしない */}
+  <div className="flex items-baseline gap-6 flex-wrap md:flex-nowrap">
+    <motion.h1
+      className="leading-[0.98] font-bold text-white
+                 text-[clamp(2.6rem,7vw,7rem)]"
+      variants={itemVariants}
+      style={{ fontFamily: 'var(--font-serif)' }}
+    >
+      What&apos;s CaP5?
+    </motion.h1>
+  </div>
+
+  <motion.p
+    className="text-[clamp(1.05rem,2.4vw,1.25rem)] text-gray-300 mt-3 italic"
+    variants={itemVariants}
+  >
+    Live performance and current constituents of the index.
+  </motion.p>
+</div>
+
 
       {/* --- パート1: CaP5（ロゴ + Top5ロゴグリッド） --- */}
       <div className="max-w-[1200px] mx-auto mb-14">
         {/* CaP5 ロゴ（1枚） */}
-        <motion.div
-          className="flex items-center justify-center mb-8"
-          variants={itemVariants}
-        >
-          {/* ここをCaP5ロゴの実ファイルパスに合わせてください */}
-          <Image
-            src="/cap5.png"
-            alt="CaP5 logo"
-            width={900}
-            height={270}
-            className="w-auto h-20 md:h-28 lg:h-36 object-contain"
-            sizes="(min-width:1024px) 36rem, (min-width:768px) 28rem, 20rem"
-            priority
-          />
-        </motion.div>
+       
 
         <motion.div className="text-center mb-6" variants={itemVariants}>
           <h2 className="text-2xl md:text-3xl font-bold">
@@ -137,7 +130,7 @@ export default function IndexOverviewSection() {
           {/* CTA：詳細は別ページへ */}
           <div className="mt-6 flex items-center justify-center">
             <a
-              href="/methodology"
+              href="https://zenodo.org/records/17521527"
               className="inline-flex items-center gap-2 rounded-lg border border-cyan-400/40 bg-cyan-400/10 px-4 py-2 text-sm font-semibold text-cyan-200 hover:bg-cyan-400/15 hover:border-cyan-400/60 transition-colors"
             >
               Read full methodology

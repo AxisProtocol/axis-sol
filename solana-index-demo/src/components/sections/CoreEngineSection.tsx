@@ -85,11 +85,12 @@ const CoreEngineSection: React.FC = () => {
     >
       <div className="container mx-auto max-w-6xl px-4">
         <motion.h2
-          className="text-[clamp(2.2rem,6vw,3.5rem)] font-bold text-center mb-6 italic"
+          className="text-[clamp(2.2rem,6vw,7rem)]  text-center mb-6 italic"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.5 }}
           variants={itemVariants}
+          style={{ fontFamily: 'var(--font-serif)' }}
         >
           Institutional safety, retail simplicity.
         </motion.h2>
@@ -100,6 +101,7 @@ const CoreEngineSection: React.FC = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.5 }}
           variants={itemVariants}
+          
         >
           Our infrastructure is built on three pillars
           of trust, combining Jito&apos;s speed with mathematical verification.
@@ -116,6 +118,7 @@ const CoreEngineSection: React.FC = () => {
               whileInView="visible"
               viewport={{ once: true, amount: 0.3 }}
               variants={itemVariants}
+              style={{ fontFamily: 'var(--font-serif)' }}
             >
               <span
                 className="pointer-events-none select-none absolute -top-8 md:-top-10 -left-2 md:-left-6
@@ -128,7 +131,7 @@ const CoreEngineSection: React.FC = () => {
 
               {/* Left: Text */}
               <div className="w-full md:w-1/2 relative">
-                <h3 className="text-[clamp(1.8rem,4.5vw,2.8rem)] font-bold italic mb-5 relative z-10">
+                <h3 className="text-[clamp(1.8rem,4.5vw,2.8rem)]  mb-5 relative z-10">
                   {feature.title}
                 </h3>
                 <p className="text-[clamp(1rem,2.6vw,1.2rem)] text-gray-300 leading-relaxed relative z-10">

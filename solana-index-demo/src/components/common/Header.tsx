@@ -8,8 +8,11 @@ import Image from 'next/image';
 const navItems = [
   { name: 'Home', href: '#hero' },
   { name: 'Core Engine', href: '#core-engine' },
-  { name: 'Axis Index', href: '#index-overview' },
-  { name: 'Index Methodology', href: '#methodology' },
+  { name: 'CaP5', href: '#index-overview' },
+  { name: 'Our Vision', href: '#vision-video' },
+  { name: 'Our Partner', href: '#ecosystem' },
+  { name: 'Join Axis', href: '#methodology' },
+  
 ];
 
 export const Header = () => {
@@ -21,7 +24,7 @@ export const Header = () => {
       {/* ---------- Glass Header (no border / fixed on top) ---------- */}
       <header
         className="
-          fixed top-0 inset-x-0 z-[1000]
+          fixed top-0 inset-x-0 z-[1000] italic
           bg-black/10 backdrop-blur-sm
         "
       >
@@ -35,7 +38,7 @@ export const Header = () => {
                   alt="Axis Protocol Logo"
                   width={60}
                   height={60}
-                  className="w-12 h-12 lg:w-[60px] lg:h-[60px]"
+                  className="w-24 h-24 lg:w-[100px] lg:h-[100px]"
                   priority
                 />
               </a>
