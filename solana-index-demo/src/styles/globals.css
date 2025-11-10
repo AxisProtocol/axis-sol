@@ -196,3 +196,95 @@ html {
   scrollbar-color: var(--color-primary) var(--color-base-200);
   scrollbar-width: thin;
 }
+/* =========================
+   Axis Sea Light (LP専用ライトテーマ)
+   ========================= */
+   @plugin "daisyui/theme" {
+    name: "axis-sea";
+    default: false;
+    prefersdark: false;
+    color-scheme: light;
+  
+    /* “深海の光”をイメージした淡色パレット（黒文字前提） */
+    --color-base-100: #f4f8fb;   /* 背景（薄い青みの白） */
+    --color-base-200: #e9f1f7;   /* セクションカードの下地 */
+    --color-base-300: #d7e6f1;
+    --color-base-content: #0a0a0a; /* 黒文字（高級感のある可読性） */
+  
+    /* ブランド：穏やかなティール〜ディープブルー */
+    --color-primary: #10b6d6;            /* ティール（主ボタン/リンク） */
+    --color-primary-content: #051015;    /* 上に載る文字 */
+    --color-secondary: #175ea5;          /* ディープブルー（強調） */
+    --color-secondary-content: #f7fbff;
+    --color-accent: #69d1c5;             /* 海面反射のミント */
+    --color-accent-content: #071412;
+  
+    --color-neutral: #ecf2f6;
+    --color-neutral-content: #0d1115;
+  
+    /* 情報色（ライト背景で視認性最適化） */
+    --color-info: #2563eb;
+    --color-info-content: #061020;
+    --color-success: #16a34a;
+    --color-success-content: #071108;
+    --color-warning: #d97706;
+    --color-warning-content: #130b03;
+    --color-error: #b91c1c;
+    --color-error-content: #fff;
+  
+    /* 角丸・ボーダーは上品めに */
+    --radius-selector: 1rem;
+    --radius-field: .375rem;
+    --radius-box: .75rem;
+    --size-selector: .25rem;
+    --size-field: .25rem;
+    --border: 1px;
+    --depth: 1;
+    --noise: 0;
+  }
+  
+  /* ==== Premium Dark Background (body全体) ==== */
+:root{
+  /* 深海系の深緑〜黒、微妙に青味を入れる */
+  --bg0: #020405;   /* ほぼ黒 */
+  --bg1: #061018;   /* かなり暗い青緑 */
+  --bg2: #0b1f2a;   /* 低彩度ティール */
+  --glow: #4de2c6;  /* ごく淡いミント(グロー) */
+}
+
+/* 一枚モノの高級グラデ。固定でわずかにパララックス感 */
+html, body {
+  background:
+    radial-gradient(1100px 600px at 80% 0%, color-mix(in oklch, var(--bg2), black 40%) 0%, transparent 65%),
+    radial-gradient(900px 500px at 15% 10%, color-mix(in oklch, var(--bg2), black 25%) 0%, transparent 62%),
+    linear-gradient(180deg, var(--bg1) 0%, var(--bg0) 65%, #000 100%);
+  background-attachment: fixed, fixed, fixed;
+  color: #e9eef8; /* 既存が text-white ならそのままでもOK */
+}
+
+/* ごく薄い縁ビネットで締める */
+body::before{
+  content:'';
+  position: fixed;
+  inset: -2px;      /* 端にほんの少し広げる */
+  pointer-events: none;
+  background:
+    radial-gradient(1400px 800px at 50% -10%, rgba(77, 226, 198, .06), transparent 70%),
+    radial-gradient(1200px 700px at 50% 110%, rgba(77, 226, 198, .04), transparent 70%),
+    linear-gradient(180deg, transparent 0%, rgba(0,0,0,.12) 80%, rgba(0,0,0,.24) 100%);
+  z-index: -1;
+}
+
+/* 微ノイズで質感を足す（お好みでオフ可） */
+body::after{
+  content:'';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: .035;
+  mix-blend-mode: soft-light;
+  background-image: url('/noise-8x8.png'); /* 既存のノイズ画像を流用 */
+  background-size: 128px 128px;
+  z-index: -1;
+}
+
