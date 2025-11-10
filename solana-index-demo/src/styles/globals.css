@@ -288,3 +288,50 @@ body::after{
   z-index: -1;
 }
 
+/* =========================
+   Scroll behavior: モバイルは非スムース / PCはスムース
+   ========================= */
+   @media (min-width: 768px) {
+    html { scroll-behavior: smooth; }
+  }
+  @media (max-width: 767px) {
+    html { scroll-behavior: auto; }
+  }
+  
+  /* アンカーずれ（固定ヘッダー分の余白） */
+  html { scroll-padding-top: 80px; }        /* PC */
+  @media (max-width: 767px) {
+    html { scroll-padding-top: 64px; }      /* SPヘッダー高に合わせて調整 */
+  }
+  
+  /* OSの設定を尊重（モーション削減がONなら常に非スムース） */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto !important; }
+  }
+  
+  /* =========================
+     Mobile scroll performance
+     ========================= */
+  /* iOS/Androidでのスクロール jank を避けるため、固定背景をオフに */
+  @media (max-width: 767px) {
+    html, body {
+      /* 既存の3レイヤー fixed を scroll に切替（同じ数だけ指定） */
+      background-attachment: scroll, scroll, scroll;
+    }
+  }
+  
+  /* コンテンツが巨大なセクションの再描画を安定させる */
+  @media (max-width: 767px) {
+    /* ヒーローの描画を安定 (任意：該当セレクタを追加) */
+    #hero,
+    #hero img,
+    .cv-auto {
+      will-change: transform;
+      -webkit-backface-visibility: hidden;
+              backface-visibility: hidden;
+    }
+  }
+  
+  /* 横スクは引き続き禁止（既存維持） */
+  html, body { overflow-x: hidden; }
+  
