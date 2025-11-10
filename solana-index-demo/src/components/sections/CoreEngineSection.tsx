@@ -1,35 +1,42 @@
-// CoreEngineSection.tsx
+// src/components/sections/CoreEngineSection.tsx
 'use client';
+
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const features = [
+type Feature = {
+  number: string;
+  title: string;
+  description: string;
+  visual: () => React.ReactNode;
+};
+
+const features: Feature[] = [
   {
     number: '01',
     title: 'Atomic Rebalancing via JitoBAM',
     description:
       'Rebalancing is safe, automated, and atomic. By using Jito bundles, we execute oracle updates, rebalancing, and swaps in one indivisible transaction, eliminating MEV risk.',
     visual: () => (
-        <div className="flex items-center justify-center gap-6 md:gap-10 lg:gap-12">
-        <motion.div className="scale-[1.1] md:scale-[1.2] lg:scale-[1.25]">
-          <motion.img
-            whileHover={{ scale: 1.05 }}
-            src="/jito-logo.png"
-            alt="Jito Logo"
-            className="h-32 w-32 md:h-48 md:w-48 lg:h-56 lg:w-56 rounded-lg object-contain"
-            loading="lazy"
-          />
-        </motion.div>
-      
-        <span className="text-6xl md:text-7xl lg:text-8xl font-bold text-gray-500">
-            
-        </span>
+      <div className="flex items-center justify-center gap-6 md:gap-8 lg:gap-10">
+        <motion.img
+          whileHover={{ scale: 1.05 }}
+          src="/jito-logo.png"
+          alt="Jito Logo"
+          loading="lazy"
+          decoding="async"
+          fetchPriority="low"
+          className="h-20 w-20 md:h-24 md:w-24 lg:h-28 lg:w-28 rounded-lg object-contain"
+        />
+        <span className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-500" />
         <motion.img
           whileHover={{ scale: 1.05 }}
           src="/BAM.png"
           alt="BAM Logo"
-          className="h-24 w-24 md:h-32 md:w-32 rounded-lg object-contain"
           loading="lazy"
+          decoding="async"
+          fetchPriority="low"
+          className="h-20 w-20 md:h-24 md:w-24 lg:h-28 lg:w-28 rounded-lg object-contain"
         />
       </div>
     ),
@@ -43,8 +50,10 @@ const features = [
       <img
         src="/PoR.png"
         alt="Proof of Reserves Illustration"
-        className="w-full h-auto max-w-xl md:max-w-2xl rounded-lg object-cover"
         loading="lazy"
+        decoding="async"
+        fetchPriority="low"
+        className="w-full h-auto object-contain rounded-lg"
       />
     ),
   },
@@ -57,38 +66,36 @@ const features = [
       <img
         src="/assets.png"
         alt="Native Asset Custody Illustration"
-        className="w-full h-auto max-w-xl md:max-w-2xl rounded-lg object-cover"
         loading="lazy"
+        decoding="async"
+        fetchPriority="low"
+        className="w-full h-auto object-contain rounded-lg"
       />
     ),
   },
 ];
 
-// animations
 const sectionVariants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { duration: 0.5 } },
 };
 const itemVariants = {
   hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: 'easeOut' } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: 'easeOut' } },
 };
 
 const CoreEngineSection: React.FC = () => {
   return (
     <motion.section
-      className="text-white py-24 lg:py-32" // ← 背景は透明（他セクションに合わせる）
+      className="text-white py-16 md:py-20 lg:py-24"
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
+      viewport={{ once: true, amount: 0.12 }}
       variants={sectionVariants}
     >
-      <div className="container mx-auto max-w-6xl px-4">
+      <div className="mx-auto max-w-[1400px] px-4 lg:px-6">
         <motion.h2
-          className="text-[clamp(2.2rem,6vw,7rem)]  text-center mb-6 italic"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.5 }}
+          className="text-[clamp(2rem,6vw,4.5rem)] text-center mb-4 italic"
           variants={itemVariants}
           style={{ fontFamily: 'var(--font-serif)' }}
         >
@@ -96,54 +103,66 @@ const CoreEngineSection: React.FC = () => {
         </motion.h2>
 
         <motion.p
-          className="text-[clamp(1rem,3.2vw,1.5rem)] text-gray-400 text-center mb-20 lg:mb-28 max-w-3xl mx-auto leading-relaxed italic"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.5 }}
+          className="text-[clamp(1rem,3.2vw,1.25rem)] text-gray-400 text-center mb-10 md:mb-14 max-w-3xl mx-auto leading-relaxed italic"
           variants={itemVariants}
-          
         >
-          Our infrastructure is built on three pillars
-          of trust, combining Jito&apos;s speed with mathematical verification.
+          Our infrastructure is built on three pillars of trust, combining Jito&apos;s speed with
+          mathematical verification.
         </motion.p>
 
         <div>
           {features.map((feature, index) => (
             <motion.div
               key={feature.number}
-              className={`relative flex flex-col md:flex-row items-center gap-12 lg:gap-20 min-h-[70vh] lg:min-h-[80vh] py-16 ${
-                index % 2 !== 0 ? 'md:flex-row-reverse' : ''
-              }`}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
               variants={itemVariants}
+              viewport={{ once: true, amount: 0.22 }}
               style={{ fontFamily: 'var(--font-serif)' }}
+              className={[
+                // 常時2カラム（スマホでもPCと同じ構図）
+                'relative grid grid-cols-2 items-start',
+                // 余白をタイトに
+                'gap-4 md:gap-10 lg:gap-16',
+                // 行の高さも短めに
+                'min-h-[32vh] md:min-h-[32vh] lg:min-h-[32vh]',
+                'py-8 md:py-12',
+                'overflow-visible', // 番号のはみ出しを許容
+              ].join(' ')}
             >
-              <span
-                className="pointer-events-none select-none absolute -top-8 md:-top-10 -left-2 md:-left-6
-                           text-[clamp(6rem,14vw,16rem)] leading-[0.8]
-                           font-extrabold text-white/10"
-                aria-hidden="true"
-              >
-                {feature.number}
-              </span>
-
-              {/* Left: Text */}
-              <div className="w-full md:w-1/2 relative">
-                <h3 className="text-[clamp(1.8rem,4.5vw,2.8rem)]  mb-5 relative z-10">
-                  {feature.title}
-                </h3>
-                <p className="text-[clamp(1rem,2.6vw,1.2rem)] text-gray-300 leading-relaxed relative z-10">
-                  {feature.description}
-                </p>
+              {/* Left: Visual（偶数/奇数で左右入替） */}
+              <div className={index % 2 === 0 ? 'order-1' : 'order-2'}>
+                <div className="mx-auto w-[40vw] max-w-[380px]">
+                  <div className="
+                    [&>img]:w-full [&>img]:h-auto [&>img]:object-contain [&>img]:rounded-lg
+                    [&>img]:max-h-[50vh]
+                  ">
+                    {feature.visual()}
+                  </div>
+                </div>
               </div>
 
-              {/* Right: Visual */}
-              <div className="w-full md:w-1/2 flex items-center justify-center">
-                <div className="scale-[1.05] md:scale-[1.12]">
-                  {feature.visual()}
-                </div>
+              {/* Right: Text */}
+              <div className={['relative', index % 2 === 0 ? 'order-2' : 'order-1'].join(' ')}>
+                {/* ★ 番号：さらに上へ & やや濃くして視認性UP */}
+                <span
+                  className={[
+                    'pointer-events-none select-none',
+                    'absolute -top-16 md:-top-25 left-1 md:left-2',
+                    'text-white/15',                 // ちょい濃く
+                    'text-[clamp(6.5rem,30vw,13rem)] md:text-[clamp(4.5rem,12vw,10rem)]',
+                    'leading-[0.8] font-extrabold',
+                    'z-0',
+                  ].join(' ')}
+                  aria-hidden="true"
+                >
+                  {feature.number}
+                </span>
+
+                <h3 className="relative z-10 text-[clamp(1.25rem,3.2vw,2rem)] mb-3">
+                  {feature.title}
+                </h3>
+                <p className="relative z-10 text-[clamp(0.95rem,2.2vw,1.1rem)] text-gray-300 leading-relaxed">
+                  {feature.description}
+                </p>
               </div>
             </motion.div>
           ))}
