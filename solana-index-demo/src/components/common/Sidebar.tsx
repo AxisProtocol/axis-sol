@@ -34,7 +34,7 @@ const Sidebar = ({ activeTab, onTabChange }: SidebarProps) => {
       icon: <Briefcase className="w-5 h-5" />,
     },
     { id: "dashboard", label: "Index", icon: <Zap className="w-5 h-5" /> },
-    { id: "market", label: "Market", icon: <BarChart3 className="w-5 h-5" /> },
+    
   ];
 
   const handleTabClick = (tabId: string) => {

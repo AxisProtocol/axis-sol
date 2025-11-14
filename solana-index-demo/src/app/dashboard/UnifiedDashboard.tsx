@@ -46,7 +46,7 @@ const UnifiedDashboard = ({
   events,
   error,
 }: UnifiedDashboardProps) => {
-  const [activeTab, setActiveTab] = useState("home");
+  const [activeTab, setActiveTab] = useState("portfolio");
 
   // Listen for tab changes from navbar
   useEffect(() => {

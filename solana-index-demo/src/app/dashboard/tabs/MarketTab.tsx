@@ -1,7 +1,8 @@
+// app/dashboard/tabs/MarketTab.tsx
 "use client";
 
 import { useState, useEffect } from "react";
-import { ModernCard, GridLayout } from "../../../components/common";
+import { ModernCard } from "../../../components/common";
 import Image from "next/image";
 import { Coins, BarChart3 } from "lucide-react";
 import dynamic from "next/dynamic";
@@ -17,7 +18,6 @@ interface MarketData {
   change24h: number;
   volume24h: number;
   marketCap: number;
-
   imageUrl: string;
 }
 
@@ -28,6 +28,7 @@ interface MarketTabProps {
   events: any[];
   error?: string;
 }
+
 type CoinMarket = {
   id: string;
   symbol: string;
@@ -46,7 +47,6 @@ const sharedMarketData: MarketData[] = [
     change24h: 2.5,
     volume24h: 15.2e9,
     marketCap: 850.5e9,
-
     imageUrl: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png",
   },
   {
@@ -56,9 +56,7 @@ const sharedMarketData: MarketData[] = [
     change24h: -1.2,
     volume24h: 8.5e9,
     marketCap: 317.2e9,
-
-    imageUrl:
-      "https://assets.coingecko.com/coins/images/279/large/ethereum.png",
+    imageUrl: "https://assets.coingecko.com/coins/images/279/large/ethereum.png",
   },
   {
     symbol: "SOL",
@@ -67,7 +65,6 @@ const sharedMarketData: MarketData[] = [
     change24h: 5.8,
     volume24h: 2.1e9,
     marketCap: 42.8e9,
-
     imageUrl: "https://assets.coingecko.com/coins/images/4128/large/solana.png",
   },
   {
@@ -77,9 +74,7 @@ const sharedMarketData: MarketData[] = [
     change24h: 1.1,
     volume24h: 1.8e9,
     marketCap: 46.2e9,
-
-    imageUrl:
-      "https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png",
+    imageUrl: "https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png",
   },
   {
     symbol: "XRP",
@@ -88,7 +83,6 @@ const sharedMarketData: MarketData[] = [
     change24h: -0.8,
     volume24h: 1.2e9,
     marketCap: 33.5e9,
-
     imageUrl:
       "https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png",
   },
@@ -96,6 +90,7 @@ const sharedMarketData: MarketData[] = [
 
 const MarketTab = ({}: MarketTabProps) => {
   const [marketData, setMarketData] = useState<MarketData[]>(sharedMarketData);
+
   useEffect(() => {
     const CG_IDS: Record<string, string> = {
       BTC: "bitcoin",
@@ -119,6 +114,8 @@ const MarketTab = ({}: MarketTabProps) => {
       try {
         const res = await fetch(url, {
           headers: { Accept: "application/json" },
+          // ↓ キャッシュで無駄な再描画を抑止（秒単位）
+          cache: "no-store",
         });
         if (!res.ok) throw new Error(`CG ${res.status}`);
         const json = (await res.json()) as CoinMarket[];
@@ -165,7 +162,11 @@ const MarketTab = ({}: MarketTabProps) => {
     marketData.length;
 
   return (
-    <div className="space-y-4 pt-15">
+    <div
+      className="space-y-4 pt-15"
+      // 明朝系（Playfair等）を --font-serif に割り当て済み想定
+      style={{ fontFamily: "var(--font-serif)" }}
+    >
       {/* TradingView-like Chart connected to TV API */}
       <ModernCard className="p-3 sm:p-4 ">
         <TVChart
@@ -174,6 +175,7 @@ const MarketTab = ({}: MarketTabProps) => {
           initialBars={1000}
         />
       </ModernCard>
+
       {/* Market Overview - Compact */}
       <ModernCard className="p-3 sm:p-4" gradient>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
@@ -236,7 +238,7 @@ const MarketTab = ({}: MarketTabProps) => {
                 >
                   <td className="py-2 px-2 sm:px-3">
                     <div className="flex items-center space-x-1 sm:space-x-2">
-                      <div className="w-5 h-5 sm:w-6 sm:h-6 relative flex-shrink-0">
+                      <div className="relative flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6">
                         <Image
                           src={token.imageUrl}
                           alt={token.symbol}

@@ -1,3 +1,4 @@
+// app/dashboard/tabs/MintTab.tsx
 "use client";
 
 import { useState } from "react";
@@ -35,7 +36,7 @@ const MintTab = ({ echartsData }: MintTabProps) => {
   const [buyModalOpen, setBuyModalOpen] = useState(false);
   const [burnModalOpen, setBurnModalOpen] = useState(false);
 
-  const { data: indexPriceData, loading: priceLoading } = useIndexPrice();
+  const { data: indexPriceData } = useIndexPrice();
   const latestClose = (indexPriceData?.normalizedPrice ??
     echartsData?.at(-1)?.[2] ??
     100) as number;
@@ -60,7 +61,18 @@ const MintTab = ({ echartsData }: MintTabProps) => {
 
   return (
     <>
-      <div className="space-y-6">
+      <div
+        className={`
+          space-y-6 font-serif
+          [&_*]:font-serif
+          [&_.btn]:font-serif       /* DaisyUI のボタンを明朝に強制 */
+          [&_.badge]:font-serif     /* バッジ類も念のため */
+          [&_.tab]:font-serif       /* タブがあれば */
+          [&_.stat-title]:font-serif
+          [&_.stat-value]:font-serif
+        `}
+        style={{ fontFamily: "var(--font-serif)" }}
+      >
         {/* Wallet Connection */}
         <div className="flex justify-center">
           <WalletBar />
@@ -122,11 +134,10 @@ const MintTab = ({ echartsData }: MintTabProps) => {
             <div className="text-base-content/70 text-sm mb-6">
               Current Index Price
             </div>
-            setBurnModalOpen
             <ModernButton
               variant="secondary"
               size="lg"
-              onClick={() => true}
+              onClick={() => setBurnModalOpen(true)}
               className="w-full"
             >
               Sell

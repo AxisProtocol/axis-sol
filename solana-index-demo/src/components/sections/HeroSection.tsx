@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Button } from '../common';
 import { Inter, Playfair_Display } from 'next/font/google';
+import WaitlistForm from '../waitlist/WaitlistForm';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -112,19 +113,84 @@ export default function HeroSection() {
             className="mt-5 max-w-[48ch] text-[clamp(1rem,1.9vw,1.25rem)] text-white/85"
           >
             A programmable, utility-driven index token that gives you diversified exposure
-            to the top five crypto assets — rebalanced, verified, and ready to use on Solana.
+            to the top five crypto assets  rebalanced, verified, and ready to use on Solana.
           </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.4 }}
-            className="mt-8 flex flex-wrap items-center gap-4"
-          >
-            <Button href="/dashboard" variant="glass" size="lg" className="px-6">
-              Get CaP5
-            </Button>
+
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.4 }}
+                className="mt-8 flex flex-col gap-6 max-w-[820px]"
+              >
+                {/* ===== メイン CTA + Tooltip ===== */}
+                <div className="flex flex-wrap items-center gap-4">
+                  {/* Tooltip 用にラッパーを追加 */}
+                  <div className="relative inline-flex items-center group">
+                    <motion.a
+                      href="/dashboard"
+                      whileHover={{ y: -2 }}
+                      whileTap={{ y: 1 }}
+                      className="
+                        inline-flex items-center justify-center
+                        w-full sm:w-auto
+                        min-w-[220px] md:min-w-[260px]      /* ← 横幅の底上げ */
+                        px-8 md:px-12                       /* ← 左右を広く */
+                        py-4 md:py-4.5                      /* ← 上下も少し厚めに */
+                        rounded-3xl
+                        text-[1rem] md:text-[1.1rem]        /* ← 文字も一段大きく */
+                        tracking-[0.22em] uppercase         /* ← CTA っぽい雰囲気 */
+                        font-semibold
+                        text-white
+                        border border-white/15              /* Waitlist と揃える */
+                        bg-black/10                         /* Waitlist と揃える */
+                        backdrop-blur-xl
+                        shadow-[0_22px_60px_rgba(0,0,0,0.85)]
+                        hover:bg-white/15
+                        transition-transform transition-shadow duration-200
+                        hover:-translate-y-0.5 active:translate-y-[1px]
+                        whitespace-nowrap
+                      "
+                      style={{ fontFamily: 'var(--font-serif)' }}
+                    >
+                      Get CaP5
+                    </motion.a>
+
+                    {/* ===== Tooltip（PCのみ表示） ===== */}
+                    <div
+                      className="
+                        pointer-events-none
+                        hidden md:block
+                        absolute left-1/2 -translate-x-1/2
+                        -top-3 -translate-y-full
+                        opacity-0 translate-y-1
+                        group-hover:opacity-100 group-hover:translate-y-0
+                        transition duration-150
+                      "
+                      role="tooltip"
+                      style={{ fontFamily: 'var(--font-serif)' }}
+                    >
+                      <div
+                        className="
+                          px-3.5 py-2 rounded-xl
+                          text-[12px] leading-tight
+                          text-white
+                          bg-black/80 backdrop-blur-xl
+                          shadow-[0_14px_40px_rgba(0,0,0,0.7)]
+                          border border-white/15
+                          whitespace-nowrap
+                        "
+                      >
+                        Launch the CaP5 trading dashboard
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+            <WaitlistForm />
           </motion.div>
+
         </div>
       </div>
     </section>
