@@ -37,6 +37,8 @@ interface UnifiedDashboardProps {
   initialDailyChange: number | null;
   events: any[];
   error?: string;
+  // ★ BuyModal と同じ「正しいインデックス価格」を親から受け取る
+  indexPrice: number | null;
 }
 
 const UnifiedDashboard = ({
@@ -45,10 +47,12 @@ const UnifiedDashboard = ({
   initialDailyChange,
   events,
   error,
+  indexPrice,
 }: UnifiedDashboardProps) => {
+  console.log("[UnifiedDashboard] indexPrice prop:", indexPrice);
   const [activeTab, setActiveTab] = useState("portfolio");
 
-  // Listen for tab changes from navbar
+  // navbar からのタブ変更をリッスン
   useEffect(() => {
     const handleTabChange = (event: CustomEvent) => {
       setActiveTab(event.detail.tabId);
@@ -65,6 +69,13 @@ const UnifiedDashboard = ({
       );
     };
   }, []);
+
+  // ★ 念のため、indexPrice が null のときはチャート終値を fallback にする
+  const chartLastClose =
+    echartsData?.length && Array.isArray(echartsData[echartsData.length - 1])
+      ? Number(echartsData[echartsData.length - 1][2])
+      : null;
+  const effectiveIndexPrice = indexPrice ?? chartLastClose ?? null;
 
   const renderTabContent = () => {
     const commonProps = {
@@ -85,7 +96,12 @@ const UnifiedDashboard = ({
       case "dashboard":
         return <DashboardTab {...commonProps} />;
       case "portfolio":
-        return <PortfolioTab {...commonProps} />;
+        return (
+          <PortfolioTab
+            {...commonProps}
+            indexPrice={indexPrice}
+          />
+        );
       case "challenge":
         return <ChallengeTab {...commonProps} />;
       default:

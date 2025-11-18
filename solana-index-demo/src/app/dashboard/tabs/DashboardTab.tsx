@@ -215,8 +215,14 @@ const DashboardTab = ({
                 </div>
               </div>
 
-              {/* Chart */}
-              <ModernCard className="order-1 lg:order-none p-5 sm:p-4 h-[calc(100vh-200px)] mb-4 lg:mb-0">
+              {/* Chart (hidden on mobile) */}
+              <ModernCard
+                className="
+                  order-1 lg:order-none p-5 sm:p-4
+                  h-[calc(100vh-200px)] mb-4 lg:mb-0
+                  hidden sm:block
+                "
+              >
                 <TVChart
                   initialSymbol="INDEX:FAMC"
                   initialResolution="60"
@@ -358,7 +364,7 @@ const DashboardTab = ({
                     <RefreshCcw className="w-4 h-4" />
                     <span className="text-sm font-semibold">Next Rebalance</span>
                   </div>
-                  <span className="text-sm text-base-content/70">Daily at 00:00 UTC</span>
+                  <span className="text-sm text-base-content/70">Quarterly at 00:00 UTC</span>
                 </div>
 
                 <div className="overflow-x-auto">
@@ -416,11 +422,13 @@ const DashboardTab = ({
                             {asset.targetWeight.toFixed(1)}%
                           </td>
                           <td className="text-right py-2 px-2 sm:px-3 text-xs">
-                            <span className={`font-medium ${
-                              Math.abs(asset.weight - asset.targetWeight) > 2 
-                                ? "text-amber-400" 
-                                : "text-base-content"
-                            }`}>
+                            <span
+                              className={`font-medium ${
+                                Math.abs(asset.weight - asset.targetWeight) > 2
+                                  ? "text-amber-400"
+                                  : "text-base-content"
+                              }`}
+                            >
                               {asset.weight.toFixed(1)}%
                             </span>
                           </td>
@@ -452,7 +460,7 @@ const DashboardTab = ({
                     <div className="text-xs text-base-content/80">
                       <strong>Smart Weighting:</strong> Weights are dynamically calculated using 
                       inverse-volatility and liquidity-adjusted market cap to reduce concentration risk.
-                      Rebalances occur daily when drift exceeds ±2% threshold.
+                      Rebalances occur quarterly or when drift exceeds ±2% threshold.
                     </div>
                   </div>
                 </div>
