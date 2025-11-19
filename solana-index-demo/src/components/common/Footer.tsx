@@ -65,7 +65,7 @@ const Footer: React.FC = () => {
                 </li>
                 <li>
                   <a
-                    href="https://x.com/Axis_Solana"
+                    href="https://x.com/Axis__Solana"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-gray-400 hover:text-white transition-colors"
@@ -103,6 +103,16 @@ const Footer: React.FC = () => {
                     GitHub
                   </a>
                 </li>
+                <li>
+                    <a
+                      href="https://drive.google.com/drive/folders/1A4Rtjd-tuQCjV4It7Sfvahk8jCwxGy0d?usp=sharing"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-400 hover:text-white transition-colors"
+                    >
+                      Brand Assets
+                    </a>
+                  </li>
               </ul>
             </div>
           </nav>

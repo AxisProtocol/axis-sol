@@ -17,13 +17,6 @@ const VisionVideoSection = dynamic(() => import('../components/sections').then(m
 const EcosystemSection = dynamic(() => import('../components/sections').then(m => m.EcosystemSection), { ssr: false });
 const MethodologySection = dynamic(() => import('../components/sections').then(m => m.MethodologySection), { ssr: false });
 
-// ★ Waitlist をクライアント専用で動的読込（必須）
-const WaitlistForm = dynamic(
-  () => import('../components/waitlist/WaitlistForm').then(m => m.default),
-  { ssr: false }
-);
-// ↑ パスはあなたの配置に合わせてください
-// 例）../components/overlays/WaitlistForm など
 
 // Section ラッパ
 const Section: React.FC<React.PropsWithChildren<{ id?: string; className?: string }>> = ({ id, className, children }) => (
@@ -105,9 +98,6 @@ const AxisLandingPage: NextPage = () => {
           </main>
 
           <Footer />
-
-          {/* ★ ここで1回だけマウント（Portalで body 直下に出るので場所はどこでもOK） */}
-          <WaitlistForm />
         </div>
       )}
     </>

@@ -1,3 +1,4 @@
+// app/dashboard/components/TVChart.tsx
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -5,9 +6,9 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 type Resolution = '1' | '5' | '15' | '60' | '240' | 'D';
 
 interface TVChartProps {
-  initialSymbol?: string; // e.g. INDEX:FAMC or ETH:USD
+  initialSymbol?: string;        // e.g. INDEX:FAMC or ETH:USD
   initialResolution?: Resolution;
-  initialBars?: number; // number of candles
+  initialBars?: number;          // number of candles
   className?: string;
 }
 
@@ -23,259 +24,188 @@ export default function TVChart({
   initialSymbol = 'INDEX:FAMC',
   initialResolution = '60',
   initialBars = 1000,
-  className,
+  className = '',
 }: TVChartProps) {
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const wrapRef = useRef<HTMLDivElement | null>(null);      // 外枠（高さ制御）
+  const canvasRef = useRef<HTMLDivElement | null>(null);    // 実チャートDOM
+  const chartRef = useRef<any>(null);
   const seriesRef = useRef<any>(null);
   const baselineRef = useRef<any>(null);
-  const chartRef = useRef<any>(null);
   const lwRef = useRef<any>(null);
 
   const [symbol, setSymbol] = useState(initialSymbol.toUpperCase());
   const [resolution, setResolution] = useState<Resolution>(initialResolution);
   const [bars, setBars] = useState<number>(initialBars);
-  const [loading, setLoading] = useState<boolean>(false);
   const [mode, setMode] = useState<'line' | 'candles'>('candles');
-  const [refresh, setRefresh] = useState<number>(0); // bump to trigger fetch when series becomes ready
-  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
-  const retryRef = useRef<number>(0);
+  const [loading, setLoading] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);          // series 再作成時に fetch 走らせる
 
   const queryParams = useMemo(() => ({ symbol, resolution, bars }), [symbol, resolution, bars]);
 
-  // Fullscreen functionality
+  // -------- Fullscreen --------
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
-      containerRef.current?.requestFullscreen();
+      wrapRef.current?.requestFullscreen();
       setIsFullscreen(true);
     } else {
       document.exitFullscreen();
       setIsFullscreen(false);
     }
   };
-
   useEffect(() => {
-    const handleFullscreenChange = () => {
-      setIsFullscreen(!!document.fullscreenElement);
-    };
-
-    document.addEventListener('fullscreenchange', handleFullscreenChange);
-    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+    const onFs = () => setIsFullscreen(!!document.fullscreenElement);
+    document.addEventListener('fullscreenchange', onFs);
+    return () => document.removeEventListener('fullscreenchange', onFs);
   }, []);
 
+  // -------- 初期化（LW読み込み & チャート作成）--------
   useEffect(() => {
-    if (!containerRef.current) return;
+    let disposed = false;
 
-    const ensureLW = async (): Promise<any> => {
-      // Prefer ESM to ensure we have SeriesDefinition exports (v5)
-      try {
-        const mod = await import('lightweight-charts');
-        lwRef.current = mod as any;
-        return mod as any;
-      } catch (e) {
-        // Fallback to global if ESM import fails (shouldn't in modern bundlers)
-        if (typeof window !== 'undefined' && (window as any).LightweightCharts) {
-          const LW = (window as any).LightweightCharts;
-          lwRef.current = LW;
-          return LW;
-        }
-        throw e;
-      }
+    const ensureLW = async () => {
+      const mod = await import('lightweight-charts');
+      lwRef.current = mod as any;
+      return lwRef.current;
     };
 
-    let disposed = false;
     (async () => {
       const LW = await ensureLW();
-      if (!containerRef.current || disposed) return;
-      
-      const chart = LW.createChart(containerRef.current, {
-        layout: { 
-          background: { type: 'solid', color: '#0b0e11' }, 
-          textColor: '#d1d4dc' 
+      if (!canvasRef.current || disposed) return;
+
+      // 初期サイズは外枠の実サイズに合わせる（内部余白を避ける）
+      const getSize = () => {
+        const el = canvasRef.current!;
+        const r = el.getBoundingClientRect();
+        return {
+          width: Math.floor(r.width),
+          height: Math.floor(r.height),
+        };
+      };
+
+      const chart = LW.createChart(canvasRef.current, {
+        layout: {
+          background: { type: 'solid', color: '#0C0F14' },
+          textColor: '#D4D7E1',
         },
-        grid: { 
-          vertLines: { color: '#1f2326' }, 
-          horzLines: { color: '#1f2326' } 
+        grid: {
+          vertLines: { color: '#1B2027' },
+          horzLines: { color: '#1B2027' },
         },
-        rightPriceScale: { 
+        rightPriceScale: {
           borderVisible: false,
-          scaleMargins: {
-            top: 0.1,
-            bottom: 0.1,
-          },
+          // 余白が出ないように下側を薄く
+          scaleMargins: { top: 0.08, bottom: 0.02 },
         },
-        timeScale: { 
-          borderVisible: false, 
-          timeVisible: true, 
-          secondsVisible: true 
+        timeScale: {
+          borderVisible: false,
+          timeVisible: true,
+          secondsVisible: true,
         },
-        crosshair: { 
+        crosshair: {
           mode: 1,
-          vertLine: {
-            color: '#758696',
-            width: 0.5,
-            style: 0,
-            labelBackgroundColor: '#2962FF',
-          },
-          horzLine: {
-            color: '#758696',
-            width: 0.5,
-            style: 0,
-            labelBackgroundColor: '#2962FF',
-          },
+          vertLine: { color: '#7F8DA1', width: 0.5, style: 0, labelBackgroundColor: '#1F6BFF' },
+          horzLine: { color: '#7F8DA1', width: 0.5, style: 0, labelBackgroundColor: '#1F6BFF' },
         },
-        width: containerRef.current.clientWidth,
-        height: Math.max(320, Math.floor(containerRef.current.clientHeight || 480)),
+        ...getSize(),
       });
+
       chartRef.current = chart;
 
-      const addBuiltInSeries = (type: 'line' | 'candles') => {
-        const optsLine = { 
-          color: '#1a73e8', 
-          lineWidth: 2,
-          priceLineVisible: false,
-          lastValueVisible: true,
-        } as any;
-        
-        const optsCandle = {
-          upColor: '#26a69a', 
-          downColor: '#ef5350',
-          wickUpColor: '#26a69a', 
-          wickDownColor: '#ef5350',
-          borderUpColor: '#26a69a', 
-          borderDownColor: '#ef5350',
-          priceLineVisible: false,
-          lastValueVisible: true,
-        } as any;
-        
-        const anyChart = chart as any;
-        const isLine = type === 'line';
-        
-        // 1) Legacy API
-        if (isLine && typeof anyChart.addLineSeries === 'function') {
-          console.log('[TVChart] using legacy addLineSeries');
-          const s = anyChart.addLineSeries(optsLine);
-          return s;
-        }
-        if (!isLine && typeof anyChart.addCandlestickSeries === 'function') {
-          console.log('[TVChart] using legacy addCandlestickSeries');
-          const s = anyChart.addCandlestickSeries(optsCandle);
-          return s;
-        }
-        
-        // 2) V5 API with SeriesDefinition constants
-        if (typeof anyChart.addSeries === 'function' && lwRef.current) {
-          const def = isLine ? lwRef.current.LineSeries : lwRef.current.CandlestickSeries;
-          if (def) {
-            try {
-              console.log('[TVChart] using v5 addSeries(definition)');
-              const s = anyChart.addSeries(def, isLine ? optsLine : optsCandle);
-              return s;
-            } catch (e) {
-              console.warn('[TVChart] addSeries(definition) failed', e);
-            }
-          } else {
-            console.warn('[TVChart] SeriesDefinition missing on LW module', { lwKeys: Object.keys(lwRef.current || {}) });
-          }
-        }
-        console.warn('[TVChart] addBuiltInSeries could not create series', { hasAddLine: typeof anyChart.addLineSeries, hasAddCandle: typeof anyChart.addCandlestickSeries, hasAddSeries: typeof anyChart.addSeries, chartKeys: Object.keys(anyChart || {}) });
-        return null;
-      };
-
-      const addBaselineSeries = () => {
-        const anyChart = chart as any;
-        
-        // Try to add baseline series at value 100
-        try {
-          if (typeof anyChart.addBaselineSeries === 'function') {
-            const baseline = anyChart.addBaselineSeries({
-              baseValue: { type: 'price', price: 100 },
-              topLineColor: 'rgba(255, 255, 255, 0.3)',
-              topFillColor1: 'rgba(255, 255, 255, 0.1)',
-              topFillColor2: 'rgba(255, 255, 255, 0.05)',
-              bottomLineColor: 'rgba(255, 255, 255, 0.3)',
-              bottomFillColor1: 'rgba(255, 255, 255, 0.05)',
-              bottomFillColor2: 'rgba(255, 255, 255, 0.1)',
-              priceLineVisible: true,
-              lastValueVisible: false,
+      const addSeries = (t: 'line' | 'candles') => {
+        const any = chart as any;
+        if (t === 'line') {
+          if (typeof any.addLineSeries === 'function') {
+            return any.addLineSeries({
+              color: '#3B82F6',
+              lineWidth: 2,
+              priceLineVisible: false,
+              lastValueVisible: true,
             });
-            return baseline;
           }
-          
-          // Try V5 API
-          if (typeof anyChart.addSeries === 'function' && lwRef.current?.BaselineSeries) {
-            const baseline = anyChart.addSeries(lwRef.current.BaselineSeries, {
-              baseValue: { type: 'price', price: 100 },
-              topLineColor: 'rgba(255, 255, 255, 0.3)',
-              topFillColor1: 'rgba(255, 255, 255, 0.1)',
-              topFillColor2: 'rgba(255, 255, 255, 0.05)',
-              bottomLineColor: 'rgba(255, 255, 255, 0.3)',
-              bottomFillColor1: 'rgba(255, 255, 255, 0.05)',
-              bottomFillColor2: 'rgba(255, 255, 255, 0.1)',
-              priceLineVisible: true,
-              lastValueVisible: false,
+          if (typeof any.addSeries === 'function' && LW?.LineSeries) {
+            return any.addSeries(LW.LineSeries, {
+              color: '#3B82F6',
+              lineWidth: 2,
+              priceLineVisible: false,
+              lastValueVisible: true,
             });
-            return baseline;
           }
-        } catch (e) {
-          console.warn('[TVChart] Failed to add baseline series', e);
-        }
-        return null;
-      };
-
-      const makeSeries = () => {
-        if (!chartRef.current) return;
-        
-        // Remove existing series
-        if (seriesRef.current && typeof seriesRef.current.priceScale === 'function') {
-          chartRef.current.removeSeries(seriesRef.current);
-        }
-        if (baselineRef.current && typeof baselineRef.current.priceScale === 'function') {
-          chartRef.current.removeSeries(baselineRef.current);
-        }
-        
-        if (retryRef.current === 0) {
-          console.log('[TVChart] attempting to create series');
-        }
-        
-        // Create main series
-        const s = addBuiltInSeries(mode === 'candles' ? 'candles' : 'line');
-        if (s) {
-          seriesRef.current = s;
-          
-          // Create baseline series
-          const baseline = addBaselineSeries();
-          if (baseline) {
-            baselineRef.current = baseline;
-            // Baseline data will be set when we fetch the actual data
-          }
-          
-          // trigger initial fetch now that series exists
-          setRefresh((x) => x + 1);
-          retryRef.current = 0;
         } else {
-          retryRef.current += 1;
-          const attempts = retryRef.current;
-          if (attempts <= 20) {
-            console.warn('[TVChart] series create failed; retrying in 200ms', { attempts });
-            setTimeout(() => {
-              if (chartRef.current && !seriesRef.current) makeSeries();
-            }, 200);
-          } else {
-            console.error('[TVChart] series creation failed after max retries');
+          if (typeof any.addCandlestickSeries === 'function') {
+            return any.addCandlestickSeries({
+              upColor: '#22C55E',
+              downColor: '#EF4444',
+              wickUpColor: '#22C55E',
+              wickDownColor: '#EF4444',
+              borderUpColor: '#22C55E',
+              borderDownColor: '#EF4444',
+              priceLineVisible: false,
+              lastValueVisible: true,
+            });
+          }
+          if (typeof any.addSeries === 'function' && LW?.CandlestickSeries) {
+            return any.addSeries(LW.CandlestickSeries, {
+              upColor: '#22C55E',
+              downColor: '#EF4444',
+              wickUpColor: '#22C55E',
+              wickDownColor: '#EF4444',
+              borderUpColor: '#22C55E',
+              borderDownColor: '#EF4444',
+              priceLineVisible: false,
+              lastValueVisible: true,
+            });
           }
         }
+        return null;
       };
-      makeSeries();
 
+      // メインシリーズ
+      seriesRef.current = addSeries(mode);
+
+      // Baseline(100)
+      try {
+        const any = chart as any;
+        if (typeof any.addBaselineSeries === 'function') {
+          baselineRef.current = any.addBaselineSeries({
+            baseValue: { type: 'price', price: 100 },
+            topLineColor: 'rgba(255,255,255,0.3)',
+            topFillColor1: 'rgba(255,255,255,0.06)',
+            topFillColor2: 'rgba(255,255,255,0.02)',
+            bottomLineColor: 'rgba(255,255,255,0.25)',
+            bottomFillColor1: 'rgba(255,255,255,0.02)',
+            bottomFillColor2: 'rgba(255,255,255,0.06)',
+            priceLineVisible: true,
+            lastValueVisible: false,
+          });
+        } else if (typeof any.addSeries === 'function' && LW?.BaselineSeries) {
+          baselineRef.current = any.addSeries(LW.BaselineSeries, {
+            baseValue: { type: 'price', price: 100 },
+            topLineColor: 'rgba(255,255,255,0.3)',
+            topFillColor1: 'rgba(255,255,255,0.06)',
+            topFillColor2: 'rgba(255,255,255,0.02)',
+            bottomLineColor: 'rgba(255,255,255,0.25)',
+            bottomFillColor1: 'rgba(255,255,255,0.02)',
+            bottomFillColor2: 'rgba(255,255,255,0.06)',
+            priceLineVisible: true,
+            lastValueVisible: false,
+          });
+        }
+      } catch {}
+
+      // リサイズ監視（外枠の実寸にジャスト合わせ）
       const ro = new ResizeObserver(() => {
-        if (!containerRef.current) return;
-        chart.applyOptions({
-          width: containerRef.current.clientWidth,
-          height: Math.max(320, Math.floor(containerRef.current.clientHeight || 480)),
-        });
+        if (!canvasRef.current || !chartRef.current) return;
+        const r = canvasRef.current.getBoundingClientRect();
+        chartRef.current.applyOptions({ width: Math.floor(r.width), height: Math.floor(r.height) });
+        chartRef.current.timeScale().fitContent();
+        chartRef.current.timeScale().rightOffset(0);
       });
-      ro.observe(containerRef.current);
+      ro.observe(canvasRef.current);
       (chart as any)._ro = ro;
+
+      // 初回 fetch
+      setRefreshKey((x) => x + 1);
     })();
 
     return () => {
@@ -284,265 +214,207 @@ export default function TVChart({
       const ro: ResizeObserver | undefined = (chart as any)?._ro;
       if (ro) ro.disconnect();
       if (chart && typeof chart.remove === 'function') chart.remove();
+      chartRef.current = null;
       seriesRef.current = null;
       baselineRef.current = null;
-      chartRef.current = null;
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // -------- データ取得 --------
   useEffect(() => {
-    const doFetch = async () => {
-      if (!seriesRef.current) {
-        console.warn('[TVChart] seriesRef not ready; skipping fetch', { symbol, resolution, bars, mode });
-        return;
-      }
+    const fetchData = async () => {
+      if (!seriesRef.current) return;
       try {
         setLoading(true);
-        const timeUrl = `${API_BASE}/tv/time`;
-        console.log('[TVChart] fetching /tv/time', { timeUrl });
-        const timeRes = await fetch(timeUrl);
-        if (!timeRes.ok) {
-          console.error('[TVChart] /tv/time failed', { status: timeRes.status, statusText: timeRes.statusText });
-        }
+        const timeRes = await fetch(`${API_BASE}/tv/time`);
         const nowSec = Number(await timeRes.text());
-        if (!Number.isFinite(nowSec)) {
-          console.error('[TVChart] invalid nowSec from /tv/time', { nowSec });
-        }
         const spb = secondsPerBar(resolution);
         const from = Math.max(0, Math.floor(nowSec - bars * spb));
         const qs = new URLSearchParams({ symbol, resolution, from: String(from), to: String(nowSec) });
-        const historyUrl = `${API_BASE}/tv/history?${qs.toString()}`;
-        console.log('[TVChart] fetching /tv/history', { historyUrl, symbol, resolution, bars, spb, from, nowSec });
-        const res = await fetch(historyUrl);
-        if (!res.ok) {
-          console.error('[TVChart] /tv/history failed', { status: res.status, statusText: res.statusText });
-        }
-        const data = await res.json() as { s?: string; t?: number[]; c?: number[]; o?: number[]; h?: number[]; l?: number[]; v?: number[] };
-        console.log('[TVChart] /tv/history response', { s: data?.s, points: Array.isArray(data?.t) ? data.t.length : null });
-        if (data.s !== 'ok') {
+        const res = await fetch(`${API_BASE}/tv/history?${qs.toString()}`);
+        const data = (await res.json()) as {
+          s?: string; t?: number[]; c?: number[]; o?: number[]; h?: number[]; l?: number[]; v?: number[];
+        };
+
+        if (data.s !== 'ok' || !data.t?.length) {
           seriesRef.current.setData([]);
+          if (baselineRef.current) baselineRef.current.setData([]);
           return;
         }
-        
+
         if (mode === 'line') {
-          const series = data.t.map((t: number, i: number) => ({ time: t, value: data.c[i] as number }));
-          console.log('[TVChart] setting line data', { count: series.length, sample: series[0] });
-          seriesRef.current.setData(series);
+          seriesRef.current.setData(
+            data.t.map((t, i) => ({ time: t, value: data.c![i] as number }))
+          );
         } else {
-          const candles = data.t.map((t: number, i: number) => ({
-            time: t,
-            open: data.o?.[i] ?? data.c[i],
-            high: data.h?.[i] ?? data.c[i],
-            low: data.l?.[i] ?? data.c[i],
-            close: data.c?.[i] ?? data.c[i],
-          }));
-          console.log('[TVChart] setting candle data', { count: candles.length, sample: candles[0] });
-          seriesRef.current.setData(candles);
+          seriesRef.current.setData(
+            data.t.map((t, i) => ({
+              time: t,
+              open: data.o?.[i] ?? data.c![i],
+              high: data.h?.[i] ?? data.c![i],
+              low:  data.l?.[i] ?? data.c![i],
+              close:data.c?.[i] ?? data.c![i],
+            }))
+          );
         }
-        
-        // Update baseline data
+
         if (baselineRef.current) {
-          const baselineData = data.t.map((t: number) => ({ time: t, value: 100 }));
-          baselineRef.current.setData(baselineData);
+          baselineRef.current.setData(data.t.map((t) => ({ time: t, value: 100 })));
         }
-        
+
+        // ここで毎回フィット＋右端オフセット0 → 下の余白/ズレ感を解消
         chartRef.current?.timeScale().fitContent();
+        chartRef.current?.timeScale().rightOffset(0);
       } catch (e) {
-        console.error('[TVChart] doFetch error', e);
+        // no-op（UIは静かに）
       } finally {
         setLoading(false);
       }
     };
-    doFetch();
-  }, [queryParams, mode, refresh]);
+    fetchData();
+  }, [queryParams, mode, refreshKey]);
 
-  const handleModeChange = (newMode: 'line' | 'candles') => {
-    setMode(newMode);
-    if (chartRef.current) {
-      try { 
-        chartRef.current.removeSeries(seriesRef.current); 
-      } catch {}
-      
-      const chartAny = chartRef.current as any;
-      let s: any = null;
-      
-      // Prefer v5 SeriesDefinition API if available
-      if (typeof chartAny.addSeries === 'function' && lwRef.current) {
-        const def = newMode === 'line' ? lwRef.current.LineSeries : lwRef.current.CandlestickSeries;
-        if (def) {
-          try {
-            console.log('[TVChart] mode change uses v5 addSeries(definition)');
-            s = chartAny.addSeries(def);
-          } catch (err) {
-            console.warn('[TVChart] mode change addSeries(definition) failed', err);
-          }
-        }
-      }
-      
-      // Try legacy API
-      if (!s) {
-        if (newMode === 'candles' && typeof chartAny.addCandlestickSeries === 'function') {
-          s = chartAny.addCandlestickSeries();
-        } else if (newMode === 'line' && typeof chartAny.addLineSeries === 'function') {
-          s = chartAny.addLineSeries();
-        }
-      }
-      
-      // Try v5 addSeries API variants
-      if (!s && typeof chartAny.addSeries === 'function') {
-        try { s = chartAny.addSeries(newMode === 'line' ? 'Line' : 'Candlestick', {}); } catch {}
-        if (!s) { try { s = chartAny.addSeries(newMode === 'line' ? 'line' : 'candlestick', {}); } catch {} }
-        if (!s) { try { s = chartAny.addSeries({ type: newMode === 'line' ? 'Line' : 'Candlestick' }); } catch {} }
-      }
-      
-      if (!s) {
-        console.error('[TVChart] failed to create series on mode change');
-        return;
-      }
-      
-      // Apply styling
-      if (newMode === 'line') {
-        s.applyOptions({ 
-          color: '#1a73e8', 
-          lineWidth: 2,
-          priceLineVisible: false,
-          lastValueVisible: true,
-        });
-      }
-      if (newMode === 'candles') {
-        s.applyOptions({ 
-          upColor: '#26a69a', 
-          downColor: '#ef5350', 
-          wickUpColor: '#26a69a', 
-          wickDownColor: '#ef5350', 
-          borderUpColor: '#26a69a', 
-          borderDownColor: '#ef5350',
-          priceLineVisible: false,
-          lastValueVisible: true,
-        });
-      }
-      
-      seriesRef.current = s;
-      console.log('[TVChart] series recreated for mode change', { mode: newMode });
-      // trigger refetch for new series
-      setRefresh((x) => x + 1);
+  // -------- モード変更（シリーズ作り直し）--------
+  const changeMode = (next: 'line' | 'candles') => {
+    if (!chartRef.current || mode === next) return;
+    setMode(next);
+    try {
+      if (seriesRef.current) chartRef.current.removeSeries(seriesRef.current);
+    } catch {}
+    const LW = lwRef.current;
+    const any = chartRef.current as any;
+    let s: any = null;
+
+    if (next === 'line') {
+      s = typeof any.addLineSeries === 'function'
+        ? any.addLineSeries({ color: '#3B82F6', lineWidth: 2, priceLineVisible: false, lastValueVisible: true })
+        : (typeof any.addSeries === 'function' && LW?.LineSeries
+          ? any.addSeries(LW.LineSeries, { color: '#3B82F6', lineWidth: 2, priceLineVisible: false, lastValueVisible: true })
+          : null);
+    } else {
+      s = typeof any.addCandlestickSeries === 'function'
+        ? any.addCandlestickSeries({
+            upColor: '#22C55E', downColor: '#EF4444',
+            wickUpColor: '#22C55E', wickDownColor: '#EF4444',
+            borderUpColor: '#22C55E', borderDownColor: '#EF4444',
+            priceLineVisible: false, lastValueVisible: true,
+          })
+        : (typeof any.addSeries === 'function' && LW?.CandlestickSeries
+          ? any.addSeries(LW.CandlestickSeries, {
+              upColor: '#22C55E', downColor: '#EF4444',
+              wickUpColor: '#22C55E', wickDownColor: '#EF4444',
+              borderUpColor: '#22C55E', borderDownColor: '#EF4444',
+              priceLineVisible: false, lastValueVisible: true,
+            })
+          : null);
     }
+
+    if (!s) return;
+    seriesRef.current = s;
+    setRefreshKey((x) => x + 1);
   };
 
   return (
-    <div className={`${className} ${isFullscreen ? 'fixed inset-0 z-50 bg-black' : ''}`}>
-      {/* Control Panel */}
-      <div className="flex flex-col md:flex-row gap-3 md:items-center md:justify-between mb-4 p-4 bg-gradient-to-r from-gray-900/50 to-gray-800/50 rounded-lg border border-gray-700/50 backdrop-blur-sm">
-        <div className="flex flex-wrap gap-3 items-center">
-          {/* Symbol Input */}
-          <div className="flex flex-col gap-1">
-            <label className="text-xs font-medium text-gray-300">Symbol</label>
-            <input
-              className="px-3 py-2 rounded-lg bg-gray-800/80 border border-gray-600/50 text-white text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all duration-200"
-              value={symbol}
-              onChange={(e) => setSymbol(e.target.value.toUpperCase())}
-              placeholder="INDEX:FAMC"
-            />
-          </div>
+    <div
+      ref={wrapRef}
+      className={[
+        'relative',
+        'rounded-2xl border border-white/10 shadow-2xl',
+        'bg-gradient-to-b from-slate-900/70 via-slate-900/60 to-slate-900/70',
+        'backdrop-blur supports-[backdrop-filter]:backdrop-blur-md',
+        'p-3 md:p-4',
+        className,
+      ].join(' ')}
+    >
+      {/* ヘッダー（チャート上に重ねるガラスUI） */}
+      <div className="pointer-events-auto absolute left-3 right-3 top-3 z-20">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 px-3 py-2 rounded-xl border border-white/10 bg-slate-800/40 backdrop-blur-md">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+            <div className="flex items-center gap-2">
+              <input
+                value={symbol}
+                onChange={(e) => setSymbol(e.target.value.toUpperCase())}
+                placeholder="INDEX:FAMC"
+                className="h-9 px-3 rounded-lg bg-slate-900/70 border border-white/10 text-sm text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+              />
+              <select
+                value={resolution}
+                onChange={(e) => setResolution(e.target.value as Resolution)}
+                className="h-9 px-2 rounded-lg bg-slate-900/70 border border-white/10 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+              >
+                <option value="1">1m</option>
+                <option value="5">5m</option>
+                <option value="15">15m</option>
+                <option value="60">1h</option>
+                <option value="240">4h</option>
+                <option value="D">1D</option>
+              </select>
+              <input
+                type="number"
+                min={50}
+                max={5000}
+                step={50}
+                value={bars}
+                onChange={(e) => setBars(Math.max(50, Math.min(5000, Number(e.target.value) || 500)))}
+                className="h-9 w-24 px-2 rounded-lg bg-slate-900/70 border border-white/10 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+                title="Bars"
+              />
+            </div>
 
-          {/* Resolution Select */}
-          <div className="flex flex-col gap-1">
-            <label className="text-xs font-medium text-gray-300">Resolution</label>
-            <select
-              className="px-3 py-2 rounded-lg bg-gray-800/80 border border-gray-600/50 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all duration-200"
-              value={resolution}
-              onChange={(e) => setResolution(e.target.value as Resolution)}
-            >
-              <option value="1">1m</option>
-              <option value="5">5m</option>
-              <option value="15">15m</option>
-              <option value="60">1h</option>
-              <option value="240">4h</option>
-              <option value="D">1D</option>
-            </select>
-          </div>
-
-          {/* Chart Type Toggle */}
-          <div className="flex flex-col gap-1">
-            <label className="text-xs font-medium text-gray-300">Chart Type</label>
-            <div className="flex rounded-lg bg-gray-800/80 border border-gray-600/50 overflow-hidden">
+            <div className="flex rounded-lg overflow-hidden border border-white/10">
               <button
-                className={`px-4 py-2 text-sm font-medium transition-all duration-200 ${
-                  mode === 'line'
-                    ? 'bg-blue-600 text-white'
-                    : 'text-gray-300 hover:text-white hover:bg-gray-700/50'
-                }`}
-                onClick={() => handleModeChange('line')}
+                onClick={() => changeMode('line')}
+                className={`h-9 px-4 text-sm ${mode === 'line' ? 'bg-blue-600 text-white' : 'bg-slate-900/60 text-slate-200 hover:bg-slate-800/60'}`}
               >
                 Line
               </button>
               <button
-                className={`px-4 py-2 text-sm font-medium transition-all duration-200 ${
-                  mode === 'candles'
-                    ? 'bg-blue-600 text-white'
-                    : 'text-gray-300 hover:text-white hover:bg-gray-700/50'
-                }`}
-                onClick={() => handleModeChange('candles')}
+                onClick={() => changeMode('candles')}
+                className={`h-9 px-4 text-sm ${mode === 'candles' ? 'bg-blue-600 text-white' : 'bg-slate-900/60 text-slate-200 hover:bg-slate-800/60'}`}
               >
                 Candles
               </button>
             </div>
-          </div>
 
-          {/* Bars Input */}
-          <div className="flex flex-col gap-1">
-            <label className="text-xs font-medium text-gray-300">Bars</label>
-            <input
-              type="number"
-              min={50}
-              max={5000}
-              step={50}
-              className="px-3 py-2 w-24 rounded-lg bg-gray-800/80 border border-gray-600/50 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all duration-200"
-              value={bars}
-              onChange={(e) => setBars(Math.max(50, Math.min(5000, Number(e.target.value) || 500)))}
-            />
-          </div>
-
-          {/* Loading Indicator */}
-          {loading && (
-            <div className="flex items-center gap-2 text-blue-400">
-              <div className="w-4 h-4 border-2 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
-              <span className="text-sm">Loading...</span>
-            </div>
-          )}
-        </div>
-
-        {/* Right side controls */}
-        <div className="flex items-center gap-3">
-          {/* Fullscreen Toggle */}
-          <button
-            onClick={toggleFullscreen}
-            className="p-2 rounded-lg bg-gray-800/80 border border-gray-600/50 text-gray-300 hover:text-white hover:bg-gray-700/50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
-            title={isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
-          >
-            {isFullscreen ? (
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            ) : (
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
-              </svg>
+            {loading && (
+              <div className="flex items-center gap-2 text-blue-300">
+                <span className="w-3.5 h-3.5 border-2 border-blue-400 border-t-transparent rounded-full animate-spin" />
+                <span className="text-xs">Loading</span>
+              </div>
             )}
-          </button>
+          </div>
 
-          {/* Data Source Info */}
-          <div className="text-xs text-gray-400 hidden md:block">
-            Data via /tv endpoints
+          <div className="flex items-center gap-2">
+            <button
+              onClick={toggleFullscreen}
+              className="h-9 px-3 rounded-lg bg-slate-900/70 border border-white/10 text-slate-200 hover:text-white hover:bg-slate-800/60 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+              title={isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
+            >
+              {isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
+            </button>
+            <span className="hidden md:inline text-xs text-slate-400">Data via /tv endpoints</span>
           </div>
         </div>
       </div>
 
-      {/* Chart Container */}
-      <div 
-        ref={containerRef} 
-        className={`w-full ${isFullscreen ? 'h-[calc(100vh-120px)]' : 'h-[420px]'} rounded-lg overflow-hidden border border-gray-700/50`}
+      {/* チャート領域：親の高さに完全追従（余白出ない） */}
+      <div
+        ref={canvasRef}
+        className={[
+          'w-full',
+          'h-[58vh] md:h-[62vh] max-h-[820px] min-h-[360px]',
+          'rounded-xl border border-white/10',
+          'bg-[linear-gradient(180deg,rgba(16,22,30,0.9),rgba(12,15,20,0.95))]',
+          'overflow-hidden',
+        ].join(' ')}
       />
+
+      {/* 下部の薄い情報行（任意） */}
+      <div className="mt-3 flex items-center justify-between text-xs text-slate-400 px-1">
+        <span>Sym: <span className="text-slate-200">{symbol}</span></span>
+        <span>Res: <span className="text-slate-200">{resolution}</span> • Bars: <span className="text-slate-200">{bars}</span></span>
+      </div>
     </div>
   );
 }
