@@ -6,6 +6,8 @@ import { Card } from '../common';
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import { getCoinIcon } from '../common';
+import dynamic from 'next/dynamic';
+const BacktestSimulator = dynamic(() => import('./BacktestSimulator').then(m => m.BacktestSimulator), { ssr: false });
 
 /* ========= utils ========= */
 const fmtUSD = (n: number) => {
@@ -113,6 +115,12 @@ export default function IndexOverviewSection() {
             </motion.div>
           ))}
         </div>
+      </div>
+
+      <div className="max-w-[1200px] mx-auto mb-20 px-4">
+         <motion.div variants={itemVariants}>
+           <BacktestSimulator />
+         </motion.div>
       </div>
 
       {/* --- パート2: Methodology（要約 + CTA遷移） --- */}
