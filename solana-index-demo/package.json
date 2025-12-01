@@ -66,6 +66,7 @@
     "react-hot-toast": "^2.5.2",
     "react-icons": "^5.5.0",
     "react-tooltip": "^5.30.0",
+    "recharts": "^3.5.1",
     "tailwindcss": "^4.1.12",
     "ts-node": "^10.9.2",
     "wrangler": "^4.37.1"
