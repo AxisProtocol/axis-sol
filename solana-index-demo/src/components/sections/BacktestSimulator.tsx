@@ -131,9 +131,12 @@ export const BacktestSimulator: React.FC = () => {
               fontSize={11}
               tickFormatter={(str) => {
                 const d = new Date(str);
-                return `${d.getMonth()+1}/${d.getDate()}`; // format: MM/DD
+                const y = d.getFullYear();
+                const m = String(d.getMonth() + 1).padStart(2, '0'); // 0埋め (01月)
+                const day = String(d.getDate()).padStart(2, '0');    // 0埋め (01日)
+                return `${y}-${m}-${day}`; // 例: 2025-11-20
               }}
-              minTickGap={40}
+              minTickGap={50} // 文字列が長くなるので、重ならないよう間隔を少し広めに確保
             />
             
             <YAxis 
@@ -155,7 +158,7 @@ export const BacktestSimulator: React.FC = () => {
             <Area 
               type="monotone" 
               dataKey="mcwPct" 
-              name="Market Cap Weighted (Competitors)" 
+              name="Market Cap Weighted" 
               stroke="#71717a" 
               strokeWidth={2}
               fill="transparent" 
