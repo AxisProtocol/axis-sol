@@ -1,12 +1,14 @@
 // components/sections/HeroSection.tsx
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react'; 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Button } from '../common';
 import { Inter, Playfair_Display } from 'next/font/google';
 import WaitlistForm from '../waitlist/WaitlistForm';
+import { useRouter } from 'next/navigation';
+import { usePhantom, useModal } from '@phantom/react-sdk';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -23,6 +25,28 @@ const playfair = Playfair_Display({
 });
 
 export default function HeroSection() {
+
+  const router = useRouter();
+  const { isConnected } = usePhantom();
+  const { open } = useModal();
+  const [isPendingRedirect, setIsPendingRedirect] = useState(false);
+
+  const handleGetCap5Click = () => {
+    if (isConnected) {
+      router.push('/dashboard');
+    } else {
+      setIsPendingRedirect(true);
+      open();
+    }
+  };
+
+  useEffect(() => {
+    if (isConnected && isPendingRedirect) {
+      router.push('/dashboard');
+      setIsPendingRedirect(false);
+    }
+  }, [isConnected, isPendingRedirect, router]);
+
   return (
     <section
       id="hero"
@@ -127,34 +151,35 @@ export default function HeroSection() {
                 <div className="flex flex-wrap items-center gap-4">
                   {/* Tooltip 用にラッパーを追加 */}
                   <div className="relative inline-flex items-center group">
-                    <motion.a
-                      href="/dashboard"
-                      whileHover={{ y: -2 }}
-                      whileTap={{ y: 1 }}
-                      className="
-                        inline-flex items-center justify-center
-                        w-full sm:w-auto
-                        min-w-[220px] md:min-w-[260px]      /* ← 横幅の底上げ */
-                        px-8 md:px-12                       /* ← 左右を広く */
-                        py-4 md:py-4.5                      /* ← 上下も少し厚めに */
-                        rounded-3xl
-                        text-[1rem] md:text-[1.1rem]        /* ← 文字も一段大きく */
-                        tracking-[0.22em] uppercase         /* ← CTA っぽい雰囲気 */
-                        font-semibold
-                        text-white
-                        border border-white/15              /* Waitlist と揃える */
-                        bg-black/10                         /* Waitlist と揃える */
-                        backdrop-blur-xl
-                        shadow-[0_22px_60px_rgba(0,0,0,0.85)]
-                        hover:bg-white/15
-                        transition-transform transition-shadow duration-200
-                        hover:-translate-y-0.5 active:translate-y-[1px]
-                        whitespace-nowrap
-                      "
-                      style={{ fontFamily: 'var(--font-serif)' }}
-                    >
-                      Get CaP5
-                    </motion.a>
+                  <motion.button
+                    onClick={handleGetCap5Click}
+                    whileHover={{ y: -2 }}
+                    whileTap={{ y: 1 }}
+                    className="
+                      inline-flex items-center justify-center
+                      w-full sm:w-auto
+                      min-w-[220px] md:min-w-[260px]
+                      px-8 md:px-12
+                      py-4 md:py-4.5
+                      rounded-3xl
+                      text-[1rem] md:text-[1.1rem]
+                      tracking-[0.22em] uppercase
+                      font-semibold
+                      text-white
+                      border border-white/15
+                      bg-black/10
+                      backdrop-blur-xl
+                      shadow-[0_22px_60px_rgba(0,0,0,0.85)]
+                      hover:bg-white/15
+                      transition-transform transition-shadow duration-200
+                      hover:-translate-y-0.5 active:translate-y-[1px]
+                      whitespace-nowrap
+                      cursor-pointer
+                    "
+                    style={{ fontFamily: 'var(--font-serif)' }}
+                  >
+                    Get CaP5
+                  </motion.button>
 
                     {/* ===== Tooltip（PCのみ表示） ===== */}
                     <div

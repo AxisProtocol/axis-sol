@@ -1,9 +1,13 @@
 // Header.tsx
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'; // useEffect追加
 import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
+
+// ★ 追加: App Router用フック と Phantom SDK
+import { useRouter } from 'next/navigation';
+import { usePhantom, useModal } from '@phantom/react-sdk';
 
 const navItems = [
   { name: 'Home', href: '#hero' },
@@ -12,12 +16,39 @@ const navItems = [
   { name: 'Our Vision', href: '#vision-video' },
   { name: 'Our Partner', href: '#ecosystem' },
   { name: 'Join Axis', href: '#methodology' },
-  
 ];
 
 export const Header = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const handleLinkClick = () => setIsDrawerOpen(false);
+
+  // ★ ここから追加ロジック
+  const router = useRouter();
+  const { isConnected } = usePhantom();
+  const { open } = useModal();
+  const [isPendingRedirect, setIsPendingRedirect] = useState(false);
+
+  // ボタンクリック時の処理
+  const handleLaunchApp = () => {
+    // モバイルメニューが開いていれば閉じる
+    setIsDrawerOpen(false);
+
+    if (isConnected) {
+      router.push('/dashboard');
+    } else {
+      setIsPendingRedirect(true);
+      open(); // 接続モーダルを開く
+    }
+  };
+
+  // 接続完了後の自動遷移
+  useEffect(() => {
+    if (isConnected && isPendingRedirect) {
+      router.push('/dashboard');
+      setIsPendingRedirect(false);
+    }
+  }, [isConnected, isPendingRedirect, router]);
+  // ★ ここまで追加ロジック
 
   return (
     <>
@@ -70,7 +101,7 @@ export const Header = () => {
                 </svg>
               </a>
 
-              {/* Discord（指定SVG） */}
+              {/* Discord */}
               <a
                 href="https://discord.gg/PTGVdd5KZQ"
                 target="_blank"
@@ -83,9 +114,9 @@ export const Header = () => {
                 </svg>
               </a>
 
-              {/* 半透明・小さめ Launch App（ヘッダー専用） */}
-              <a
-                href="/dashboard"
+              {/* ★ 変更: PC版 Launch App ボタン */}
+              <button
+                onClick={handleLaunchApp}
                 className="
                   inline-flex items-center justify-center
                   h-9 lg:h-10 px-3.5
@@ -96,7 +127,7 @@ export const Header = () => {
                 "
               >
                 Launch App
-              </a>
+              </button>
             </div>
 
             {/* Mobile: Menu button */}
@@ -161,22 +192,18 @@ export const Header = () => {
                   </a>
                 </div>
 
-                <a
-                  href="/dashboard"
+                {/* ★ 変更: SP版 Launch App ボタン */}
+                <button
+                  onClick={handleLaunchApp}
                   className="inline-flex items-center justify-center h-10 px-4 text-sm font-semibold text-white rounded-lg bg-white/10 hover:bg-white/20"
-                  onClick={handleLinkClick}
                 >
                   Launch App
-                </a>
+                </button>
               </div>
             </motion.div>
           </>
         )}
       </AnimatePresence>
-
-      {/* ヒーローと重ねたい場合はスペーサー不要。
-         重なりを避けたい場合は以下を有効化 */}
-      {/* <div className="h-16 lg:h-20" /> */}
     </>
   );
 };
