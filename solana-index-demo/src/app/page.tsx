@@ -1,42 +1,42 @@
-'use client';
-import React, { useState, useEffect } from 'react';
-import type { NextPage } from 'next';
-import { AnimatePresence } from 'framer-motion';
+"use client";
+import React, { useState, useEffect } from "react";
+import type { NextPage } from "next";
+import { AnimatePresence } from "framer-motion";
 // Components
-import { Header, Background, Button, Card } from '../components/common';
-import { Modal } from '../components/modals/Modal';
-import { Footer } from '../components/common/Footer';
+import { Header, Background, Button, Card } from "../components/common";
+import { Modal } from "../components/modals/Modal";
+import { Footer } from "../components/common/Footer";
 import {
   Section,
   HeroSection,
   IndexOverviewSection,
   MethodologySection,
-  LoadingScreen
-} from '../components/sections';
+  LoadingScreen,
+} from "../components/sections";
 
 const AxisLandingPage: NextPage = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [typewriterText, setTypewriterText] = useState('');
+  const [typewriterText, setTypewriterText] = useState("");
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [modalState, setModalState] = useState({ 
-    isOpen: false, 
-    type: 'success' as 'success' | 'error', 
-    title: '', 
-    message: '' 
+  const [modalState, setModalState] = useState({
+    isOpen: false,
+    type: "success" as "success" | "error",
+    title: "",
+    message: "",
   });
 
   const fullText = "Because markets can't grow up without a good guide.";
 
   const sections = [
-    { id: 'hero', component: HeroSection },
-    { id: 'index-overview', component: IndexOverviewSection },
-    { id: 'methodology', component: MethodologySection },
+    { id: "hero", component: HeroSection },
+    { id: "index-overview", component: IndexOverviewSection },
+    { id: "methodology", component: MethodologySection },
   ];
 
   useEffect(() => {
     // Check if user has seen the intro before
-    const hasSeenIntro = sessionStorage.getItem('hasSeenIntro');
-    
+    const hasSeenIntro = sessionStorage.getItem("hasSeenIntro");
+
     if (hasSeenIntro) {
       // Skip loading screen if user has seen it before
       setIsLoading(false);
@@ -52,7 +52,7 @@ const AxisLandingPage: NextPage = () => {
         clearInterval(timer);
         setTimeout(() => {
           setIsLoading(false);
-          sessionStorage.setItem('hasSeenIntro', 'true');
+          sessionStorage.setItem("hasSeenIntro", "true");
         }, 1000);
       }
     }, 100);
@@ -63,12 +63,13 @@ const AxisLandingPage: NextPage = () => {
   // Function to skip the intro
   const skipIntro = () => {
     setIsLoading(false);
-    sessionStorage.setItem('hasSeenIntro', 'true');
+    sessionStorage.setItem("hasSeenIntro", "true");
   };
 
   // Optimize pointer tracking for desktop only, with rAF throttle and passive listener
   useEffect(() => {
-    const isCoarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+    const isCoarse =
+      window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
     if (isCoarse) return; // Skip on touch devices to improve scroll perf
 
     let rafId = 0;
@@ -85,9 +86,9 @@ const AxisLandingPage: NextPage = () => {
       });
     };
 
-    window.addEventListener('mousemove', onMove, { passive: true });
+    window.addEventListener("mousemove", onMove, { passive: true });
     return () => {
-      window.removeEventListener('mousemove', onMove as any);
+      window.removeEventListener("mousemove", onMove as any);
       if (rafId) cancelAnimationFrame(rafId);
     };
   }, []);
@@ -101,7 +102,7 @@ const AxisLandingPage: NextPage = () => {
         title={modalState.title}
         message={modalState.message}
       />
-      
+
       <AnimatePresence>
         {isLoading && (
           <div onClick={skipIntro} className="cursor-pointer">
@@ -111,9 +112,13 @@ const AxisLandingPage: NextPage = () => {
       </AnimatePresence>
 
       {!isLoading && (
-        <div 
+        <div
           className="relative bg-black text-white min-h-screen overflow-y-auto overscroll-y-contain"
-          style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-y', scrollBehavior: 'smooth' }}
+          style={{
+            WebkitOverflowScrolling: "touch",
+            touchAction: "pan-y",
+            scrollBehavior: "smooth",
+          }}
         >
           <Header />
           <Background mouseX={mousePosition.x} mouseY={mousePosition.y} />
@@ -125,7 +130,7 @@ const AxisLandingPage: NextPage = () => {
               </Section>
             ))}
           </main>
-          
+
           <Footer />
         </div>
       )}

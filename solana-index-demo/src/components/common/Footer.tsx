@@ -1,6 +1,6 @@
-import React from 'react';
-import { FaGithub, FaXTwitter } from 'react-icons/fa6'; // ★★★ Xのアイコンをインポート ★★★
-import { FaTelegramPlane } from 'react-icons/fa';
+import React from "react";
+import { FaGithub, FaXTwitter } from "react-icons/fa6"; // ★★★ Xのアイコンをインポート ★★★
+import { FaTelegramPlane } from "react-icons/fa";
 
 export const Footer = () => {
   return (
@@ -10,14 +10,32 @@ export const Footer = () => {
           © {new Date().getFullYear()} Axis Protocol. All rights reserved.
         </p>
         <div className="flex gap-6">
-        <a href="https://github.com/AxisProtocol/axis-sol" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="text-gray-400 text-xl transition-all duration-300 hover:text-white hover:scale-110">
-        <FaGithub />
-        </a>
+          <a
+            href="https://github.com/AxisProtocol/axis-sol"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+            className="text-gray-400 text-xl transition-all duration-300 hover:text-white hover:scale-110"
+          >
+            <FaGithub />
+          </a>
 
-          <a href="https://x.com/axis__Solana" target="_blank" rel="noopener noreferrer" aria-label="X" className="text-gray-400 text-xl transition-all duration-300 hover:text-white hover:scale-110">
+          <a
+            href="https://x.com/axis__Solana"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="X"
+            className="text-gray-400 text-xl transition-all duration-300 hover:text-white hover:scale-110"
+          >
             <FaXTwitter />
           </a>
-          <a href="https://t.me/+17f3f2qcJFMxYzE1" target="_blank" rel="noopener noreferrer" aria-label="Telegram" className="text-gray-400 text-xl transition-all duration-300 hover:text-white hover:scale-110">
+          <a
+            href="https://t.me/+17f3f2qcJFMxYzE1"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Telegram"
+            className="text-gray-400 text-xl transition-all duration-300 hover:text-white hover:scale-110"
+          >
             <FaTelegramPlane />
           </a>
         </div>
